@@ -133,4 +133,15 @@ public class LoginController {
 				 }
 		  }
 	}
+	
+	/**
+	 * 修改个人信息
+	 * @param users
+	 * @return
+	 */
+	@RequestMapping(value="/updatePim",method=RequestMethod.POST)
+    @ResponseBody
+	public Integer updatePim(Users users){
+		return loginService.updatePim(users);
+	}
 }

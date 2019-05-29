@@ -11,4 +11,11 @@ public interface LoginMapper {
 	
 	Integer updateUsers(Users users);
 	
+	/**
+	 * 修改个人信息
+	 * @param uid
+	 * @return
+	 */
+	Integer updatePim(Users users);
+	
 }

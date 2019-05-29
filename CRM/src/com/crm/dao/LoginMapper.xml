@@ -29,4 +29,20 @@
 			</where>
 		</set>
 	</update>
+	
+	<!-- 修改个人信息  -->
+	<update id="updatePim" parameterType="users">
+         update users <!-- set ProtectEMail=#{ProtectEMail},ProtectMTel=#{ProtectMTel} where  uid=#{uid} -->
+         <set>
+             <if test="ProtectEMail!=null and ProtectEMail!=''">
+                   ProtectEMail=#{ProtectEMail},
+             </if>
+             <if test="ProtectMTel!=null and ProtectMTel!=''">
+                   ProtectMTel=#{ProtectMTel},
+             </if>
+         </set>	
+             <where>
+                 uid=#{uid}
+             </where> 
+	</update>
 </mapper>

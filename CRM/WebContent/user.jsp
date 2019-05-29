@@ -101,7 +101,7 @@
 		}
 		
 
-/* 手机号验证 */
+        /* 手机号验证 */
 		$.extend($.fn.validatebox.defaults.rules, {    
 		    minLength: {    
 		        validator: function(value, param){    
@@ -420,7 +420,7 @@
 						<label for="name">手机号:</label>
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="uphone" name="protectMTel" data-options="required:true" />
+						<input class="easyui-validatebox" type="text" id="uphone" name="protectMTel"  data-options="required:true,validType:['minLength[11]','maxLength[11]']"  />
 					</td>
 				</tr>
 			</table>

@@ -23,5 +23,13 @@ public class LoginServiceImp implements LoginService{
 		// TODO Auto-generated method stub
 		return loginMapper.selectUsersPass(users);
 	}
+	
+	/**
+	 * 修改个人信息
+	 */
+	public Integer updatePim(Users users) {
+		// TODO Auto-generated method stub
+		return loginMapper.updatePim(users);
+	}
 
 }

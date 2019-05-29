@@ -163,6 +163,46 @@
 	function closed() {
 		$("#UpdateWin").window("close")
 	}
+	
+	/* 手机号验证 */
+	$.extend($.fn.validatebox.defaults.rules, {    
+	    minLength: {    
+	        validator: function(value, param){    
+	            return value.length >= param[0];    
+	        },    
+	        message: '长度不能小于11位数' 
+	    }    
+	});  
+	
+	$.extend($.fn.validatebox.defaults.rules, {    
+	    maxLength: {    
+	        validator: function(value, param){    
+	            return value.length <= param[0];    
+	        },    
+	        message: '长度不能大于11位数' 
+	    }    
+	});  
+	
+	//修改个人信息
+	 function updatePim(){
+	    var uid="<%=session.getAttribute("uid")%>"
+		var ProtectEMail = $("#userprotectEMail").val();
+		var ProtectMTel = $("#userprotectMTel").val();
+		$.post("updatePim", {
+			uid : uid,
+			ProtectEMail : ProtectEMail,
+			ProtectMTel : ProtectMTel
+		}, function(res) {
+			if (res > 0) {
+				$("#editDialog").dialog("close");
+				$.messager.alert("提示", "修改成功");
+			} else {
+				$.messager.alert("提示", "修改失败")
+			}
+
+		}, "json")
+
+	}
 
 	//签到
 	function qiandao() {
@@ -251,10 +291,14 @@ span {
 		data-options="collapsible:false,minimizable:false,closed:true">
 		<div style="margin-left: 40%; margin-top: 10%">
 			<label for="name">用户名:</label> <input class="easyui-validatebox"
-				type="text" id="userlonginName" readonly="true" /><br> <br><label for="name">邮箱&emsp;:</label>
-			<input class="easyui-validatebox" readonly="true"  type="text" id="userprotectEMail" /><br><br>
-			<label for="name">电话&emsp;:</label> <input class="easyui-validatebox"
-				readonly="true" type="text" id="userprotectMTel" />
+				type="text" id="userlonginName" readonly="true" /><br> <br>
+			<label for="name">邮箱&emsp;:</label> <input class="easyui-validatebox"
+				type="text" id="userprotectEMail" data-options="required:true,validType:'email'" /><br>
+			<br> <label for="name">电话&emsp;:</label> <input
+				class="easyui-validatebox" type="text" id="userprotectMTel" data-options="required:true,validType:['minLength[11]','maxLength[11]']" /><br>
+			<br> 
+			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-edit" onclick="updatePim()">修改个人信息</a>
 		</div>
 	</div>
 	<!-- 修改用户 -->
@@ -267,16 +311,16 @@ span {
 				if (longinName != null) {
 			%>
 			<div>
-				<label for="name">登录名&emsp;:</label>
-				 <input class="easyui-validatebox" type="text" readonly="true"
+				<label for="name">登录名&emsp;:</label> <input
+					class="easyui-validatebox" type="text" readonly="true"
 					id="updateUserName" value="<%=longinName%>" />
 			</div>
 			<%
 				} else {
 			%>
 			<div>
-				<label for="name">登录名&emsp;:</label>
-				 <input class="easyui-validatebox" type="text" readonly="true"
+				<label for="name">登录名&emsp;:</label> <input
+					class="easyui-validatebox" type="text" readonly="true"
 					id="updateUserName" value="${ isdenglu}" />
 			</div>
 			<%
@@ -284,21 +328,18 @@ span {
 			%>
 			<br>
 			<div>
-				<label for="name">原始密码:</label>
-				 <input class="easyui-validatebox" type="password"
-					data-options="required:true" id="beforpassword" />
+				<label for="name">原始密码:</label> <input class="easyui-validatebox"
+					type="password" data-options="required:true" id="beforpassword" />
 			</div>
 			<br>
 			<div>
-				<label for="name">新改密码:</label>
-				 <input class="easyui-validatebox" type="password"
-					data-options="required:true" id="newPassword" />
+				<label for="name">新改密码:</label> <input class="easyui-validatebox"
+					type="password" data-options="required:true" id="newPassword" />
 			</div>
 			<br>
 			<div>
-				<label for="name">确认密码:</label>
-				 <input class="easyui-validatebox" type="password"
-					data-options="required:true" id="trueNewPassword" />
+				<label for="name">确认密码:</label> <input class="easyui-validatebox"
+					type="password" data-options="required:true" id="trueNewPassword" />
 			</div>
 			<br> &emsp;&emsp;&emsp;&emsp;&emsp;<a href="javascript:void(0)"
 				class="easyui-linkbutton" onclick="submit()">提交</a>&emsp;&emsp; <a
