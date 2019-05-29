@@ -7,29 +7,22 @@ import org.springframework.stereotype.Service;
 
 import com.crm.dao.GenZongMapper;
 import com.crm.entity.Fenye;
-import com.crm.entity.GenZong;
-import com.crm.entity.Student;
+import com.crm.entity.Network_trace;
 @Service
 public class GenZongServiceImpl implements GenZongService{
 	@Autowired
 	private GenZongMapper genZongMapper;
 
-	public Fenye<GenZong> selectGenZong(Fenye<GenZong> fenye) {
-		List<GenZong> selectGenZong = genZongMapper.selectGenZong(fenye);
+	public Fenye<Network_trace> selectGenZong(Fenye<Network_trace> fenye) {
+		List<Network_trace> selectGenZong = genZongMapper.selectGenZong(fenye);
 		Integer count = genZongMapper.count(fenye);
 		fenye.setRows(selectGenZong);
 		fenye.setTotal(count);
 		return fenye;
 	}
 
-	public Integer Addgenzong(GenZong genZong) {
-		Integer i=null;
-		List<GenZong> selectStudentName = genZongMapper.selectGenZongName(genZong);
-		if(selectStudentName.size()==0) {
-			i = genZongMapper.Addgenzong(genZong);
-		}else {
-			return -1;
-		}
+	public Integer Addgenzong(Network_trace network_trace) {
+		 Integer i = genZongMapper.Addgenzong(network_trace);
 		return i;
 	}
 

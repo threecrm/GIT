@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.crm.entity.Fenye;
-import com.crm.entity.GenZong;
+import com.crm.entity.Network_trace;
 import com.crm.service.GenZongService;
 
 @Controller
@@ -15,21 +15,22 @@ public class GenZongController {
 	@Autowired
 	private GenZongService genZongService;
 	@Autowired
-	private Fenye<GenZong> fenye;
+	private Fenye<Network_trace> fenye;
 	
-	@RequestMapping(value="/selectGenZong",method=RequestMethod.POST)
+	@RequestMapping(value="/SeleteAllNetwork_trace",method=RequestMethod.POST)
 	@ResponseBody
-	public Fenye<GenZong> selectGenZong(Integer page,Integer rows,GenZong genZong) {
+	public Fenye<Network_trace> selectGenZong(Network_trace network_trace ,Integer page,Integer rows) {
 		fenye.setPage((page-1)*rows);
 		fenye.setPageSize(rows);
-		fenye.setGenZong(genZong);
-		genZongService.selectGenZong(fenye);
+		fenye.setNetwork_trace(network_trace);
+		fenye=genZongService.selectGenZong(fenye);
+		
 		return fenye;
 	}
 	@RequestMapping(value="/addgenzong",method=RequestMethod.POST)
 	@ResponseBody
-	public Integer Addgenzong(GenZong genZong) {
-		Integer i = genZongService.Addgenzong(genZong);
+	public Integer Addgenzong(Network_trace network_trace) {
+		Integer i = genZongService.Addgenzong(network_trace);
 		return i;
 	}
 

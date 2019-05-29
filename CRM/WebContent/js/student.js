@@ -293,44 +293,61 @@ $(function() {
 // 跟踪
 function genzong() {
 	var rows = $("#tab").datagrid("getSelected"); // 获取所有选中的行
-	$("#genzongForm").form("load", rows);
+	
 	var row = $("#tab").datagrid("getSelections"); // 获取所有选中的行
 	if (row.length == 0) {
 		$.messager.alert("提示", "请选择要操作的行！", "info");
 		return;
 	} else {
 		$("#genzongid").window("open");
+		$("#genzongForm").form("load", rows);
 	}
 
 }
-// 跟踪确认按钮
-function genzongtrue() {
-	$.post("addgenzong", {
-		StudentId : $("#studentID1").val(),
-		StudentName : $("#studentsname1").val(),
-		FollowTime : $("#followTime1").datetimebox("getValue"),
-		NextFollowTime : $("#nextFollowTime1").datetimebox("getValue"),
-		Contents : $("#contents1").val(),
-		UserId : $("#userId1").combobox("getValue"),
-		FollowType : $("#followType1").val(),
-		CreatsTime : $("#creatsTime1").datetimebox("getValue"),
-		FollowState : $("#followState1").val()
-	}, function(res) {
-		if (res > 0) {
-			$.messager.alert("提示", "对" + $("#studentsname1").val() + "跟踪成功");
-			$("#genzongid").window("close");
-			$("#tab").datagrid("reload");
-			$("#genzongForm").form("reset");
-		} else {
-			$.messager.alert("提示", "你已经对" + $("#studentsname1").val()
-					+ "跟踪过一次了，不能二次跟踪哦！");
-			$("#genzongid").window("close");
-			$("#tab").datagrid("reload");
-			$("#genzongForm").form("reset");
 
+// 跟踪确认按钮
+function submitZuiZong(){
+	var u_id=$("#u_id").val();
+	var data=$("#tab").datagrid("getSelected");
+	var sname=$("#sName").val();
+	var uname=$("#userlonginName").val();
+	var n_qingkuang=$("#n_qingkuang").val();
+	var n_fangshi=$("#n_fangshi").val();
+	var date=$("#date").datetimebox('getValue');
+	var ask=$("#ask").val();
+	var aftertime=$("#aftertime").datetimebox('getValue');
+	
+	var flg = $("#ZhuiZongform").form("validate");
+	if (flg) {
+		if(date<=aftertime){
+			$.post("addgenzong",{
+				sid:data.sid,
+	    		n_sname:sname,
+	    		uname:uname,
+	    		n_qingkuang:n_qingkuang,
+	    		n_fangshi:n_fangshi,
+	    		n_date:date,
+	    		n_ask:ask,
+	    		n_aftertime:aftertime,
+	    		uid:u_id
+	    	},function(res){
+	    		if (res > 0) {
+					//拜访成功
+					$("#genzongid").dialog("close");
+					
+					$.messager.alert("提示", "回访成功");
+				} else {
+					//拜访失败
+					$.messager.alert("提示", "回访失败")
+				}
+	    	},"json")
+		}else{
+			$.messager.alert("提示", "结束日期要大于开始日期哦")
 		}
-	})
+		
+	}
 }
+
 // 跟踪取消按钮
 function genzongfalse() {
 	$("#genzongid").window("close");

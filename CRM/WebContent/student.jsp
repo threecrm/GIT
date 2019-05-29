@@ -224,55 +224,59 @@
 			</tr>
 		</table>
 	</div>
-	<!--  添加跟踪-->
+	<!-- 添加追踪的弹窗 -->
 	<div id="genzongid" class="easyui-window"
-		data-options="closed:true,title:'添加跟踪'">
+		data-options="modal:true,title:'拜访学生页面',closed:true"
+		style="width: 600px; height: 500px;">
 		<form id="genzongForm" class="easyui-form">
-			<table>
+			<table style="margin-left: 25%; margin-top: 10%">
+			<input id="u_id" value="<%=session.getAttribute("uid")%>" style="display: none"/>
 				<tr>
-					<td><input class="easyui-textbox" id="studentID1" name="sid"
-						type="hidden"></td>
+					<td><label for="name">拜访客户:</label></td>
+					<td><input class="easyui-validatebox" type="text" id="sName"
+						name="sname" disabled="disabled" /></td>
 				</tr>
 				<tr>
-					<td><input class="easyui-textbox" id="studentsname1"
-						name="sname" type="hidden"></td>
+					<td><label for="name">跟踪开始时间:</label></td>
+					<td><input class="easyui-datetimebox" type="text" id="date"
+						data-options="required:true" /></td>
 				</tr>
 				<tr>
-					<td>开始跟踪时间:</td>
-					<td><input class="easyui-datetimebox" id="followTime1"></td>
+					<td><label for="name">跟踪者:</label>
+					<td><input class="easyui-validatebox" type="text"
+						id="userlonginName"
+						value="<%=session.getAttribute("LoginUserName")%>"
+						disabled="disabled" /></td>
 				</tr>
 				<tr>
-					<td>结束跟踪时间:</td>
-					<td><input class="easyui-datetimebox" id="nextFollowTime1"></td>
+					<td><label for="name">回访情况:</label></td>
+					<td><input class="easyui-validatebox" type="text"
+						id="n_qingkuang" data-options="required:true" /></td>
 				</tr>
 				<tr>
-					<td>内容:</td>
-					<td><input class="easyui-textbox" id="contents1"></td>
+					<td><label for="name">跟踪方式:</label></td>
+					<td><input class="easyui-validatebox" type="text"
+						id="n_fangshi" data-options="required:true" /></td>
 				</tr>
 				<tr>
-					<td>跟踪者:</td>
-					<td><input id="userId1" class="easyui-combobox"></td>
+					<td><label for="name">拜访详细:</label></td>
+					<td><input class="easyui-validatebox" type="text" id="ask"
+						data-options="required:true" /></td>
 				</tr>
 				<tr>
-					<td>追踪方式:</td>
-					<td><input class="easyui-textbox" id="followType1"></td>
+					<td><label for="name">跟踪结束时间:</label></td>
+					<td><input class="easyui-datetimebox" type="text"
+						id="aftertime" data-options="required:true" /></td>
 				</tr>
+
 				<tr>
-					<td>创建时间:</td>
-					<td><input class="easyui-datetimebox" id="creatsTime1"></td>
-				</tr>
-				<tr>
-					<td>跟踪状态:</td>
-					<td><input class="easyui-textbox" id="followState1"></td>
-				</tr>
-				<tr>
-					<td><a href="javascript:void(0)" icon="icon-ok"
-						class="easyui-linkbutton" onclick="genzongtrue()">提交</a></td>
-					<td><a href="javascript:void(0)" icon="icon-cancel"
+					<td></td>
+					<td><a href="javascript:void(0)" class="easyui-linkbutton"
+						onclick="submitZuiZong()">提交</a> <a href="javascript:void(0)"
 						class="easyui-linkbutton" onclick="genzongfalse()">取消</a></td>
 				</tr>
 			</table>
-		</form>
+			</form>
 	</div>
 	<!--批量操作  -->
 	<div id="caozuoWindow" class="easyui-window"
@@ -406,7 +410,8 @@
 						class="easyui-linkbutton" onclick="addtrue()">提交</a></td>
 					<td><a href="javascript:void(0)" icon="icon-cancel"
 						class="easyui-linkbutton" onclick="addfalse()">取消</a></td>
-					<td style="color:red">自动分配<input id="tur" class="easyui-switchbutton" checked></td>
+					<td style="color: red">自动分配<input id="tur"
+						class="easyui-switchbutton" checked></td>
 				</tr>
 			</table>
 		</form>

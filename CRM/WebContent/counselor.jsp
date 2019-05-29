@@ -105,31 +105,35 @@ function submit(){
 	var date=$("#date").datetimebox('getValue');
 	var ask=$("#ask").val();
 	var aftertime=$("#aftertime").datetimebox('getValue');
-	if(date!=null && date!=''&&aftertime!=null&& aftertime!=''){
-		$.post("insert",{
-			sid:data.sid,
-    		n_sname:sname,
-    		uname:uname,
-    		n_qingkuang:n_qingkuang,
-    		n_fangshi:n_fangshi,
-    		n_date:date,
-    		n_ask:ask,
-    		n_aftertime:aftertime,
-    		uid:u_id
-    	},function(res){
-    		if (res > 0) {
-				//拜访成功
-				$("#ZhuiZongWin").dialog("close");
-				
-				$.messager.alert("提示", "回访成功");
-			} else {
-				//拜访失败
-				$.messager.alert("提示", "回访失败")
-			}
-    	},"json")
-	} else{
-		$.messager.alert("提示", "请输入完整的信息");
-	} 
+	var flg = $("#ZhuiZongform").form("validate");
+	if (flg) {
+		if(date<=aftertime){
+			$.post("insert",{
+				sid:data.sid,
+	    		n_sname:sname,
+	    		uname:uname,
+	    		n_qingkuang:n_qingkuang,
+	    		n_fangshi:n_fangshi,
+	    		n_date:date,
+	    		n_ask:ask,
+	    		n_aftertime:aftertime,
+	    		uid:u_id
+	    	},function(res){
+	    		if (res > 0) {
+					//拜访成功
+					$("#ZhuiZongWin").dialog("close");
+					
+					$.messager.alert("提示", "回访成功");
+				} else {
+					//拜访失败
+					$.messager.alert("提示", "回访失败")
+				}
+	    	},"json")
+		}else{
+			$.messager.alert("提示", "结束日期要大于开始日期哦")
+		}
+		
+	}
 }
 
     function look(index){
@@ -922,27 +926,27 @@ function submit(){
 	    </tr>
 	    <tr>
 	     <td><label for="name">跟踪开始时间:</label></td>
-	     <td><input class="easyui-datetimebox" type="text" id="date"  /></td> 
+	     <td><input class="easyui-datetimebox" type="text" id="date" data-options="required:true" /></td> 
 	    </tr>
 	    <tr>
 	     <td><label for="name">跟踪者:</label>   
-	     <td><input class="easyui-validatebox" type="text" id="userlonginName" value="<%=session.getAttribute("LoginUserName")%>" /></td> 
+	     <td><input class="easyui-validatebox" type="text" id="userlonginName" value="<%=session.getAttribute("LoginUserName")%>" disabled="disabled" /></td> 
 	    </tr>
 	    <tr>
 	     <td><label for="name">回访情况:</label></td>
-	     <td><input class="easyui-validatebox" type="text" id="n_qingkuang"  /></td> 
+	     <td><input class="easyui-validatebox" type="text" id="n_qingkuang" data-options="required:true" /></td> 
 	    </tr>
 	    <tr> 
 	     <td><label for="name">跟踪方式:</label></td>
-	     <td><input class="easyui-validatebox" type="text" id="n_fangshi" /></td> 
+	     <td><input class="easyui-validatebox" type="text" id="n_fangshi" data-options="required:true"/></td> 
 	    </tr>
 	    <tr> 
 	     <td><label for="name">拜访详细:</label></td>
-	     <td><input class="easyui-validatebox" type="text" id="ask" /></td> 
+	     <td><input class="easyui-validatebox" type="text" id="ask" data-options="required:true"/></td> 
 	    </tr>
 	    <tr>
 	     <td> <label for="name">跟踪结束时间:</label>  </td>
-	     <td><input class="easyui-datetimebox" type="text" id="aftertime" /></td> 
+	     <td><input class="easyui-datetimebox" type="text" id="aftertime" data-options="required:true"/></td> 
 	    </tr>
 	  
 	    <tr>
@@ -950,8 +954,8 @@ function submit(){
 	     <td> <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submit()" >提交</a>
               <a href="javascript:void(0)" class="easyui-linkbutton" onclick="closed()" >取消</a> </td> 
 	    </tr>
-      <table>
-         </from>
+      </table>
+         </form>
 	    </div>
   
 </body>

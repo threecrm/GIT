@@ -12,75 +12,138 @@
 <script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
 $(function(){
-	init();
-})
-   function init(){
-	$("#tab").datagrid({
-		url:'selectGenZong',
-		method:'post',
-	    pagination:true,
-	   toolbar:'#sousuoId',  
-	   queryParams:{
-		   StudentName:$("#studentName").val(),
-		   LonginName:$("#userName").val(),
-		   StartfollowTime:$("#StartfollowTime").datetimebox("getValue"),
-		   endfollowTime:$("#endfollowTime").datetimebox("getValue"),
-		   StartnextFollowTime:$("#StartnextFollowTime").datetimebox("getValue"),
-		   endnextFollowTime:$("#endnextFollowTime").datetimebox("getValue"),
-		   IsReturnVisit:$("#isReturnVisit").combobox("getValue"), 
-		   followType:$("#followType").val()
-	   } 
-		
+	initStu();	
+        })
+        
+    function initStu(){
+    	 $("#stuTab").datagrid({
+    		    url:"SeleteAllNetwork_trace",
+    		    method:"post",
+    		    pagination:true,
+    		    fitColumns : true,
+    		    singleSelect:true,
+    		    toolbar:'#stuTool', 
+    			queryParams: {
+    				 searchn_sname:$("#n_sname").val(),
+    				 searchn_address:$("#n_address").val(),
+    				 searchn_qingkuang:$("#n_qingkuang").val(),
+    				 searchn_fangshi:$("#n_fangshi").val(),
+    				 searchstartTime:$("#startTime").datetimebox('getValue'), 
+    				 searchendTime:$("#endTime").datetimebox('getValue'), 
+    			}
+    		});
+     }
+    
+function formatterChoose(value, row, index) {
+	return "<a href='javascript:void(0)' onclick='Delete("+ index+")'>删除</a> <a href='javascript:void(0)' onclick='selectInfo("+ index+")'>查看</a> "
+}
+
+function selectInfo(index){
+	var datas=$("#stuTab").datagrid("getData");
+	 var row=datas.rows[index];
+	 $("#ZhuiZongWin").dialog("open");
+	 //填充表单
+	 $("#ZhuiZongform").form("load",row)
+}
+
+function Delete(index) {
+	//获取要删除的数据
+	var arr = $("#stuTab").datagrid("getData");
+	var row = arr.rows[index];
+	//确认删除
+	   $.messager.confirm("确认删除", "确认删除么？", function(r) {
+		if (r) {
+			$.post("DeleteNetwork_trace", {
+				n_id : row.n_id
+			}, function(res) {
+				if (res > 0) {
+					//删除成功
+					$.messager.alert("提示", "删除成功");
+					$("#stuTab").datagrid("reload");
+				} else {
+					//失败
+					$.messager.alert("提示", "删除失败")
+				}
+			}, "json")
+		}
 	})
 }
 
- function formatterName(value,row,index){
-	return row.users.longinName;
-}
+    function breakPage() {
+    	window.location.reload(true);
+	}
 
-  function formatterHui(value,row,index){
-	return row.student.isReturnVisit;
-}  
+   
 </script>
-</head>
 <body>
-<table id="tab" class="easyui-datagrid">
-  <div id="sousuoId">
-  <form id="seachForm" class="easyui-form">
-  学生名称: <input id="studentName"  class="easyui-textbox">
-  跟踪者: <input id="userName"  class="easyui-textbox">
-  跟踪开始时间:<input id="StartfollowTime"  class="easyui-datetimebox">~ <input id="endfollowTime"  class="easyui-datetimebox">
- <br>跟踪结束时间:<input id="StartnextFollowTime"  class="easyui-datetimebox">~<input id="endnextFollowTime"  class="easyui-datetimebox">
-  回访情况:
-  <select id="isReturnVisit" class="easyui-combobox">
-   <option value=''>--请选择--</option>
-   <option>已回访</option>
-   <option>未回访</option> 
-   <option>思量</option>
-   <option>上门未报名</option>
-   <option>报名未进班</option>
-   <option>未上门</option>
-   </select> 
-  跟踪方式:<input id="followType"  class="easyui-textbox">
-    <br> <a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="init()">搜索</a>
-  </form>
-</div>  
- <thead>
-       <tr>
-                <th data-options="field:'cid',title:'编号'"></th>
-				<th data-options="field:'studentName',title:'学生姓名'"></th>
-				<th data-options="field:'followTime',title:'开始追踪时间'"></th>
-				<th data-options="field:'nextFollowTime',title:'结束追踪时间'"></th>
-				<th data-options="field:'student',title:'回访情况',formatter:formatterHui"></th>
-				<th data-options="field:'contents',title:'内容'"></th>
-				<th data-options="field:'users',title:'跟踪者',formatter:formatterName"></th>
-				<th data-options="field:'followType',title:'追踪方式'"></th>
-				<th data-options="field:'creatsTime',title:'创建时间'"></th>
-				<th data-options="field:'followState',title:'咨询内容'"></th>
-			
-        </tr>
-  
-  </thead> 
-</table>
+
+ <div id="stuTool">
+			 <label for="name">学生名称:</label>
+			 <input class="easyui-textbox"  id="n_sname" style="width: 100px"/> 
+			 <label for="name">回访情况:</label>
+			 <input class="easyui-textbox"  id="n_qingkuang" style="width: 100px"/> 
+			 <label for="name">跟踪方式:</label>
+			 <input class="easyui-textbox"  id="n_fangshi" style="width: 100px"/> 
+			 
+			<label for="name">跟踪时间:</label>
+		    <input class="easyui-datetimebox" id="startTime"  style="width: 100px" /> ~ 
+		    <input class="easyui-datetimebox" id="endTime" style="width: 100px" />
+		    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="initStu()">搜索</a>
+		     <a href="#" class="easyui-linkbutton"  onclick="breakPage()">返回上一页</a> 
+	</div>
+
+<table id="stuTab" class="easyui-datagrid" >
+		<thead>
+			<tr> <th field="ck" checkbox="true" title="批量删除"></th> 
+			    <th data-options="field:'choose',title:'操作',formatter:formatterChoose"></th>   
+				<th data-options="field:'n_id',title:'ID',width:100"></th>
+				<th data-options="field:'n_sname',title:'学生姓名',width:100"></th>
+				<th data-options="field:'n_date',title:'跟踪开始时间',width:100"></th>
+				<th data-options="field:'uname',title:'跟踪者',width:100"></th>
+				<th data-options="field:'n_qingkuang',title:'回访情况',width:100"></th>
+				<th data-options="field:'n_fangshi',title:'跟踪方式',width:100"></th>
+				<th data-options="field:'n_ask',title:'拜访详细',width:100"></th>
+				<th data-options="field:'n_aftertime',title:'跟踪结束时间',width:100"></th>
+				
+			</tr>
+		</thead>
+	</table>
+	    
+		<div id="ZhuiZongWin" class="easyui-window" data-options="modal:true,title:'拜访学生页面',closed:true" style="width:600px;height:500px">
+	    <form id="ZhuiZongform" class="easyui-form" >
+	    <table>
+	    <tr>
+	     <td><label for="name">拜访客户:</label></td>
+	     <td><input class="easyui-validatebox" type="text" id="sname" name="n_sname" disabled="disabled" /></td> 
+	    </tr>
+	    <tr>
+	     <td><label for="name">跟踪开始时间:</label></td>
+	     <td><input class="easyui-datetimebox" type="text" id="date" name="n_date" /></td> 
+	    </tr>
+	    <tr>
+	     <td><label for="name">跟踪者:</label>   
+	     <td><input class="easyui-validatebox" type="text" id="uname" name="uname" /></td> 
+	    </tr>
+	    <tr>
+	     <td><label for="name">回访情况:</label></td>
+	     <td><input class="easyui-validatebox" type="text" id="n_qingkuang" name="n_qingkuang" /></td> 
+	    </tr>
+	    <tr> 
+	     <td><label for="name">跟踪方式:</label></td>
+	     <td><input class="easyui-validatebox" type="text" id="n_fangshi"  name="n_fangshi" /></td> 
+	    </tr>
+	    <tr> 
+	     <td><label for="name">拜访详细:</label></td>
+	     <td><input class="easyui-validatebox" type="text" id="ask" name="n_ask" /></td> 
+	    </tr>
+	    <tr>
+	     <td> <label for="name">跟踪结束时间:</label>  </td>
+	     <td><input class="easyui-datetimebox" type="text" id="aftertime"  name="n_aftertime" /></td> 
+	    </tr>
+	  
+      </table>
+         </form>
+	    </div>
+	
 </body>
 </html>

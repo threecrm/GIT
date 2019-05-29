@@ -116,29 +116,31 @@
 	} 
 	
 	//修改用户信息
-	function UserSafety(){
-		
-		$("#UpdateWin").window("open")
-	}
+		function UserSafety(){
+			
+			$("#UpdateWin").window("open")
+		}
 	 function submit() {
 	   var u_id="<%=session.getAttribute("uid")%>"
 		var password = $("#beforpassword").val();
 		var newPassword = $("#newPassword").val();
 		var trueNewPassword = $("#trueNewPassword").val();
+		var flg = $("#Updateform").form("validate");
+		if (flg) {
+			$.messager.confirm("提示信息", "确定修改吗？", function(r) {
+				$.post("updateUserPassword", {
+					uid : u_id,
+					PassWord : password,
+					newPassword : newPassword,
+					trueNewPassword : trueNewPassword
+				}, function(res) {
 
-		$.post("updateUserPassword", {
-			uid : u_id,
-			password : password,
-			newPassword : newPassword,
-			trueNewPassword : trueNewPassword
-		}, function(res) {
-			if (res > 0) {
-
-				if (res != -2) {
-					if (res != -1) {
-						//修改成功
+					if (res == 0) {
+						$.messager.alert("提示", "原密码不正确");
+					} else if (res == -1) {
+						$.messager.alert("提示", "两次密码不一致");
+					} else if (res > 0) {
 						$.messager.alert("提示", "修改成功请从新登陆");
-
 						//清除session
 						$.post("drop", {}, function(res) {
 							if (res == true) {
@@ -151,18 +153,11 @@
 						//修改成功后从新转到登陆页面
 						window.location.href = "login.jsp";
 					} else {
-						$.messager.alert("提示", "两次密码不一致");
+						$.messager.alert("提示", "修改失败");
 					}
-
-				} else {
-					$.messager.alert("提示", "原密码不正确");
-				}
-
-			} else {
-				$.messager.alert("提示", "修改失败");
-			}
-
-		}, 'json');
+				}, 'json');
+			})
+		}
 	}
 
 	function closed() {
@@ -256,10 +251,10 @@ span {
 		data-options="collapsible:false,minimizable:false,closed:true">
 		<div style="margin-left: 40%; margin-top: 10%">
 			<label for="name">用户名:</label> <input class="easyui-validatebox"
-				type="text" id="userlonginName" /> <label for="name">邮箱&emsp;:</label>
-			<input class="easyui-validatebox" type="text" id="userprotectEMail" />
+				type="text" id="userlonginName" readonly="true" /><br> <br><label for="name">邮箱&emsp;:</label>
+			<input class="easyui-validatebox" readonly="true"  type="text" id="userprotectEMail" /><br><br>
 			<label for="name">电话&emsp;:</label> <input class="easyui-validatebox"
-				type="text" id="userprotectMTel" />
+				readonly="true" type="text" id="userprotectMTel" />
 		</div>
 	</div>
 	<!-- 修改用户 -->
@@ -273,7 +268,7 @@ span {
 			%>
 			<div>
 				<label for="name">登录名&emsp;:</label>
-				</td> <input class="easyui-validatebox" type="text" readonly="true"
+				 <input class="easyui-validatebox" type="text" readonly="true"
 					id="updateUserName" value="<%=longinName%>" />
 			</div>
 			<%
@@ -281,7 +276,7 @@ span {
 			%>
 			<div>
 				<label for="name">登录名&emsp;:</label>
-				</td> <input class="easyui-validatebox" type="text" readonly="true"
+				 <input class="easyui-validatebox" type="text" readonly="true"
 					id="updateUserName" value="${ isdenglu}" />
 			</div>
 			<%
@@ -290,19 +285,19 @@ span {
 			<br>
 			<div>
 				<label for="name">原始密码:</label>
-				</td> <input class="easyui-validatebox" type="text"
+				 <input class="easyui-validatebox" type="password"
 					data-options="required:true" id="beforpassword" />
 			</div>
 			<br>
 			<div>
 				<label for="name">新改密码:</label>
-				</td> <input class="easyui-validatebox" type="text"
+				 <input class="easyui-validatebox" type="password"
 					data-options="required:true" id="newPassword" />
 			</div>
 			<br>
 			<div>
 				<label for="name">确认密码:</label>
-				</td> <input class="easyui-validatebox" type="text"
+				 <input class="easyui-validatebox" type="password"
 					data-options="required:true" id="trueNewPassword" />
 			</div>
 			<br> &emsp;&emsp;&emsp;&emsp;&emsp;<a href="javascript:void(0)"

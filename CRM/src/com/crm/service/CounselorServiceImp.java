@@ -75,11 +75,12 @@ public class CounselorServiceImp implements CounselorService {
 		Integer count=counselorMapper.SeleteNetwork_traceLogCount(fenye);
 		List<Network_trace> selectNetwork_trace=counselorMapper.SeleteNetwork_traceLog(fenye);
 		
-		
 		fenye.setRows(selectNetwork_trace);
 		fenye.setTotal(count);
 		return fenye;
 	}
 
-	
+	public Users selectUsersPassword(Users u) {
+		return counselorMapper.selectUsersPassword(u);
+	}
 }

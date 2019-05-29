@@ -45,5 +45,7 @@ public interface CounselorMapper {
 	
 	//查询咨询师信息
 	 Ask selectAskInfo(String LonginName);
-	 
+	
+	 //查询咨询师密码
+	 Users selectUsersPassword(Users u);
 }

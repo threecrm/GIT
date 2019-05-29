@@ -207,14 +207,12 @@
           DELETE FROM network_trace 
           WHERE n_id=#{n_id}
  </delete>
- 
- <!-- 修改个人信息 -->
- <!-- <update id="UpdatePassword" parameterType="users" >
-    UPDATE users 
-    SET PassWord =#{PassWord} 
-    WHERE uid=#{uid} 
- </update> -->
- 
+
+<!-- 查询登录用户原始密码 -->	
+	<select id="selectUsersPassword" resultType="users" parameterType="users">
+		select * from users where uid = #{uid} and PassWord = md5(#{PassWord})
+	</select>
+<!-- 修改登录用户的密码 --> 
  <update id="UpdateUserPassword" parameterType="users">
 	        update users
 	        <set>
@@ -244,7 +242,7 @@
 		          where sid = #{sid}
 	</update>
 	
-	
+<!-- 查询线下咨询师信息 -->	
 	<select id="selectAskInfo" resultType="ask" parameterType="string">
 		select * from askteacher 
 		<where>

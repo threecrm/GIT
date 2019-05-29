@@ -102,22 +102,25 @@ public Integer Delete(Integer n_id){
     
     @RequestMapping(value="/updateUserPassword",method=RequestMethod.POST)
     @ResponseBody
-    public Integer UpdateUserPassword( Users u, Integer uid, String password,String newPassword,String trueNewPassword){
-    	Users user=counselorService.selectUsersInfo(uid);
-    	if(newPassword.equals(trueNewPassword)){
-    		if(password.equals(user.getPassWord())){
-        		
-        		u.setUid(uid);
-            	u.setPassWord(newPassword);
-            	Integer Update=counselorService.UpdateUserPassword(u);
-            	return Update;
-        	}else{
-        		return -2;
-        	}
-    	}else{
-    		return -1;
-    	}
-    }
+    public Integer UpdateUserPassword(Users u, Integer uid, String PassWord,
+			String newPassword, String trueNewPassword) {
+		Users user = counselorService.selectUsersPassword(u);
+		if (user != null) {
+			if (newPassword.equals(trueNewPassword)) {
+				u.setUid(uid);
+				u.setPassWord(newPassword);
+				Integer Update = counselorService.UpdateUserPassword(u);
+				return Update;
+			} else {
+				return -1;
+			}
+		} else {
+			return 0;
+		}
+
+	}
+    
+    
     
     @RequestMapping(value="/selectUsersInfo",method=RequestMethod.POST)
     @ResponseBody

@@ -19,8 +19,6 @@ public interface CounselorService {
 		
 		//查询追踪表数据
 		Fenye<Network_trace> SelectNetworkTrace(Fenye<Network_trace> fenye);
-		
-	///////
 	
 		//查询网络追踪,单个学生信息的 数据
 	    Fenye<Network_trace> SeleteNetwork_traceLog(Fenye<Network_trace> fenye);
@@ -43,4 +41,7 @@ public interface CounselorService {
 		 
 		// 查询咨询师信息
 		 Ask selectAskInfo(String LonginName);
+		 
+		// 查询用户密码
+		Users selectUsersPassword(Users u);
 }
