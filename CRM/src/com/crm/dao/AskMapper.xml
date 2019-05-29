@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crm.dao.AskMapper">
+	<!--分页显示咨询师所有 -->
+	<select id="selectAsk" parameterType="fenye" resultType="Ask">
+		SELECT * from askteacher
+		<where>
+			<if test="ask.askName!='' and ask.askName!=null">
+				and askName like "%"#{ask.askName}"%"
+			</if>
+			<if test="ask.roleNames!='' and ask.roleNames!=null">
+				and roleNames=#{ask.roleNames}
+			</if>
+			<if test="ask.Statue!='' and ask.Statue!=null">
+				and Statue=#{ask.Statue}
+			</if>
+		</where>
+		limit #{page},#{pageSize}
+
+	</select>
+	<!-- 查询所有咨询师数量 -->
+	<select id="selectCountAsk" parameterType="fenye" resultType="int">
+		SELECT COUNT(AskId) from askteacher
+	</select>
+	<!--查询网络咨询师 -->
+	<select id="selectInternetAsk" parameterType="fenye" resultType="Ask">
+		SELECT * from askteacher where RoleNames='网络咨询师' limit
+		#{page},#{pageSize}
+	</select>
+	<!-- 查询咨询师 -->
+	<select id="selectAskTeacher" parameterType="fenye" resultType="Ask">
+		SELECT * from askteacher where RoleNames='咨询师' limit
+		#{page},#{pageSize}
+	</select>
+	<!-- 查询角色 -->
+	<select id="selectRoles" resultType="Roles">
+		SELECT * from roles LIMIT 2,2
+	</select>
+	<!-- 修改网络咨询师 -->
+	<update id="updateAsk" parameterType="Ask">
+		UPDATE askteacher
+		<set>
+			<if test="askName!=null and askName!=''">
+				askName=#{askName},
+			</if>
+			<if test="checkState!=null and checkState!=''">
+				checkState=#{checkState},
+			</if>
+			<if test="checkInTime!=null and checkInTime!=''">
+				checkInTime=#{checkInTime},
+			</if>
+			<if test="changeState!=null and changeState!=''">
+				changeState=#{changeState},
+			</if>
+			<if test="weights!=null and weights!=''">
+				weights=#{weights},
+			</if>
+			<if test="roleNames!=null and roleNames!=''">
+				roleNames=#{roleNames},
+			</if>
+			<if test="bakContent!=null and bakContent!=''">
+				bakContent=#{bakContent},
+			</if>
+		</set>
+		where askId=#{askId}
+	</update>
+
+	<!--查询网络学生 -->
+	<select id="selectStudent" parameterType="int" resultType="Student">
+		SELECT * from student s,askteacher a WHERE s.AskerId=a.AskId and
+		askId=#{askId}
+	</select>
+	<!--签到 -->
+	<update id="updateQianDao" parameterType="Ask">
+		UPDATE askteacher set Statue ='已签到' where askId=#{askId}
+	</update>
+	<!--签退 -->
+	<update id="updateQianTui" parameterType="Ask">
+		UPDATE askteacher set Statue ='已签退' where askId=#{askId}
+	</update>
+	<!-- 权重排序 -->
+	<select id="paixun" parameterType="ask" resultType="Ask">
+		SELECT * from askteacher ORDER BY Weights DESC
+	</select>
+	<select id="selectUsers" parameterType="string" resultType="users">
+		SELECT * FROM users WHERE LonginName=#{longinName}
+	</select>
+</mapper>

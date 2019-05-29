@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.crm.dao.CounselorMapper">
+ 
+ <select id="SelectCount" parameterType="fenye" resultType="int">
+      select count(sid) from student
+ <where> 
+	<if test="student.sname!=null and student.sname!=''">
+	and sname like "%"#{student.sname}"%"
+	</if>
+	<if test="student.isReturnVisit!=null and student.isReturnVisit!=''">
+	and isReturnVisit=#{student.isReturnVisit}
+	</if>
+	<if test="student.phone!=null and student.phone!=''">
+	and Phone like "%"#{student.phone}"%"
+	</if>
+	<if test="student.QQ!=null and student.QQ!=''">
+	and QQ like "%"#{student.QQ}"%"
+	</if>
+	<if test="student.isPay!=null and student.isPay!=''">
+	and isPay=#{student.isPay}
+	</if>
+	<if test="student.isValid!=null and student.isValid!=''">
+	and isValid=#{student.isValid}
+	</if>
+	<if test="student.StartcreatTimes!=null and student.StartcreatTimes!=''">
+	and creatTimes&gt;=#{student.StartcreatTimes}
+	</if>
+	<if test="student.EndcreatTimes!=null and student.EndcreatTimes!=''">
+	and creatTimes&lt;=#{student.EndcreatTimes}
+	</if>
+	 <if test="student.StarthomeTime!=null and student.StarthomeTime!=''">
+	and homeTime&gt;=#{student.StarthomeTime}
+	</if>
+	<if test="student.EndhomeTime!=null and student.EndhomeTime!=''">
+	and homeTime&lt;=#{student.EndhomeTime}
+	</if>
+	<if test="student.StartfirstVisitTime!=null and student.StartfirstVisitTime!=''">
+	and FirstVisitTime&gt;=#{student.StartfirstVisitTime}
+	</if>
+	<if test="student.EndfirstVisitTime!=null and student.EndfirstVisitTime!=''">
+	and FirstVisitTime&lt;=#{student.EndfirstVisitTime}
+	</if>
+	<if test="student.StartpayTime!=null and student.StartpayTime!=''">
+	and payTime&gt;=#{student.StartpayTime}
+	</if>
+	<if test="student.EndpayTime!=null and student.EndpayTime!=''">
+	and payTime&lt;=#{student.EndpayTime}
+	</if>
+	<if test="student.StartinClassTime!=null and student.StartinClassTime!=''">
+	and inClassTime&gt;#{student.StartinClassTime}
+	</if>
+	<if test="student.EndinClassTime!=null and student.EndinClassTime!=''">
+	and inClassTime&lt;#{student.EndinClassTime}
+	</if> 
+	<if test="ask.askId!=null and ask.askId!=''">
+	and AskerId=#{ask.askId}
+	</if> 
+	<if test="student.Address!=null and student.Address!=''">
+	and Address like "%"#{student.Address}"%"
+	</if>
+	</where> 
+ </select> 
+ 
+ <select id="SelectStudent" parameterType="fenye" resultType="student">
+			  SELECT * 
+			  FROM student
+	<where> 
+	<if test="student.sname!=null and student.sname!=''">
+	and sname like "%"#{student.sname}"%"
+	</if>
+	<if test="student.isReturnVisit!=null and student.isReturnVisit!=''">
+	and isReturnVisit=#{student.isReturnVisit}
+	</if>
+	<if test="student.phone!=null and student.phone!=''">
+	and Phone like "%"#{student.phone}"%"
+	</if>
+	<if test="student.QQ!=null and student.QQ!=''">
+	and QQ like "%"#{student.QQ}"%"
+	</if>
+	<if test="student.isPay!=null and student.isPay!=''">
+	and isPay=#{student.isPay}
+	</if>
+	<if test="student.isValid!=null and student.isValid!=''">
+	and isValid=#{student.isValid}
+	</if>
+	<if test="student.StartcreatTimes!=null and student.StartcreatTimes!=''">
+	and creatTimes&gt;=#{student.StartcreatTimes}
+	</if>
+	<if test="student.EndcreatTimes!=null and student.EndcreatTimes!=''">
+	and creatTimes&lt;=#{student.EndcreatTimes}
+	</if>
+	 <if test="student.StarthomeTime!=null and student.StarthomeTime!=''">
+	and homeTime&gt;=#{student.StarthomeTime}
+	</if>
+	<if test="student.EndhomeTime!=null and student.EndhomeTime!=''">
+	and homeTime&lt;=#{student.EndhomeTime}
+	</if>
+	<if test="student.StartfirstVisitTime!=null and student.StartfirstVisitTime!=''">
+	and FirstVisitTime&gt;=#{student.StartfirstVisitTime}
+	</if>
+	<if test="student.EndfirstVisitTime!=null and student.EndfirstVisitTime!=''">
+	and FirstVisitTime&lt;=#{student.EndfirstVisitTime}
+	</if>
+	<if test="student.StartpayTime!=null and student.StartpayTime!=''">
+	and payTime&gt;=#{student.StartpayTime}
+	</if>
+	<if test="student.EndpayTime!=null and student.EndpayTime!=''">
+	and payTime&lt;=#{student.EndpayTime}
+	</if>
+	<if test="student.StartinClassTime!=null and student.StartinClassTime!=''">
+	and inClassTime&gt;#{student.StartinClassTime}
+	</if>
+	<if test="student.EndinClassTime!=null and student.EndinClassTime!=''">
+	and inClassTime&lt;#{student.EndinClassTime}
+	</if> 
+	<if test="ask.askId!=null and ask.askId!=''">
+	and AskerId=#{ask.askId}
+	</if> 
+	<if test="student.Address!=null and student.Address!=''">
+	and Address like "%"#{student.Address}"%"
+	</if>
+	</where> 
+ limit #{page},#{pageSize}
+ </select>
+ 
+ <insert id="InsertInfo" parameterType="network_trace"  >
+		      INSERT INTO network_trace(n_sname,uname,n_date,n_ask,n_aftertime,uid,n_qingkuang,n_fangshi,sid) 
+		      VALUES(#{n_sname},#{uname},#{n_date},#{n_ask},#{n_aftertime},#{uid},#{n_qingkuang},#{n_fangshi},#{sid})
+ </insert>
+ 
+  <select id="SelectNetworkTraceCount" parameterType="fenye" resultType="int">
+         select count(n_id) from network_trace
+         <where>
+             <if test="network_trace.searchn_sname!=null and network_trace.searchn_sname!=''">
+                and n_sname like "%"#{network_trace.searchn_sname}"%"
+             </if>
+             <if test="network_trace.searchn_address!=null and network_trace.searchn_address!=''">
+                and n_address like "%"#{network_trace.searchn_address}"%"
+             </if>
+             <if test="network_trace.searchn_qingkuang!=null and network_trace.searchn_qingkuang!=''">
+                and n_qingkuang like "%"#{network_trace.searchn_qingkuang}"%"
+             </if>
+             <if test="network_trace.searchn_fangshi!=null and network_trace.searchn_fangshi!=''">
+                and n_fangshi like "%"#{network_trace.searchn_fangshi}"%"
+             </if>
+             
+             <if test="network_trace.searchstartTime!=null and network_trace.searchstartTime!=''">
+                and n_date &gt; #{network_trace.searchstartTime}
+             </if>
+             <if test="network_trace.searchendTime!=null and network_trace.searchendTime!=''">
+                and n_date &lt;#{network_trace.searchendTime}
+             </if>
+            <if test="ask.askId!=null and ask.askId!=''">
+                and uid =#{ask.askId}
+             </if>
+         </where>
+        
+         
+  </select> 
+ <select id="SelectNetworkTrace" parameterType="fenye" resultType="network_trace">
+			 SELECT *
+			  FROM `network_trace` 
+			    <where>
+             <if test="network_trace.searchn_sname!=null and network_trace.searchn_sname!=''">
+                and n_sname like "%"#{network_trace.searchn_sname}"%"
+             </if>
+             <if test="network_trace.searchn_address!=null and network_trace.searchn_address!=''">
+                and n_address like "%"#{network_trace.searchn_address}"%"
+             </if>
+             <if test="network_trace.searchn_qingkuang!=null and network_trace.searchn_qingkuang!=''">
+                and n_qingkuang like "%"#{network_trace.searchn_qingkuang}"%"
+             </if>
+             <if test="network_trace.searchn_fangshi!=null and network_trace.searchn_fangshi!=''">
+                and n_fangshi like "%"#{network_trace.searchn_fangshi}"%"
+             </if>
+             
+             <if test="network_trace.searchstartTime!=null and network_trace.searchstartTime!=''">
+                and n_date &gt; #{network_trace.searchstartTime}
+             </if>
+             <if test="network_trace.searchendTime!=null and network_trace.searchendTime!=''">
+                and n_date &lt; #{network_trace.searchendTime}
+             </if>
+             <if test="ask.askId!=null and ask.askId!=''">
+                and uid =#{ask.askId}
+             </if>
+         </where>
+         limit #{page},#{pageSize}
+          <!-- ORDER BY network_trace.n_id DESC  -->
+ </select>
+ 
+  <select id="SeleteNetwork_traceLogCount" parameterType="fenye" resultType="int">
+         select count(sid) from network_trace where sid=#{network_trace.sid}
+         
+  </select> 
+ <select id="SeleteNetwork_traceLog" parameterType="fenye" resultType="network_trace">
+			 SELECT *
+			  FROM `network_trace` 
+			 where sid=#{network_trace.sid} 
+          limit #{page},#{pageSize}
+          <!-- ORDER BY #{network_trace.n_id} DESC -->
+ </select>
+ 
+ <delete id="Delete" parameterType="int" >
+          DELETE FROM network_trace 
+          WHERE n_id=#{n_id}
+ </delete>
+ 
+ <!-- 修改个人信息 -->
+ <!-- <update id="UpdatePassword" parameterType="users" >
+    UPDATE users 
+    SET PassWord =#{PassWord} 
+    WHERE uid=#{uid} 
+ </update> -->
+ 
+ <update id="UpdateUserPassword" parameterType="users">
+	        update users
+	        <set>
+	            <if test="PassWord !=null and PassWord !=''">
+				PassWord = #{PassWord}
+			</if>       
+	        </set>
+	        <where>
+				uid = #{uid}
+			</where>
+	</update>
+	
+	<select id="selectUsersInfo" resultType="users" parameterType="int">
+		select * from users 
+		<where>
+		uid = #{uid}
+		</where>
+	</select>
+	
+	<update id="UpdateStudentInfo" parameterType="student">
+	      update student 
+	             set CreatUser = #{CreatUser},LearnForword = #{LearnForword},IsValid = #{IsValid},
+			          FromPart=#{FromPart}, LostValid=#{LostValid}, IsReturnVisit=#{IsReturnVisit}, 
+			          FirstVisitTime=#{FirstVisitTime}, isHome=#{isHome}, homeTime=#{homeTime}, 
+			          IsPay=#{IsPay}, PayTime=#{PayTime}, Money=#{Money}, isReturnMoney=#{isReturnMoney}, isInClass=#{isInClass}, 
+			          inClassTime=#{inClassTime},inClassContent =#{inClassContent}, AskerContent=#{AskerContent}
+		          where sid = #{sid}
+	</update>
+	
+	
+	<select id="selectAskInfo" resultType="ask" parameterType="string">
+		select * from askteacher 
+		<where>
+		AskName=#{LonginName}
+		</where>
+	</select>
+ </mapper>

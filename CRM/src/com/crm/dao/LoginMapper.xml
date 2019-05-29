@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crm.dao.LoginMapper">
+	<select id="selectUsers" resultType="users">
+		select * from users;
+	</select>
+	<select id="selectUsersPass" parameterType="users" resultType="users">
+		select * from users where LonginName=#{LonginName} and PassWord=md5(#{PassWord});
+	</select>
+	<update id="updateUsers" parameterType="users">
+		update users 
+		<set>
+			<if test="LastLoginTime !=null and LastLoginTime !=''">
+				LastLoginTime = #{LastLoginTime},
+			</if>
+			<if test="PsdWrongTime !=null and PsdWrongTime!=''">
+				PsdWrongTime = #{PsdWrongTime}
+			</if>
+			<if test="IsLockout !=null and IsLockout !=''">
+				IsLockout = #{IsLockout},
+			</if>
+			<if test="LockTime !=null and LockTime !=''">
+				LockTime = #{LockTime}
+			</if>
+			<where>
+				LonginName = #{LonginName}
+			</where>
+		</set>
+	</update>
+</mapper>

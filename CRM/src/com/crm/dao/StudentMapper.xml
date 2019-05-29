@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crm.dao.StudentMapper">
+	<sql id="stu">
+		<where>
+			<if test="student.AskerId!=null and student.AskerId!=''">
+				and AskerId=#{student.AskerId}
+			</if>
+			<if test="student.roleNames!=null and student.roleNames!=''">
+				and roleNames=#{student.roleNames}
+			</if>
+			<if test="student.sname!=null and student.sname!=''">
+				and sname like "%"#{student.sname}"%"
+			</if>
+			<if test="student.isReturnVisit!=null and student.isReturnVisit!=''">
+				and isReturnVisit=#{student.isReturnVisit}
+			</if>
+			<if test="student.phone!=null and student.phone!=''">
+				and Phone like "%"#{student.phone}"%"
+			</if>
+			<if test="student.QQ!=null and student.QQ!=''">
+				and QQ like "%"#{student.QQ}"%"
+			</if>
+			<if test="student.isPay!=null and student.isPay!=''">
+				and isPay=#{student.isPay}
+			</if>
+			<if test="student.isValid!=null and student.isValid!=''">
+				and isValid=#{student.isValid}
+			</if>
+			<if test="student.StartcreatTimes!=null and student.StartcreatTimes!=''">
+				and creatTimes&gt;=#{student.StartcreatTimes}
+			</if>
+			<if test="student.EndcreatTimes!=null and student.EndcreatTimes!=''">
+				and creatTimes&lt;=#{student.EndcreatTimes}
+			</if>
+			<if test="student.StarthomeTime!=null and student.StarthomeTime!=''">
+				and homeTime&gt;=#{student.StarthomeTime}
+			</if>
+			<if test="student.EndhomeTime!=null and student.EndhomeTime!=''">
+				and homeTime&lt;=#{student.EndhomeTime}
+			</if>
+			<if
+				test="student.StartfirstVisitTime!=null and student.StartfirstVisitTime!=''">
+				and FirstVisitTime&gt;=#{student.StartfirstVisitTime}
+			</if>
+			<if
+				test="student.EndfirstVisitTime!=null and student.EndfirstVisitTime!=''">
+				and FirstVisitTime&lt;=#{student.EndfirstVisitTime}
+			</if>
+			<if test="student.StartpayTime!=null and student.StartpayTime!=''">
+				and payTime&gt;=#{student.StartpayTime}
+			</if>
+			<if test="student.EndpayTime!=null and student.EndpayTime!=''">
+				and payTime&lt;=#{student.EndpayTime}
+			</if>
+			<if test="student.StartinClassTime!=null and student.StartinClassTime!=''">
+				and inClassTime&gt;#{student.StartinClassTime}
+			</if>
+			<if test="student.EndinClassTime!=null and student.EndinClassTime!=''">
+				and inClassTime&lt;#{student.EndinClassTime}
+			</if>
+		</where>
+	</sql>
+
+	<!-- 查询所有学生 -->
+	<select id="selectStudentAll" parameterType="fenye" resultType="Student">
+		SELECT * from student
+		<include refid="stu"></include>
+		ORDER BY sid desc
+		limit #{page},#{pageSize}
+	</select>
+	<!-- 查询学生数量 -->
+	<select id="countStudent" parameterType="fenye" resultType="int">
+		SELECT COUNT(sid) from student
+		<include refid="stu"></include>
+	</select>
+	<!-- 查询角色 -->
+	<select id="selectRoles" resultType="Roles">
+		SELECT * from roles LIMIT
+		2,2
+	</select>
+	<!--学生咨询师所有 -->
+	<select id="selectAsk" resultType="Student" parameterType="int">
+		SELECT * from student s,askteacher a where s.AskerId=a.AskId and
+		sid=#{sid}
+	</select>
+	<!-- 添加学生 -->
+	<insert id="addStudent" parameterType="Student">
+		INSERT INTO
+		student(Sname,Sex,Age,Phone,StuStatus,PerStatus,MsgSource,SourceUrl,SourceKeyWord,QQ,WeiXin,isBaoBei,Content,IsReturnVisit,AskerId)
+		VALUES(#{Sname},#{Sex},#{Age},#{Phone},#{StuStatus},#{PerStatus},#{MsgSource},#{SourceUrl},#{SourceKeyWord},#{QQ},#{WeiXin},#{isBaoBei},#{Content},#{IsReturnVisit},#{AskerId})
+	</insert>
+	<!-- 删除学生 -->
+	<delete id="deleteStudent" parameterType="int">
+		DELETE from student
+		where sid=#{id}
+	</delete>
+	<!-- 修改学生 -->
+	<update id="updateStudent" parameterType="Student">
+		UPDATE student
+		<set>
+			<if test="LearnForword!=null and LearnForword!=''">
+				LearnForword=#{LearnForword},
+			</if>
+			<if test="IsReturnVisit!=null and IsReturnVisit!=''">
+				IsReturnVisit=#{IsReturnVisit},
+			</if>
+			<if test="FirstVisitTime!=null and FirstVisitTime!=''">
+				FirstVisitTime=#{FirstVisitTime},
+			</if>
+			<if test="isHome!=null and isHome!=''">
+				isHome=#{isHome},
+			</if>
+			<if test="homeTime!=null and homeTime!=''">
+				homeTime=#{homeTime},
+			</if>
+			<if test="IsPay!=null and IsPay!=''">
+				IsPay=#{IsPay},
+			</if>
+			<if test="PayTime!=null and PayTime!=''">
+				PayTime=#{PayTime}
+			</if>
+		</set>
+		where sid=#{sid}
+	</update>
+	<!-- 查询咨询师姓名 -->
+	<select id="selectAskName" parameterType="string" resultType="ask">
+		SELECT * FROM askteacher
+		WHERE askName in (SELECT LoginUserName FROM sign_in
+		WHERE LoginUserName in(SELECT AskName FROM askteacher) and (state='已签到' OR
+		state='迟到') AND creat_time LIKE "%"#{date}"%") ORDER BY Weights DESC;
+	</select>
+	<!-- 手动分配 -->
+	<update id="addAskName" parameterType="Student">
+		update student set
+		AskerId=#{AskerId} where sid=#{sid} and AskerId is null
+	</update>
+	<!--手动分配 -->
+	<update id="addAskNames" parameterType="Student">
+		UPDATE student set
+		AskerId =2 where sid=#{sid} and AskerId is null
+	</update>
+	<!--查询咨询师下的姓名 -->
+	<select id="selectNames" resultType="Ask">
+		SELECT * from askteacher
+	</select>
+	<!--已分配 -->
+	<select id="selectYifenpei" resultType="Student">
+		SELECT * from student
+		where AskerId is not NULL
+	</select>
+	<!--未分配 -->
+	<select id="selectWeifenpei" resultType="Student">
+		SELECT * from student
+		where AskerId is null
+	</select>
+	<!--根据权重查咨询师id -->
+	<select id="selectWeightId" resultType="Ask">
+		SELECT AskId from
+		askteacher ORDER BY Weights DESC
+	</select>
+	<select id="selecStudent" resultType="student">
+		SELECT * FROM student where sid in(
+		<foreach collection="list" item="item" separator=",">
+			#{item}
+		</foreach>
+		) and AskerId is NULL
+	</select>
+	<select id="selectAskStu" resultType="int">
+		SELECT
+		COUNT(sid) FROM
+		student s,askteacher a WHERE s.askerID=a.askId and
+		a.AskName
+		in (SELECT
+		AskName FROM askteacher WHERE askName in (SELECT
+		LoginUserName FROM
+		sign_in
+		WHERE LoginUserName in(SELECT AskName FROM askteacher) and
+		(state='已签到' OR
+		state='迟到') AND creat_time LIKE "%"#{0}"%")) AND
+		a.AskId=#{1}
+	</select>
+	<select id="selectAskAll" parameterType="string" resultType="ask">
+		SELECT * FROM askteacher WHERE askName in (SELECT
+		LoginUserName FROM
+		sign_in WHERE LoginUserName in(SELECT AskName FROM
+		askteacher) and
+		(state='已签到' OR state='迟到') AND creat_time LIKE "%"#{date}"%")
+		ORDER BY Weights DESC
+	</select>
+	<update id="updateStudentAsk" parameterType="student">
+		update student
+		<set>
+			<if test="AskerId !=null and AskerId !=''">
+				AskerId=#{AskerId}
+			</if>
+		</set>
+		<where>
+			sid=#{sid}
+		</where>
+	</update>
+</mapper>

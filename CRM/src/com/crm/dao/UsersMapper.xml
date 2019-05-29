@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.crm.dao.UsersMapper">
+ 	 <resultMap type="users" id="selectUser">
+ 		<id property="uid" column="uid"/>
+ 		<result property="LonginName" column="LonginName"/>
+ 		<result property="PassWord" column="PassWord"/>
+ 		<result property="IsLockout" column="IsLockout"/>
+ 		<result property="LastLoginTime" column="LastLoginTime"/>
+ 		<result property="CreateTime" column="CreateTime"/>
+ 		<result property="PsdWrongTime" column="PsdWrongTime"/>
+ 		<result property="LockTime" column="LockTime"/>
+ 		<result property="ProtectEMail" column="ProtectEMail"/>
+ 		<result property="ProtectMTel" column="ProtectMTel"/>
+ 		<!-- <result property="sign_in.state" column="state"/> -->
+ 		<result property="roles.rid" column="rid"/>
+ 		<result property="roles.RoleName" column="RoleName"/>
+ 		<result property="userRoles.userid" column="userid"/>
+ 		<result property="userRoles.roleid" column="roleid"/>
+ 	</resultMap> 
+ 	<sql id="sql">
+ 		<where>
+ 			<if test="users.LonginName !=null and users.LonginName!=''">
+ 				and LonginName like "%"#{users.LonginName}"%"
+ 			</if>
+ 			<if test="users.IsLockout !=null and users.IsLockout!=''">
+ 				and IsLockout=#{users.IsLockout}
+ 			</if>
+ 		    <if test="beginDates!=null and beginDates!=''">
+ 			    and CreateTime &gt;=#{beginDates}
+ 			</if>
+ 			<if test="endDates!=null and endDates!=''">
+ 			    and CreateTime &lt;=#{endDates}
+ 			</if> 
+ 		</where> 
+ 	</sql>
+ 	<select id="selectUser" resultMap="selectUser" parameterType="fenye">
+ 		SELECT * FROM users 
+ 		<include refid="sql"></include>
+ 		 limit #{page},#{pageSize}
+ 	</select>
+ 	<select id="selectCount" resultType="int" parameterType="fenye">
+ 		select count(uid) from users 
+ 		<include refid="sql"></include>
+ 	</select>
+ 	
+ 	<select id="selectUserName" parameterType="users" resultType="users">
+ 		select * from users where LonginName=#{LonginName}
+ 	</select>
+ 	<!-- 添加用户 -->
+ 	<insert id="insertUser" parameterType="users">
+ 		INSERT INTO users(LonginName,PassWord,CreateTime,ProtectEMail,ProtectMTel,IsLockout,PsdWrongTime) VALUES(#{LonginName},md5(#{PassWord}),#{CreateTime},#{ProtectEMail},#{ProtectMTel},'否',1);
+ 	</insert>
+ <!-- 删除用户 -->
+   <delete id="delUser" parameterType="int">
+       delete from users where uid=#{uid}
+  </delete>
+<!--   修改用户 -->
+<update id="updateUser" parameterType="users">
+  update users
+   <set>
+     <if test="LonginName!=null and LonginName!=''">
+         LonginName=#{LonginName},
+     </if>
+     <if test="ProtectEMail!=null and ProtectEMail!=''">
+         ProtectEMail=#{ProtectEMail},
+     </if>
+     <if test="ProtectMTel!=null and ProtectMTel!=''">
+         ProtectMTel=#{ProtectMTel},
+     </if>
+   </set>
+   <where>
+        <if test="uid!=null and uid!=''">
+             uid=#{uid}
+        </if>
+   </where>
+</update>
+
+<!-- 锁定用户 -->
+<update id="lockUser" parameterType="users">
+ update users IsLockout set IsLockout='是' where IsLockout= '否' AND LonginName=#{LonginName}
+</update>
+
+<!-- 解锁用户 -->
+<update id="unlockUser" parameterType="users">
+   update users IsLockout set IsLockout='否' where IsLockout= '是' AND LonginName=#{LonginName}
+</update>
+
+<!-- 重置密码 -->
+<update id="chongzhiPwd" parameterType="users">
+      update users PassWord set PassWord=md5('ysd123') where LonginName=#{LonginName}
+</update>
+<!-- 根据用户名查询当前用户的角色 -->
+ <select id="selectRoles" parameterType="string" resultMap="selectUser">
+     SELECT * from users u,roles r,userroles ur
+		WHERE u.uid=ur.UserId and r.rid=ur.RoleId 
+	 and u.LonginName=#{LonginName}
+</select> 
+
+<!-- 为用户设置角色 -->
+<insert id="addUserRoles" parameterType="userRoles" >
+    INSERT INTO userroles(userid,roleid) VALUES(#{userid},#{roleid})
+</insert>
+<!-- 查询用户是否拥有该角色 -->
+<select id="selectUserRoles" parameterType="userRoles" resultType="userRoles">
+	select * from userroles where userid=#{userid} and roleid=#{roleid}
+</select>
+
+<!-- 查询用户名 -->
+<select id="selectUsersName" parameterType="int" resultType="users">
+    SELECT * FROM users where uid =#{uid}
+</select>
+<!-- 查询角色名 -->
+<select id="selectRolesName" parameterType="int" resultType="roles">
+    SELECT * FROM roles where rid =#{rid}
+</select>
+
+<!-- 移除用户角色 -->
+<delete id="delUserRoles" parameterType="userRoles">
+   delete from userroles where userid=#{userid} and roleid=#{roleid} 
+</delete>
+
+<!-- 添加资讯师 -->
+ <insert id="addAsk" parameterType="ask">
+      INSERT into askteacher(AskName,RoleNames,CheckInTime) VALUES(#{askName},#{roleNames},#{checkInTime})
+</insert>
+
+<!-- 删除资讯师 -->
+ <delete id="delAsk" parameterType="ask" >
+     DELETE FROM askteacher WHERE AskName=#{askName} and RoleNames=#{roleNames}
+</delete> 
+
+ </mapper>

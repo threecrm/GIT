@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crm.dao.Sign_inMapper">
+    <!-- 签到 -->
+	<insert id="addSign" parameterType="sign_in">
+	   insert into sign_in(uid,creat_time,state,LoginUserName) values(#{uid},#{creat_time},'已签到',#{LoginUserName})
+	</insert>  
+	<!-- 迟到 -->
+	<insert id="addChidaoSign" parameterType="sign_in">
+	   insert into sign_in(uid,creat_time,state,LoginUserName) values(#{uid},#{creat_time},'迟到',#{LoginUserName})
+	</insert>  
+	
+	<!-- 查询当天是否已经签到 -->
+	<select id="selectSignByTime" parameterType="sign_in" resultType="sign_in">
+	   select * from sign_in where uid=#{uid} and creat_time like "%"#{creat_time} "%"
+	</select>
+	
+	<!--  根据用户id查询签到数据 -->
+	<select id="selectSignByUid" parameterType="sign_in" resultType="sign_in" >
+	   select *from sign_in where sid=#{sid} and uid=#{uid}
+	</select>
+	
+     <!-- 查询该用户当天签到信息 -->	 
+    <select id="selectSign" parameterType="sign_in" resultType="sign_in">
+	     select * from sign_in where uid=#{uid} and creat_time like "%"#{creat_time} "%"
+	 </select> 
+	<!--签退  -->
+	<update id="updateSign" parameterType="sign_in">
+	   update sign_in set end_time=#{end_time}, endState=#{endState} where sid=#{sid}
+	</update>
+	<!--查询我的考勤 -->
+	<select id="selectMySign" parameterType="int" resultType="sign_in">
+	       SELECT * FROM sign_in WHERE uid=#{uid}
+	</select>
+</mapper>

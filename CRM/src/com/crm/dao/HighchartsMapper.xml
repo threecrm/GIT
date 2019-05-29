@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.crm.dao.HighchartsMapper">
+ 	<select id="selectHighchartsZC" parameterType="int" resultType="int">
+ 		SELECT COUNT(sid) FROM sign_in WHERE uid=#{uid} and state='已签到'
+ 	</select>
+ 	<select id="selectHighchartsZT" parameterType="int" resultType="int">
+ 		SELECT COUNT(sid) FROM sign_in WHERE uid=#{uid} and endState='早退'
+ 	</select>
+ 	<select id="selectHighchartsCD" parameterType="int" resultType="int">
+ 		SELECT COUNT(sid) FROM sign_in WHERE uid=#{uid} and state='迟到'
+ 	</select>
+ </mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crm.dao.ModulesMapper">
+	<resultMap type="modules" id="modul">
+		<id property="id" column="mid" />
+		<result property="text" column="ModuleName" />
+		<result property="url" column="Path" />
+		<result property="Weight" column="Weight" />
+		<result property="ParentId" column="ParentId" />
+	</resultMap>
+	
+	
+	<!-- 根据父模块id查询子模块 -->
+	<select id="selectModulesSubmodule" parameterType="int" resultMap="modul">
+		SELECT * from modules WHERE ParentId=#{id}
+	</select>
+	<!-- 根据mid查询模块 -->
+	<select id="GetModuleById" parameterType="int" resultType="modules">
+	    select * from modules where mid=#{mid}
+	</select>
+	
+	<!-- 根据名称查询模块 -->
+	<select id="selectMoudleByName" parameterType="modules" resultType="modules">
+	    select * from modules where ModuleName=#{ModuleName}
+	</select>
+	
+	<!-- 添加父模块  -->
+	<insert id="addParentModules" parameterType="modules">
+	    insert INTO modules(ModuleName,Path,Weight,ParentId) VALUES(#{ModuleName},#{Path},#{Weight},0) 
+	</insert>
+	<!-- 添加子模块 -->
+	<insert id="addModules" parameterType="modules">
+	    insert INTO modules(ModuleName,Path,Weight,ParentId) VALUES(#{ModuleName},#{Path},#{Weight},#{ParentId}) 
+	</insert>
+	<!-- 修改模块信息 -->
+	<update id="updateModules" parameterType="modules">
+	  UPDATE modules 
+	  <set>
+	      <if test="ModuleName!=null and ModuleName!=''">
+	            ModuleName=#{ModuleName},
+	      </if>
+	      <if test="Path!=null and Path!=''">
+	            Path=#{Path},
+	      </if>
+	      <if test="Weight!=null and Weight!=''">
+	            Weight=#{Weight},
+	      </if>
+	  </set>
+	  <where>
+	     	   mid=#{mid}
+	  </where>
+	</update>
+	<!-- 查询该模块有没有被引用 -->
+	<select id="selectModules" parameterType="int" resultType="rolemodules">
+	     SELECT * FROM rolemodules WHERE ModuleId=#{ModuleId}
+	</select>
+	<!--查询该模块下有没有子模块 -->
+	<select id="selectChildren" parameterType="int" resultType="modules">
+	     select *FROM  modules WHERE parentId=#{parentId}
+	</select>
+	<!-- 删除模块 -->
+	<delete id="deleteModules" parameterType="int">
+	    delete from modules where mid=#{mid}
+	</delete>
+	
+</mapper>

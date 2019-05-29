@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.crm.dao.NetStudentMapper">
+ <!--查看所有网络咨询师-->
+<select id="selectNetStudent" parameterType="fenye" resultType="Student">
+SELECT * from student s,askteacher a 
+<where> 
+s.AskerId=a.AskId and AskName=#{ask.askName} and RoleNames='网络咨询师' and IsValid='是'	
+	 <if test="student.AskerId!=null and student.AskerId!=''">
+	and AskerId=#{student.AskerId}
+	</if>
+	<if test="student.roleNames!=null and student.roleNames!=''">
+	and roleNames=#{student.roleNames}
+	</if>
+	<if test="student.sname!=null and student.sname!=''">
+	and sname like "%"#{student.sname}"%"
+	</if>
+	<if test="student.isReturnVisit!=null and student.isReturnVisit!=''">
+	and isReturnVisit=#{student.isReturnVisit}
+	</if>
+	<if test="student.phone!=null and student.phone!=''">
+	and Phone like "%"#{student.phone}"%"
+	</if>
+	<if test="student.QQ!=null and student.QQ!=''">
+	and QQ like "%"#{student.QQ}"%"
+	</if>
+	<if test="student.isPay!=null and student.isPay!=''">
+	and isPay=#{student.isPay}
+	</if>
+	<if test="student.isValid!=null and student.isValid!=''">
+	and isValid=#{student.isValid}
+	</if>
+	<if test="student.StartcreatTimes!=null and student.StartcreatTimes!=''">
+	and creatTimes&gt;=#{student.StartcreatTimes}
+	</if>
+	<if test="student.EndcreatTimes!=null and student.EndcreatTimes!=''">
+	and creatTimes&lt;=#{student.EndcreatTimes}
+	</if>
+	 <if test="student.StarthomeTime!=null and student.StarthomeTime!=''">
+	and homeTime&gt;=#{student.StarthomeTime}
+	</if>
+	<if test="student.EndhomeTime!=null and student.EndhomeTime!=''">
+	and homeTime&lt;=#{student.EndhomeTime}
+	</if>
+	<if test="student.StartfirstVisitTime!=null and student.StartfirstVisitTime!=''">
+	and FirstVisitTime&gt;=#{student.StartfirstVisitTime}
+	</if>
+	<if test="student.EndfirstVisitTime!=null and student.EndfirstVisitTime!=''">
+	and FirstVisitTime&lt;=#{student.EndfirstVisitTime}
+	</if>
+	<if test="student.StartpayTime!=null and student.StartpayTime!=''">
+	and payTime&gt;=#{student.StartpayTime}
+	</if>
+	<if test="student.EndpayTime!=null and student.EndpayTime!=''">
+	and payTime&lt;=#{student.EndpayTime}
+	</if>
+	<if test="student.StartinClassTime!=null and student.StartinClassTime!=''">
+	and inClassTime&gt;#{student.StartinClassTime}
+	</if>
+	<if test="student.EndinClassTime!=null and student.EndinClassTime!=''">
+	and inClassTime&lt;#{student.EndinClassTime}
+	</if> 
+</where>
+ limit #{page},#{pageSize}
+</select><!-- AskName=#{ask.askName}  -->
+<!--查看它的数量 -->
+<select id="selectNetStudentCount" parameterType="fenye" resultType="int">
+SELECT COUNT(*) from student s,askteacher a where 
+s.AskerId=a.AskId and AskName=#{ask.askName}  and RoleNames='网络咨询师'and IsValid='是' 
+</select>
+<!-- 根据用户id查询出咨询师id -->
+<select id="selectAsk" parameterType="int" resultType="ask">
+	 SELECT AskId FROM askteacher WHERE AskName=(SELECT LonginName FROM users WHERE uid=#{askid})
+</select>
+<!-- 添加学生 -->
+<insert id="addStudent" parameterType="student">
+INSERT INTO student(Sname,Sex,Age,Phone,StuStatus,PerStatus,MsgSource,SourceUrl,SourceKeyWord,QQ,WeiXin,isBaoBei,Content,IsReturnVisit,AskerId,IsValid) 
+VALUES(#{Sname},#{Sex},#{Age},#{Phone},#{StuStatus},#{PerStatus},#{MsgSource},#{SourceUrl},#{SourceKeyWord},#{QQ},#{WeiXin},#{isBaoBei},#{Content},#{IsReturnVisit},#{AskerId},#{IsValid})
+</insert>
+<!--查看失效学生名单-->
+<select id="selectShiXiaoStudent" resultType="student" parameterType="String">
+SELECT * from student s,askteacher a where
+s.AskerId=a.AskId and AskName=#{ask.askName}  and RoleNames='网络咨询师'  and IsValid='否'
+</select>
+<!-- 查看所有咨询师下的学生 -->
+<select id="selectAllNetStudent" resultType="student">
+SELECT * from student s,askteacher a 
+where s.AskerId=a.AskId and AskName='东方不败' and RoleNames='网络咨询师'
+</select>
+<!-- 修改网络学生 -->
+<update id="updateNetStudent" parameterType="student">
+UPDATE student 
+<set> 
+  <if test="LearnForword!=null and LearnForword!=''">
+	 LearnForword=#{LearnForword},
+	</if>
+	 <if test="IsReturnVisit!=null and IsReturnVisit!=''">
+	 IsReturnVisit=#{IsReturnVisit},
+	</if>
+	 <if test="FirstVisitTime!=null and FirstVisitTime!=''">
+	 FirstVisitTime=#{FirstVisitTime},
+	</if>
+	 <if test="isHome!=null and isHome!=''">
+	isHome=#{isHome},
+	</if>
+	 <if test="homeTime!=null and homeTime!=''">
+	homeTime=#{homeTime},
+	</if>
+	 <if test="IsPay!=null and IsPay!=''">
+	IsPay=#{IsPay},
+	</if>
+	 <if test="PayTime!=null and PayTime!=''">
+	PayTime=#{PayTime}
+	</if>
+</set>
+ where sid=#{sid}
+</update>
+<!-- 修改失效 -->
+<update id="updateShixiaoStudent" parameterType="student">
+update student set IsValid='否' where IsValid='是' and sid=#{sid}
+</update>
+<!--查询学生和咨询师  -->
+<select id="selectAsks" parameterType="int" resultType="student">
+SELECT * from student s,askteacher a where s.AskerId=a.AskId and sid=#{sid}
+</select>
+ </mapper>

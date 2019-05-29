@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crm.dao.GenZongMapper">
+<!--映射  -->
+<resultMap type="GenZong" id="GenZongId">
+<id column="cid" property="cid"/>
+<result column="StudentId" property="StudentId"/>
+<result column="StudentName" property="StudentName"/>
+<result column="FollowTime" property="FollowTime"/>
+<result column="NextFollowTime" property="NextFollowTime"/>
+<result column="Contents" property="Contents"/>
+<result column="FollowType" property="FollowType"/>
+<result column="CreatsTime" property="CreatsTime"/>
+<result column="FollowState" property="FollowState"/>
+<result column="LonginName" property="users.LonginName"/>
+<result column="IsReturnVisit" property="student.IsReturnVisit"/>
+</resultMap>
+<!-- 分页显示所有-->
+<select id="selectGenZong" parameterType="fenye" resultMap="GenZongId">
+SELECT g.cid,g.StudentId,g.StudentName,g.FollowTime,g.NextFollowTime,g.Contents ,u.LonginName,g.FollowType,g.CreatsTime,g.FollowState,s.isReturnVisit
+from genzonguser g,users u ,student s 
+<where>
+g.UserId=u.uid and g.StudentId=s.sid 
+  <if test="genZong.studentName!='' and genZong.studentName!=null">
+and StudentName like "%"#{genZong.studentName}"%"
+ </if>
+<!--  <if test="genZong.users.LonginName!='' and genZong.users.LonginName!=null">
+and u.LonginName like "%"#{genZong.users.LonginName}"%"
+</if>  -->
+<if test="genZong.StartfollowTime!='' and genZong.StartfollowTime!=null">
+and FollowTime&gt;=#{genZong.StartfollowTime}
+</if>
+<if test="genZong.endfollowTime!='' and genZong.endfollowTime!=null">
+and FollowTime&lt;=#{genZong.endfollowTime}
+</if>
+<if test="genZong.StartnextFollowTime!='' and genZong.StartnextFollowTime!=null">
+and NextFollowTime&gt;=#{genZong.StartnextFollowTime}
+</if>
+<if test="genZong.endnextFollowTime!='' and genZong.endnextFollowTime!=null">
+and NextFollowTime&lt;=#{genZong.endnextFollowTime}
+</if>
+<!--   <if test="genZong.student.isReturnVisit!='' and genZong.student.isReturnVisit!=null">
+and s.IsReturnVisit=#{genZong.student.isReturnVisit}
+</if>  -->
+ <if test="genZong.followType!='' and genZong.followType!=null">
+and FollowType=#{genZong.followType}
+</if>  
+</where>
+ limit #{page},#{pageSize}
+</select>
+<!-- 查询数量 -->
+<select id="count" parameterType="fenye" resultType="int">
+SELECT COUNT(cid) from genzonguser
+</select>
+<!-- 跟踪 -->
+<insert id="Addgenzong" parameterType="genZong">
+INSERT into genzonguser(StudentId,StudentName,FollowTime,NextFollowTime,Contents,UserId,FollowType,CreatsTime,FollowState)
+ VALUES(#{StudentId},#{StudentName},#{FollowTime},#{NextFollowTime},#{Contents},#{UserId},#{FollowType},#{CreatsTime},#{FollowState})  
+</insert>
+<!--查询跟踪者姓名(判断是否重名)-->
+<select id="selectGenZongName" resultType="GenZong" parameterType="genZong">
+SELECT * from genzonguser where StudentName=#{StudentName}
+</select>
+</mapper>
