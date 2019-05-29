@@ -2,7 +2,8 @@ function formatterSet(value, row, index) {
 	return "<a href='javascrip:void(0)' onclick='look(" + index
 			+ ")'>查看</a>  <a href='javascrip:void(0)' onclick='update(" + index
 			+ ")'>修改</a>   <a href='javascrip:void(0)'  onclick='del(" + index
-			+ ")'>删除</a>  "
+			+ ")'>删除</a>  <a href='javascrip:void(0)'  onclick='GenZong(" + index
+			+ ")'>跟踪</a> "
 }
 $(function() {
 	init();
@@ -291,7 +292,7 @@ $(function() {
 	});
 });
 // 跟踪
-function genzong() {
+/*function genzong() {
 	var rows = $("#tab").datagrid("getSelected"); // 获取所有选中的行
 	
 	var row = $("#tab").datagrid("getSelections"); // 获取所有选中的行
@@ -303,7 +304,21 @@ function genzong() {
 		$("#genzongForm").form("load", rows);
 	}
 
-}
+}*/
+
+function GenZong(index){
+	 var datas=$("#tab").datagrid("getData");
+	 var row=datas.rows[index];
+	 
+	 $("#address").val("");
+	 $("#date").datetimebox("setValue","");
+	 $("#ask").val("");
+	 $("#aftertime").datetimebox("setValue","");
+	 //打开弹窗
+	 $("#genzongid").dialog("open");
+	 //填充表单
+	 $("#genzongForm").form("load",row)
+} 
 
 // 跟踪确认按钮
 function submitZuiZong(){
@@ -312,7 +327,7 @@ function submitZuiZong(){
 	var sname=$("#sName").val();
 	var uname=$("#userlonginName").val();
 	var n_qingkuang=$("#n_qingkuang").val();
-	var n_fangshi=$("#n_fangshi").val();
+	var n_fangshi=$("#n_fangshi").combobox("getValue");
 	var date=$("#date").datetimebox('getValue');
 	var ask=$("#ask").val();
 	var aftertime=$("#aftertime").datetimebox('getValue');

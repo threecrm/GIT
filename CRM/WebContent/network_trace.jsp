@@ -30,7 +30,7 @@ $(function(){
     				 searchn_sname:$("#n_sname").val(),
     				 searchn_address:$("#n_address").val(),
     				 searchn_qingkuang:$("#n_qingkuang").val(),
-    				 searchn_fangshi:$("#n_fangshi").val(),
+    				 searchn_fangshi:$("#sn_fangshi").combobox("getValue"),
     				 searchstartTime:$("#startTime").datetimebox('getValue'), 
     				 searchendTime:$("#endTime").datetimebox('getValue'), 
     				 uid:st, 
@@ -87,8 +87,13 @@ function Delete(index) {
 			 <input class="easyui-textbox"  id="n_sname" style="width: 100px"/> 
 			 <label for="name">回访情况:</label>
 			 <input class="easyui-textbox"  id="n_qingkuang" style="width: 100px"/> 
-			 <label for="name">跟踪方式:</label>
-			 <input class="easyui-textbox"  id="n_fangshi" style="width: 100px"/> 
+			 
+		         跟踪方式:<select id="sn_fangshi"  class="easyui-combobox"  >
+					   <option value=""></option>
+					   <option>家访</option>
+					   <option>校访</option>
+					   <option>其他</option>
+					   </select>
 			 
 			<label for="name">跟踪时间:</label>
 		    <input class="easyui-datetimebox" id="startTime"  style="width: 100px" /> ~ 
@@ -125,27 +130,27 @@ function Delete(index) {
 	    </tr>
 	    <tr>
 	     <td><label for="name">跟踪开始时间:</label></td>
-	     <td><input class="easyui-datetimebox" type="text" id="date" name="n_date" /></td> 
+	     <td><input class="easyui-datetimebox" type="text" id="date" name="n_date" readonly="true"/></td> 
 	    </tr>
 	    <tr>
 	     <td><label for="name">跟踪者:</label>   
-	     <td><input class="easyui-validatebox" type="text" id="uname" name="uname" /></td> 
+	     <td><input class="easyui-validatebox" type="text" id="uname" name="uname" readonly="true"/></td> 
 	    </tr>
 	    <tr>
 	     <td><label for="name">回访情况:</label></td>
-	     <td><input class="easyui-validatebox" type="text" id="n_qingkuang" name="n_qingkuang" /></td> 
+	     <td><input class="easyui-validatebox" type="text" id="n_qingkuang" name="n_qingkuang" readonly="true"/></td> 
 	    </tr>
 	    <tr> 
 	     <td><label for="name">跟踪方式:</label></td>
-	     <td><input class="easyui-validatebox" type="text" id="n_fangshi"  name="n_fangshi"/></td> 
+	     <td><input class="easyui-validatebox" type="text" id="n_fangshi"  name="n_fangshi" readonly="true"/></td> 
 	    </tr>
 	    <tr> 
 	     <td><label for="name">拜访详细:</label></td>
-	     <td><input class="easyui-validatebox" type="text" id="ask" name="n_ask" /></td> 
+	     <td><input class="easyui-validatebox" type="text" id="ask" name="n_ask" readonly="true"/></td> 
 	    </tr>
 	    <tr>
 	     <td> <label for="name">跟踪结束时间:</label>  </td>
-	     <td><input class="easyui-datetimebox" type="text" id="aftertime"  name="n_aftertime" /></td> 
+	     <td><input class="easyui-datetimebox" type="text" id="aftertime"  name="n_aftertime" readonly="true"/></td> 
 	    </tr>
 	  
       </table>

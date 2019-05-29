@@ -118,27 +118,27 @@ function Delete(index) {
 	    </tr>
 	    <tr>
 	     <td><label for="name">跟踪开始时间:</label></td>
-	     <td><input class="easyui-datetimebox" type="text" id="date" name="n_date" /></td> 
+	     <td><input class="easyui-datetimebox" type="text" id="date" name="n_date" readonly="true" /></td> 
 	    </tr>
 	    <tr>
 	     <td><label for="name">跟踪者:</label>   
-	     <td><input class="easyui-validatebox" type="text" id="uname" name="uname" /></td> 
+	     <td><input class="easyui-validatebox" type="text" id="uname" name="uname" readonly="true"/></td> 
 	    </tr>
 	    <tr>
 	     <td><label for="name">回访情况:</label></td>
-	     <td><input class="easyui-validatebox" type="text" id="n_qingkuang" name="n_qingkuang" /></td> 
+	     <td><input class="easyui-validatebox" type="text" id="n_qingkuang" name="n_qingkuang" readonly="true"/></td> 
 	    </tr>
 	    <tr> 
 	     <td><label for="name">跟踪方式:</label></td>
-	     <td><input class="easyui-validatebox" type="text" id="n_fangshi"  name="n_fangshi" /></td> 
+	     <td><input class="easyui-validatebox" type="text" id="n_fangshi"  name="n_fangshi" readonly="true"/></td> 
 	    </tr>
 	    <tr> 
 	     <td><label for="name">拜访详细:</label></td>
-	     <td><input class="easyui-validatebox" type="text" id="ask" name="n_ask" /></td> 
+	     <td><input class="easyui-validatebox" type="text" id="ask" name="n_ask" readonly="true"/></td> 
 	    </tr>
 	    <tr>
 	     <td> <label for="name">跟踪结束时间:</label>  </td>
-	     <td><input class="easyui-datetimebox" type="text" id="aftertime"  name="n_aftertime" /></td> 
+	     <td><input class="easyui-datetimebox" type="text" id="aftertime"  name="n_aftertime" readonly="true"/></td> 
 	    </tr>
 	  
       </table>

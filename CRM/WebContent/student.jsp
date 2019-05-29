@@ -93,8 +93,8 @@
 					data-options="iconCls:'icon-add'" onclick="caozuo()">手动分配</a></td>
 				<td><a class="easyui-linkbutton"
 					data-options="iconCls:'icon-add'" onclick='fenpei()'>自动分配</a></td>
-				<td><a class="easyui-linkbutton"
-					data-options="iconCls:'icon-undo'" onclick='genzong()'>跟踪</a></td>
+				<!-- <td><a class="easyui-linkbutton"
+					data-options="iconCls:'icon-undo'" onclick='genzong()'>跟踪</a></td> -->
 				<td><a class="easyui-linkbutton"
 					data-options="iconCls:'icon-reload'" onclick='chongzhiStudent()'>所有学生</a></td>
 			</tr>
@@ -255,8 +255,12 @@
 				</tr>
 				<tr>
 					<td><label for="name">跟踪方式:</label></td>
-					<td><input class="easyui-validatebox" type="text"
-						id="n_fangshi" data-options="required:true" /></td>
+					<td><select id="n_fangshi"  class="easyui-combobox" data-options="required:true" >
+					   <option value=" ">--请选择--</option>
+					   <option>家访</option>
+					   <option>校访</option>
+					   <option>其他</option>
+					   </select></td>
 				</tr>
 				<tr>
 					<td><label for="name">拜访详细:</label></td>

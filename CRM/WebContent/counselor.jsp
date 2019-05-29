@@ -101,7 +101,7 @@ function submit(){
 	var sname=$("#sName").val();
 	var uname=$("#userlonginName").val();
 	var n_qingkuang=$("#n_qingkuang").val();
-	var n_fangshi=$("#n_fangshi").val();
+	var n_fangshi=$("#sn_fangshi").combobox("getValue");
 	var date=$("#date").datetimebox('getValue');
 	var ask=$("#ask").val();
 	var aftertime=$("#aftertime").datetimebox('getValue');
@@ -938,11 +938,17 @@ function submit(){
 	    </tr>
 	    <tr> 
 	     <td><label for="name">跟踪方式:</label></td>
-	     <td><input class="easyui-validatebox" type="text" id="n_fangshi" data-options="required:true"/></td> 
+	     <td><select id="sn_fangshi"  class="easyui-combobox"  >
+					   <option value=""></option>
+					   <option>家访</option>
+					   <option>校访</option>
+					   <option>其他</option>
+					   </select>
+	     </td> 
 	    </tr>
 	    <tr> 
 	     <td><label for="name">拜访详细:</label></td>
-	     <td><input class="easyui-validatebox" type="text" id="ask" data-options="required:true"/></td> 
+	     <td><input class="easyui-textbox" type="text" id="ask" data-options="required:true "/></td> 
 	    </tr>
 	    <tr>
 	     <td> <label for="name">跟踪结束时间:</label>  </td>
