@@ -134,9 +134,8 @@ public class UsersServiceImp implements UsersService {
 		Integer delAsk = null;
 		   if(delUserRoles>0){
 			   delAsk = usersMapper.delAsk(ask);
-			   return delAsk;
 		   }
-		return delUserRoles;
+		   return delUserRoles;
 	}
 	
 

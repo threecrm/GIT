@@ -125,10 +125,7 @@ public class UserController {
 	  @RequestMapping(value="/delUserRoles",method=RequestMethod.POST)
 	  @ResponseBody
 	  public Integer delUserRoles (UserRoles userRoles) 
-	  {
-		  Integer i = usersService.delUserRoles(userRoles);
-		  System.out.println(i);
-		  return i;
-		 /* return usersService.delUserRoles(userRoles);*/
+	   {
+		 return usersService.delUserRoles(userRoles);
 	}
 }
