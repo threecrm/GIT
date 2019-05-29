@@ -3,13 +3,15 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.crm.dao.HighchartsMapper">
- 	<select id="selectHighchartsZC" parameterType="int" resultType="int">
- 		SELECT COUNT(sid) FROM sign_in WHERE uid=#{uid} and state='已签到'
+ 	 <!-- 正常签到 -->
+ 	<select id="selectHighchartsZC" parameterType="string" resultType="int">
+ 		SELECT COUNT(*) FROM sign_in s,askteacher a WHERE s.LoginUserName=a.AskName AND creat_time LIKE "%"#{date}"%" AND state='已签到'
  	</select>
- 	<select id="selectHighchartsZT" parameterType="int" resultType="int">
- 		SELECT COUNT(sid) FROM sign_in WHERE uid=#{uid} and endState='早退'
+ 	 <!-- 咨询师个数 -->
+ 	<select id="selectHighchartsZS" resultType="int">
+ 		SELECT COUNT(*) FROM askteacher 
  	</select>
- 	<select id="selectHighchartsCD" parameterType="int" resultType="int">
- 		SELECT COUNT(sid) FROM sign_in WHERE uid=#{uid} and state='迟到'
+ 	<select id="selectHighchartsCD" parameterType="string" resultType="int">
+ 		SELECT COUNT(*) FROM sign_in s,askteacher a WHERE s.LoginUserName=a.AskName AND creat_time LIKE "%"#{date}"%" AND state='迟到'
  	</select>
  </mapper>

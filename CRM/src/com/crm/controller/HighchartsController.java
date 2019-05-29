@@ -1,5 +1,7 @@
 package com.crm.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,8 @@ public class HighchartsController {
 	private HighchartsService highchartsService;
 	@RequestMapping(value = "/getHigcharts", method = RequestMethod.POST)
 	@ResponseBody
-	public Highcharts getHigcharts(HttpSession session){
-		Integer uid = (Integer)session.getAttribute("uid");
-		Highcharts selectHighcharts = highchartsService.selectHighcharts(uid);
+	public Highcharts getHigcharts(){
+		Highcharts selectHighcharts = highchartsService.selectHighcharts();
 		return selectHighcharts;
 	}
 }
