@@ -194,7 +194,7 @@
 			ProtectMTel : ProtectMTel
 		}, function(res) {
 			if (res > 0) {
-				$("#editDialog").dialog("close");
+				$("#win").dialog("close");
 				$.messager.alert("提示", "修改成功");
 			} else {
 				$.messager.alert("提示", "修改失败")
