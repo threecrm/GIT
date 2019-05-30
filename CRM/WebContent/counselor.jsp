@@ -11,11 +11,35 @@
 <script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
+
+/* 1,跟踪：对学生进行后续的跟踪，添加跟踪记录信息   步骤：1.在学生信息列表中找到要跟踪的行
+2.点击跟踪按钮，弹出新建跟踪窗口。字段信息：回访时间、回访情况、跟踪方式、下次跟踪时间、备注
+3.按要求输入信息
+4.点击保存按钮，提交信息；点击取消按钮，关闭窗口
+
+2,日志：查看为该学生添加的跟踪记录信息                 步骤：1.在学生信息列表中找到日志按钮
+2.点击日志按钮，弹出跟踪日志窗口，显示跟踪记录列表。列表字段：学生名称，跟踪时间，内容，下次跟踪时间，操作
+3.点击跟踪记录列表中指定行的查看按钮，可以查看该行的内容字段
+
+3,查询：根据条件查询已录入的学生信息,         步骤：1．查询条件：姓名关键字、电话、咨询师、是否缴费、是否有效、是否回访、QQ、创建时间/上门时间/首次回访时间/缴费时间/进班时间
+2．输入和选定下拉框条件之后点击查询按钮，查询数据  
+
+4,动态设置页面中需要显示的学生列表信息,             步骤：1.点击设置按钮显示学生信息的所有列：创建时间、学员姓名、学员电话、性别、年龄、学历、个人状态、来源渠道、来源网址、来源关键词、姓名（咨询）、所在区域、微信、学员QQ、来源部门、是否报备、课程方向、是否有效、打分、是否回访、首次回访时间、是否上门、上门时间、无效原因、是否缴费、缴费时间、金额、
+                                                     是否退费、是否进班、进班时间、进班备注、退费原因、定金金额、定金时间
+2．选择需要显示的字段，页面列表会动态显示相应的列， 取消已显示的字段，页面列表会隐藏相应的列。
+
+5,查看：查看对应学生的详情信息                              步骤：1. 点击查看按钮弹出学员信息窗口，该学员信息只能查看，不能修改。
+
+6,编辑：对学生信息进行更新                                     步骤：1.在学生信息列表中找到要编辑的行，点击编辑按钮，弹出学员信息。
+2.咨询师录入：姓名（咨询）、课程方向、打分、是否有效、无效原因、是否回访、首访时间、是否上门（是，否）、上门时间、定金金额、定金时间、是否缴费（是，否）、缴费时间、缴费金额、是否退费（是，否）、退费原因、是否进班（是，否）、进班时间、进班备注、咨询师备注
+3．对需要更新的字段按要求进行编辑
+4．点击保存按钮，提交信息；点击取消按钮，关闭窗口
+5．提交信息之后，窗口关闭，刷新学生列表
+*/     
+
 $(function(){
 	init();
 })
-
-
 
 function init(){
 	 var u_id="<%=session.getAttribute("uid")%>"
@@ -30,11 +54,10 @@ function init(){
 			   Sname:$("#sname").val(),
 			   Phone:$("#phone").val(),
 			   QQ:$("#qq").val(),
-			   IsReturnVisit:$("#IsReturnVisit").val(),
-			   Address:$("#Address").val(),
-			   IsPay:$("#isPay").val(),
-			   IsValid:$("#isValid").val(),
-			  
+			   IsReturnVisit:$("#IsReturnVisit").combobox("getValue"),
+			   Address:$("#Address").combobox("getValue"),
+			   IsPay:$("#isPay").combobox("getValue"),
+			   IsValid:$("#isValid").combobox("getValue"),
 			   StartcreatTimes:$("#StartcreatTimes").datetimebox("getValue"),
 			   EndcreatTimes:$("#EndcreatTimes").datetimebox("getValue"),
 			   StarthomeTime:$("#StarthomeTime").datetimebox("getValue"),
@@ -52,30 +75,7 @@ function init(){
 }
 
 function formatterSet(value,row,index){
-	/* 1,跟踪：对学生进行后续的跟踪，添加跟踪记录信息   步骤：1.在学生信息列表中找到要跟踪的行
-                                                     2.点击跟踪按钮，弹出新建跟踪窗口。字段信息：回访时间、回访情况、跟踪方式、下次跟踪时间、备注
-                                                     3.按要求输入信息
-                                                     4.点击保存按钮，提交信息；点击取消按钮，关闭窗口
-                                                     
-	   2,日志：查看为该学生添加的跟踪记录信息                 步骤：1.在学生信息列表中找到日志按钮
-	                                                 2.点击日志按钮，弹出跟踪日志窗口，显示跟踪记录列表。列表字段：学生名称，跟踪时间，内容，下次跟踪时间，操作
-	                                                 3.点击跟踪记录列表中指定行的查看按钮，可以查看该行的内容字段
-	                                                 
-	   3,查询：根据条件查询已录入的学生信息,         步骤：1．查询条件：姓名关键字、电话、咨询师、是否缴费、是否有效、是否回访、QQ、创建时间/上门时间/首次回访时间/缴费时间/进班时间
-	                                                 2．输入和选定下拉框条件之后点击查询按钮，查询数据  
 	
-	   4,动态设置页面中需要显示的学生列表信息,             步骤：1.点击设置按钮显示学生信息的所有列：创建时间、学员姓名、学员电话、性别、年龄、学历、个人状态、来源渠道、来源网址、来源关键词、姓名（咨询）、所在区域、微信、学员QQ、来源部门、是否报备、课程方向、是否有效、打分、是否回访、首次回访时间、是否上门、上门时间、无效原因、是否缴费、缴费时间、金额、
-	                                                                                                      是否退费、是否进班、进班时间、进班备注、退费原因、定金金额、定金时间
-	                                                 2．选择需要显示的字段，页面列表会动态显示相应的列， 取消已显示的字段，页面列表会隐藏相应的列。
-	  
-	   5,查看：查看对应学生的详情信息                              步骤：1. 点击查看按钮弹出学员信息窗口，该学员信息只能查看，不能修改。
-	   
-	   6,编辑：对学生信息进行更新                                     步骤：1.在学生信息列表中找到要编辑的行，点击编辑按钮，弹出学员信息。
-	                                                 2.咨询师录入：姓名（咨询）、课程方向、打分、是否有效、无效原因、是否回访、首访时间、是否上门（是，否）、上门时间、定金金额、定金时间、是否缴费（是，否）、缴费时间、缴费金额、是否退费（是，否）、退费原因、是否进班（是，否）、进班时间、进班备注、咨询师备注
-	                                                 3．对需要更新的字段按要求进行编辑
-													 4．点击保存按钮，提交信息；点击取消按钮，关闭窗口
-													 5．提交信息之后，窗口关闭，刷新学生列表
-	   */     
 	   return "<a href='javascript:void(0)' onclick='Choose(" + index+ ")'>回访</a> <a href='javascript:void(0)' onclick='log(" + index+ ")'>日志</a> <a href='javascrip:void(0)' onclick='look("+index+")'>查看</a> <a href='javascrip:void(0)' onclick='update("+index+")'>编辑</a>  "
 } 
 
@@ -169,10 +169,6 @@ function submit(){
 	  $("#SeleteNetwork_traceLogWindow").window("open"); 
 }
 
-  function Set() {
-	  
-	
-}
   /* 编辑 */
   function update(index){
       	   var data=$("#tab").datagrid("getData");
@@ -184,26 +180,29 @@ function submit(){
 //编辑确认按钮   
   function UpdateStudenntInfo(){
   	$.post("UpdateStudentInfo",{
-  		sid:$("#Updatesid").val(),
-  		CreatUser:$("#creatUser").val(),
-  		LearnForword:$("#learnForword").val(),
-  		IsValid:$("#isValid").val(),
-  		
-  		FromPart:$("#fromPart").val(),
-  		LostValid:$("#lostValid").val(),
-  		IsReturnVisit:$("#isReturnVisit1").val(),
-  		
+  		sid:$("#Updatesid1").val(),
+  		LearnForword:$("#learnForword1").val(),
+  		IsValid:$("#isValid1").combobox("getValue"),
+  		LostValid:$("#lostValid1").val(),
+  		IsReturnVisit:$("#isReturnVisit1").combobox("getValue"),
   		FirstVisitTime:$("#firstVisitTime1").datetimebox("getValue"),
-  		isHome:$("#isHome").val(),
-  		homeTime:$("#homeTime").datetimebox("getValue"),
-  		IsPay:$("#isPay").val(),
-  		PayTime:$("#payTime").datetimebox("getValue"),
-  		Money:$("#money").val(),
-  		isReturnMoney:$("#isReturnMoney").val(),
-  		isInClass:$("#isInClass").val(),
-  		inClassTime:$("#inClassTime").datetimebox("getValue"),
-  		inClassContent:$("#inClassContent").val(),
-  		AskerContent:$("#askerContent").val(),
+  		isHome:$("#isHome1").combobox("getValue"),
+  		homeTime:$("#homeTime1").datetimebox("getValue"),
+  		ZiXunName:$("#ziXunName1").val(),
+  		stuConcern:$("#stuConcern1").val(),
+  		Reoord:$("#reoord1").val(),
+  		IsPay:$("#isPay1").combobox("getValue"),
+  		PayTime:$("#payTime1").datetimebox("getValue"),
+  		Money:$("#money1").val(),
+  		isReturnMoney:$("#isReturnMoney1").combobox("getValue"),
+  		ReturnMoneyReason:$("#returnMoneyReason1").val(),
+  		isInClass:$("#isInClass1").combobox("getValue"),
+  		inClassTime:$("#inClassTime1").datetimebox("getValue"),
+  		inClassContent:$("#inClassContent1").val(),
+  		AskerContent:$("#askerContent1").val(),
+  		FromPart:$("#fromPart1").val(),
+  		isBaoBei:$("#isBaoBei1").combobox("getValue"),
+  		CreatUser:$("#creatUser1").val(),
   		
   	},function(res){
   		  if(res>0){
@@ -219,7 +218,40 @@ function submit(){
 //修改取消按钮
   function updatefalse(){
   	 $("#updateWindow").window("close");
-  } 
+  }
+  
+//动态设置显示列（第一步）
+  function shezhi() {
+  	$("#win").window("open");
+  }
+  // 动态设置显示列（第二步）
+  function test(row) {// 接受文本框this自身的所有的值
+  	var checked = $('p input:checkbox:checked');// 获取p标签所有选中的复选框
+  	checked.each(function(i) {// 依次存储到localStorage里面
+  		localStorage.setItem(i, this.value);
+  		localStorage.setItem('length', i);
+  	});
+  	console.log(localStorage.getItem('length'));// 控制台输出
+  	if (row.checked == true) {
+  		$('#tab').datagrid('showColumn', row.value);// 显示
+  	} else {
+  		$('#tab').datagrid('hideColumn', row.value);// 隐藏
+  	}
+  }
+  // 动态设置显示列（第三步）
+  $(function() {
+  	// 取得本地存储的被选中checkbox的个数，循环将checkbox选中
+  	var length = localStorage.getItem('length');// 获取localStorage数据
+  	for (var i = 0; i <= length; i++) {
+  		var a = localStorage.getItem(i);
+  		$("p input:checkbox[value=" + a + "]").attr("checked", "checked");// 选中状态
+  	}
+  	var checked = $('p input:checkbox:not(:checked)');// 获取所有未选中的复选框
+  	checked.each(function() {// 遍历
+
+  		$('#tab').datagrid('hideColumn', this.value);// 将没选中的列隐藏起来
+  	});
+  });
 </script>
 </head>
 <body>
@@ -227,8 +259,6 @@ function submit(){
 <table id="dg">
 </table>
 </div>
-
-
 
 
 <table id="tab" class="easyui-datagrid">
@@ -290,13 +320,9 @@ function submit(){
    首次回访时间：<input class="easyui-datetimebox" id="StartfirstVisitTime">~<input class="easyui-datetimebox" id="EndfirstVisitTime">
    缴费时间：<input class="easyui-datetimebox" id="StartpayTime">~<input class="easyui-datetimebox" id="EndpayTime"> 
    <a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="init()">搜索</a>
-    
     <br> 
     <br> 
-        <!-- <a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="caozuo()">批量操作</a> -->
-        
         <a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick='shezhi()'>设置</a>
-        <a class="easyui-linkbutton" data-options="iconCls:'icon-reload'" onclick="biaoge()">导出excel表格</a>
   </form>  
   </div> 
 
@@ -334,15 +360,15 @@ function submit(){
                	<th data-options="field:'inClassTime',title:'进班时间'"></th>
                	<th data-options="field:'inClassContent',title:'进班备注'"></th>
                	<th data-options="field:'askerContent',title:'咨询师备注'"></th>
-                <th data-options="field:'isDel',title:''"></th>
+                <!-- <th data-options="field:'isDel',title:''"></th> -->
                	<th data-options="field:'fromPart',title:'打分'"></th>
                	<th data-options="field:'stuConcern',title:'学生担忧情况'"></th>
                	<th data-options="field:'isBaoBei',title:'是否报备'"></th>
                	<th data-options="field:'ziXunName',title:'咨询内容'"></th>
                	<th data-options="field:'creatUser',title:'咨询师名字'"></th>
                	<th data-options="field:'returnMoneyReason',title:'退费原因'"></th>
-              	<th data-options="field:'preMoney',title:'定金金额'"></th>
-               	<th data-options="field:'preMoneyTime',title:'交定金时间'"></th>
+              	<!-- <th data-options="field:'preMoney',title:'缴费金额'"></th>
+               	<th data-options="field:'preMoneyTime',title:'交定金时间'"></th> -->
                	<!-- <th data-options="field:'askerId',title:'咨询师编号'"></th> -->
                	<th data-options="field:'',title:'操作' ,formatter:formatterSet"></th>
         </tr>
@@ -713,7 +739,7 @@ function submit(){
 						<label for="name">id:</label> 
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text" id="Updatesid" name="sid" readonly="readonly"/>
+						<input class="easyui-textbox" type="text" id="Updatesid1" name="sid" readonly="readonly"/>
 					</td>
 				</tr>
                 <tr>
@@ -721,7 +747,7 @@ function submit(){
 						<label for="name">咨询师姓名:</label> 
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text" id="creatUser" name="creatUser"/>
+						<input class="easyui-textbox" type="text" id="creatUser1" value="<%=session.getAttribute("LoginUserName")%>" readonly="readonly"/>
 					</td>
 				</tr>
 				<tr>
@@ -729,35 +755,29 @@ function submit(){
 						<label for="name">课程方向:</label> 
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="learnForword" name="learnForword"/>
+						<input class="easyui-validatebox" type="text" id="learnForword1" name="learnForword"/>
 					</td>
 				</tr>
+				
 				 <tr>
-					<td>
-						<label for="name">打分:</label> 
-					</td>
-					<td>
-						<input class="easyui-validatebox" type="text" id="fromPart" name="fromPart"/>
-					</td>
-				</tr> 
-				<tr>
-					<td>
+				     <td>
 						<label for="name">是否有效:</label> 
 					</td>
 					<td>
-					   <select id="isValid"  class="easyui-combobox" name="isValid">
+					   <select id="isValid1"  class="easyui-combobox" >
 					   <option value="">--请选择--</option>
 					   <option>是</option>
 					   <option>否</option>
 					   </select>
 					</td>
-				</tr>
+				</tr> 
+				
 		 		<tr>
 					<td>
 						<label for="name">无效原因:</label> 
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="lostValid" name="lostValid"/>
+						<input class="easyui-validatebox" type="text" id="lostValid1" name="lostValid"/>
 					</td>
 				</tr>
 				<tr>
@@ -765,7 +785,7 @@ function submit(){
 						<label for="name">是否回访:</label> 
 					</td>
 					<td>
-					   <select id="isReturnVisit1"  class="easyui-combobox" name="isReturnVisit">
+					   <select id="isReturnVisit1"  class="easyui-combobox" >
 					   <option value="">--请选择--</option>
 					   <option>是</option>
 					   <option>否</option>
@@ -782,10 +802,10 @@ function submit(){
 				</tr>	
 				<tr>
 					<td>
-						<label for="name">是否上门:</label> 
+						<label for="name">是否家访:</label> 
 					</td>
 					<td>
-					   <select id="isHome"  class="easyui-combobox" name="isHome">
+					   <select id="isHome1"  class="easyui-combobox" >
 					   <option value="">--请选择--</option>
 					   <option>是</option>
 					   <option>否</option>
@@ -794,34 +814,44 @@ function submit(){
 				</tr>
 				<tr>
 					<td>
-						<label for="name">上门时间:</label> 
+						<label for="name">家访时间:</label> 
 					</td>
 					<td>
-						<input class="easyui-datetimebox" type="text" id="homeTime" name="homeTime"/>
+						<input class="easyui-datetimebox" type="text" id="homeTime1" name="homeTime"/>
 					</td>
 				</tr>
-				<!-- <tr>
+				 <tr>
 					<td>
-						<label for="name">定金金额:</label> 
+						<label for="name">担忧情况:</label> 
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="updateSourceKeyWord" name="money"/>
+						<input class="easyui-validatebox" type="text" id="stuConcern1" name="money"/>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="name">定金时间:</label> 
+						<label for="name">咨询内容:</label> 
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="updateAddress" name="payTime"/>
+						<input class="easyui-validatebox" type="text" id="ziXunName1" name="payTime"/>
 					</td>
-				</tr> -->
+				</tr> 
+				
+				<tr>
+					<td>
+						<label for="name">学生简述:</label> 
+					</td>
+					<td>
+						<input class="easyui-validatebox" type="text" id="reoord1" name="reoord"/>
+					</td>
+				</tr> 
+				
 				<tr>
 					<td>
 						<label for="name">是否缴费:</label> 
 					</td>
 					<td>
-						<select id="isPay"  class="easyui-combobox" name="isPay">
+						<select id="isPay1"  class="easyui-combobox" >
 					   <option value="">--请选择--</option>
 					   <option>是</option>
 					   <option>否</option>
@@ -833,7 +863,7 @@ function submit(){
 						<label for="name">缴费时间:</label> 
 					</td>
 					<td>
-						<input class="easyui-datetimebox" type="text" id="payTime" name="payTime"/>
+						<input class="easyui-datetimebox" type="text" id="payTime1" name="payTime"/>
 					</td>
 				</tr>
 				<tr>
@@ -841,7 +871,7 @@ function submit(){
 						<label for="name">缴费金额:</label> 
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="money" name="money"/>
+						<input class="easyui-validatebox" type="text" id="money1" name="money"/>
 					</td>
 				</tr>
 				<tr>
@@ -849,27 +879,27 @@ function submit(){
 						<label for="name">是否退费:</label> 
 					</td>
 					<td>
-						<select id="isReturnMoney"  class="easyui-combobox" name="isReturnMoney">
+						<select id="isReturnMoney1"  class="easyui-combobox" >
 					   <option value="">--请选择--</option>
 					   <option>是</option>
 					   <option>否</option>
 					   </select>
 					</td>
 				</tr>
-				<!-- <tr>
+				<tr>
 					<td>
 						<label for="name">退费原因:</label> 
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="updateCreatTimes" name="creatTimes"/>
+						<input class="easyui-validatebox" type="text" id="returnMoneyReason1" name="returnMoneyReason"/>
 					</td>
-				</tr> -->
+				</tr> 
 				<tr>
 					<td>
 						<label for="name">是否进班:</label> 
 					</td>
 					<td>
-						<select id="isInClass"  class="easyui-combobox" name="isInClass" >
+						<select id="isInClass1"  class="easyui-combobox"  >
 					   <option value=" ">--请选择--</option>
 					   <option>是</option>
 					   <option>否</option>
@@ -881,7 +911,7 @@ function submit(){
 						<label for="name">进班时间:</label> 
 					</td>
 					<td>
-						<input class="easyui-datetimebox" type="text" id="inClassTime" name="inClassTime"/>
+						<input class="easyui-datetimebox" type="text" id="inClassTime1" name="inClassTime"/>
 					</td>
 				</tr>
 				<tr>
@@ -889,7 +919,7 @@ function submit(){
 						<label for="name">进班备注:</label> 
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="inClassContent" name="inClassContent"/>
+						<input class="easyui-validatebox" type="text" id="inClassContent1" name="inClassContent"/>
 					</td>
 				</tr>
 				<tr>
@@ -897,9 +927,30 @@ function submit(){
 						<label for="name">咨询师备注:</label> 
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="askerContent" name="askerContent"/>
+						<input class="easyui-validatebox" type="text" id="askerContent1" name="askerContent"/>
 					</td>
 				</tr> 
+				
+				<tr>
+					<td>
+						<label for="name">是否报备:</label> 
+					</td>
+					<td>
+						<select id="isBaoBei1"  class="easyui-combobox"  >
+					   <option value=" ">--请选择--</option>
+					   <option>是</option>
+					   <option>否</option>
+					   </select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="name">打分:</label> 
+					</td>
+					<td>
+						<input class="easyui-validatebox" type="text" id="fromPart1" name="fromPart"/>
+					</td>
+				</tr>
 				
 				<tr>
 					<td>
@@ -938,8 +989,8 @@ function submit(){
 	    </tr>
 	    <tr> 
 	     <td><label for="name">跟踪方式:</label></td>
-	     <td><select id="sn_fangshi"  class="easyui-combobox"  >
-					   <option value=""></option>
+	     <td><select id="sn_fangshi"  class="easyui-combobox" style="width:157px" >
+					   <option value=''>--请选择--</option>
 					   <option>家访</option>
 					   <option>校访</option>
 					   <option>其他</option>

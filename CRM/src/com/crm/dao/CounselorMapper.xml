@@ -233,13 +233,15 @@
 	</select>
 	
 	<update id="UpdateStudentInfo" parameterType="student">
-	      update student 
-	             set CreatUser = #{CreatUser},LearnForword = #{LearnForword},IsValid = #{IsValid},
-			          FromPart=#{FromPart}, LostValid=#{LostValid}, IsReturnVisit=#{IsReturnVisit}, 
-			          FirstVisitTime=#{FirstVisitTime}, isHome=#{isHome}, homeTime=#{homeTime}, 
-			          IsPay=#{IsPay}, PayTime=#{PayTime}, Money=#{Money}, isReturnMoney=#{isReturnMoney}, isInClass=#{isInClass}, 
-			          inClassTime=#{inClassTime},inClassContent =#{inClassContent}, AskerContent=#{AskerContent}
-		          where sid = #{sid}
+  update student 
+	  set  LearnForword=#{LearnForword}, IsValid=#{IsValid}, LostValid=#{LostValid},
+		  IsReturnVisit=#{IsReturnVisit}, FirstVisitTime=#{FirstVisitTime}, isHome=#{isHome}, homeTime=#{homeTime},
+		  ZiXunName=#{ZiXunName}, stuConcern=#{stuConcern}, Reoord=#{Reoord}, IsPay=#{IsPay},
+		  PayTime=#{PayTime}, Money=#{Money}, isReturnMoney=#{isReturnMoney}, ReturnMoneyReason=#{ReturnMoneyReason},
+		  isInClass=#{isInClass}, inClassTime=#{inClassTime}, inClassContent=#{inClassContent}, AskerContent=#{AskerContent},
+		  FromPart=#{FromPart}, isBaoBei=#{isBaoBei}, CreatUser=#{CreatUser}                 
+	             
+	  where sid = #{sid}
 	</update>
 	
 <!-- 查询线下咨询师信息 -->	
