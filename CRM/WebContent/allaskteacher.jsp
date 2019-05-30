@@ -179,6 +179,20 @@
 			pagination : true
 		})
 	}
+	
+	//一键签退
+	function allQiantui() {
+		$.post("allQiantui", {
+			statue : $("#statue").val(),
+		}, function(res) {
+			if (res > 0) {
+				$.messager.alert("提示", "所有上班员工签退成功");
+				$("#tab").datagrid("reload");
+			} else {
+				$.messager.alert("提示", "没有上班后未签退的员工哦");
+			}
+		}, "json")
+	}
 </script>
 </head>
 <body>
@@ -198,6 +212,9 @@
 					data-options="iconCls:'icon-redo'" onclick="paixun()">权重排序</a> <a
 					class="easyui-linkbutton" data-options="iconCls:'icon-reload'"
 					onclick='chongzhiAsk()'>所有咨询师</a>
+					
+					<a	class="easyui-linkbutton" data-options="iconCls:'icon-sum'"
+					     onclick='allQiantui()'>一键签退</a>
 			</form>
 		</div>
 		<thead>

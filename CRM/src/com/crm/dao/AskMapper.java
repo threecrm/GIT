@@ -32,6 +32,12 @@ public interface AskMapper {
 	//根据用户名称查询用户
 	Users selectUsers(String longinName);
 	/**
+	 * 一键签退
+	 * @param ask
+	 * @return
+	 */
+	Integer allQiantui(Ask ask);
+	/**
 	 * 查询出当天未签到的咨询师
 	 * @param ask
 	 * @return

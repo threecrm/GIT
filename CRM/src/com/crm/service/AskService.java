@@ -26,6 +26,12 @@ public interface AskService {
 	//权重排序
 	public	List<Ask> paixun(Ask ask);
 	/**
+	 * 一键签退
+	 * @param ask
+	 * @return
+	 */
+	Integer allQiantui(Ask ask);
+	/**
 	 * 把未签到的咨询师修改成未签到状态
 	 * @return
 	 */

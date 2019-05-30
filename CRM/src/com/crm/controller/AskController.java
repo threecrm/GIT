@@ -245,5 +245,14 @@ public class AskController {
 			return false;
 		}
 	}
-
+	/**
+	 * Ò»¼üÇ©ÍË
+	 * @param ask
+	 * @return
+	 */
+	@RequestMapping(value = "/allQiantui", method = RequestMethod.POST)
+	@ResponseBody
+	public Integer allQiantui(Ask ask){
+		return askService.allQiantui(ask);
+	}
 }

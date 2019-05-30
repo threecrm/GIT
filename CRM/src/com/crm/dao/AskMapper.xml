@@ -91,6 +91,11 @@
 	<select id="selectUsers" parameterType="string" resultType="users">
 		SELECT * FROM users WHERE LonginName=#{longinName}
 	</select>
+	<!-- 一键签退 -->
+	<update id="allQiantui" parameterType="ask">
+	      UPDATE askteacher SET statue='已签退' where statue='已签到'
+	</update>
+	
 	<!-- 查询当天未签到的咨询师 -->
 	<select id="selectAskStatue" parameterType="string" resultType="ask">
 		SELECT * FROM askteacher WHERE AskName NOT in(

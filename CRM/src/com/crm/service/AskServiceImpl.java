@@ -76,6 +76,14 @@ public class AskServiceImpl implements AskService {
 		return askMapper.paixun(ask);
 	}
 	/**
+	 * 一键签退
+	 */
+	@Override
+	public Integer allQiantui(Ask ask) {
+		// TODO Auto-generated method stub
+		return askMapper.allQiantui(ask);
+	}
+	/**
 	 * 把未签到的咨询师修改为未签到状态
 	 * @return
 	 */
