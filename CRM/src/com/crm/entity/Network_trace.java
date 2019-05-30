@@ -12,15 +12,13 @@ public class Network_trace {
 	private String n_ask;
 	private String  n_aftertime;
 	private Integer uid;
-	
 	private String n_qingkuang;
 	private String n_fangshi;
-	
+	//ËÑË÷Ìõ¼þ
 	private String searchn_sname;
 	private String searchn_address;
 	private String searchn_qingkuang;
 	private String searchn_fangshi;
-	
 	private String searchstartTime;
 	private String searchendTime;
 	

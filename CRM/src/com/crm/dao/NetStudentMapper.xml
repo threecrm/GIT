@@ -7,7 +7,7 @@
 <select id="selectNetStudent" parameterType="fenye" resultType="Student">
 SELECT * from student s,askteacher a 
 <where> 
-s.AskerId=a.AskId and AskName=#{ask.askName} and RoleNames='网络咨询师' and IsValid='是'	
+s.AskerId=a.AskId and AskName=#{ask.askName} and RoleNames='网络咨询师' and IsValid='是'	order by sid desc
 	 <if test="student.AskerId!=null and student.AskerId!=''">
 	and AskerId=#{student.AskerId}
 	</if>
@@ -76,8 +76,8 @@ s.AskerId=a.AskId and AskName=#{ask.askName}  and RoleNames='网络咨询师'and
 </select>
 <!-- 添加学生 -->
 <insert id="addStudent" parameterType="student">
-INSERT INTO student(Sname,Sex,Age,Phone,StuStatus,PerStatus,MsgSource,SourceUrl,SourceKeyWord,QQ,WeiXin,isBaoBei,Content,IsReturnVisit,AskerId,IsValid) 
-VALUES(#{Sname},#{Sex},#{Age},#{Phone},#{StuStatus},#{PerStatus},#{MsgSource},#{SourceUrl},#{SourceKeyWord},#{QQ},#{WeiXin},#{isBaoBei},#{Content},#{IsReturnVisit},#{AskerId},#{IsValid})
+INSERT INTO student(Sname,Sex,Age,Phone,StuStatus,PerStatus,MsgSource,SourceUrl,SourceKeyWord,QQ,WeiXin,isBaoBei,Content,IsReturnVisit,AskerId,CreatTimes,IsValid) 
+VALUES(#{Sname},#{Sex},#{Age},#{Phone},#{StuStatus},#{PerStatus},#{MsgSource},#{SourceUrl},#{SourceKeyWord},#{QQ},#{WeiXin},#{isBaoBei},#{Content},#{IsReturnVisit},#{AskerId},#{CreatTimes},'是')
 </insert>
 <!--查看失效学生名单-->
 <select id="selectShiXiaoStudent" resultType="student" parameterType="String">

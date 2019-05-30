@@ -5,7 +5,31 @@
  <mapper namespace="com.crm.dao.NetGenzongMapper">
  <!-- 查询网络跟踪信息 -->
  <select id="selectNetGenzong" parameterType="fenye" resultType="network_trace">
-SELECT * from network_trace where uname=#{network_trace.uname}  limit #{page},#{pageSize}
+SELECT * from network_trace
+    <where>
+    uname=#{network_trace.uname} 
+             <if test="network_trace.searchn_sname!=null and network_trace.searchn_sname!=''">
+                and n_sname like "%"#{network_trace.searchn_sname}"%"
+             </if>
+              <if test="network_trace.searchn_address!=null and network_trace.searchn_address!=''">
+                and n_address like "%"#{network_trace.searchn_address}"%"
+             </if>
+             <if test="network_trace.searchn_qingkuang!=null and network_trace.searchn_qingkuang!=''">
+                and n_qingkuang like "%"#{network_trace.searchn_qingkuang}"%"
+             </if>
+             <if test="network_trace.searchn_fangshi!=null and network_trace.searchn_fangshi!=''">
+                and n_fangshi like "%"#{network_trace.searchn_fangshi}"%"
+             </if>
+             
+             <if test="network_trace.searchstartTime!=null and network_trace.searchstartTime!=''">
+                and n_date &gt; #{network_trace.searchstartTime}
+             </if>
+             <if test="network_trace.searchendTime!=null and network_trace.searchendTime!=''">
+                and n_date &lt; #{network_trace.searchendTime}
+             </if>
+         </where>
+         ORDER BY n_id DESC
+          limit #{page},#{pageSize}
  </select>
  <!-- 查询网络跟踪数量 -->
  <select id="countNetzong" parameterType="fenye" resultType="int">

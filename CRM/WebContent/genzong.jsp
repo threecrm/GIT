@@ -76,7 +76,6 @@ function Delete(index) {
    
 </script>
 <body>
-
  <div id="stuTool">
 			 <label for="name">学生名称:</label>
 			 <input class="easyui-textbox"  id="n_sname" style="width: 100px"/> 

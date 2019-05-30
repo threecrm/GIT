@@ -1,5 +1,7 @@
 package com.crm.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class NetStudentServiceImpl implements NetStudentService {
 	}
 // Ìí¼ÓÑ§Éú
 public Integer addStudent(Student student) {
+	Date date=new Date();
+	SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	student.setCreatTimes(sdf.format(date));
 	Integer addStudent = netStudentMapper.addStudent(student);
 	return addStudent;
 }

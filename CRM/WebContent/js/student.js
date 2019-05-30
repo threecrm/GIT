@@ -324,6 +324,7 @@ function GenZong(index){
 function submitZuiZong(){
 	var u_id=$("#u_id").val();
 	var data=$("#tab").datagrid("getSelected");
+	alert(data.sid)
 	var sname=$("#sName").val();
 	var uname=$("#userlonginName").val();
 	var n_qingkuang=$("#n_qingkuang").val();

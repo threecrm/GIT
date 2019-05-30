@@ -15,9 +15,9 @@
 	src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
 <script type="text/javascript"
 	src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
+	<!--导出excel的文件包 -->
 <script type="text/javascript"
 	src="js/jquery-easyui-1.4.3/datagrid-export.js"></script>
-<!--导出excel的文件包 -->
 <script type="text/javascript" src="js/student.js"></script>
 <style type="text/css">
 .a {
@@ -93,8 +93,8 @@
 					data-options="iconCls:'icon-add'" onclick="caozuo()">手动分配</a></td>
 				<td><a class="easyui-linkbutton"
 					data-options="iconCls:'icon-add'" onclick='fenpei()'>自动分配</a></td>
-				<!-- <td><a class="easyui-linkbutton"
-					data-options="iconCls:'icon-undo'" onclick='genzong()'>跟踪</a></td> -->
+				<td><a class="easyui-linkbutton"
+					data-options="iconCls:'icon-undo'" onclick='genzong()'>跟踪</a></td>
 				<td><a class="easyui-linkbutton"
 					data-options="iconCls:'icon-reload'" onclick='chongzhiStudent()'>所有学生</a></td>
 			</tr>
