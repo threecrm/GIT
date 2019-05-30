@@ -8,17 +8,14 @@
 SELECT * from network_trace
     <where>
     uname=#{network_trace.uname} 
-             <if test="network_trace.searchn_sname!=null and network_trace.searchn_sname!=''">
-                and n_sname like "%"#{network_trace.searchn_sname}"%"
+             <if test="network_trace.n_sname!=null and network_trace.n_sname!=''">
+                and n_sname like "%"#{network_trace.n_sname}"%"
              </if>
-              <if test="network_trace.searchn_address!=null and network_trace.searchn_address!=''">
-                and n_address like "%"#{network_trace.searchn_address}"%"
+             <if test="network_trace.n_qingkuang!=null and network_trace.n_qingkuang!=''">
+                and n_qingkuang like "%"#{network_trace.n_qingkuang}"%"
              </if>
-             <if test="network_trace.searchn_qingkuang!=null and network_trace.searchn_qingkuang!=''">
-                and n_qingkuang like "%"#{network_trace.searchn_qingkuang}"%"
-             </if>
-             <if test="network_trace.searchn_fangshi!=null and network_trace.searchn_fangshi!=''">
-                and n_fangshi like "%"#{network_trace.searchn_fangshi}"%"
+             <if test="network_trace.n_fangshi!=null and network_trace.n_fangshi!=''">
+                and n_fangshi=#{network_trace.n_fangshi}
              </if>
              
              <if test="network_trace.searchstartTime!=null and network_trace.searchstartTime!=''">

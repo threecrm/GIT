@@ -39,12 +39,13 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	public Integer addStudent(Student student, Boolean tur) {
-		
 		if (tur == true) {// true自动分配
 			// 查询出所有咨询师
 			Date date = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat s=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			List<Ask> selectAskAll = studentMapper.selectAskAll(sdf.format(date));
+			student.setCreatTimes(s.format(date));
 			Integer Max = 100;
 			Integer selectAskStu = null;
 			for (int i = 0; i < selectAskAll.size(); i++) {
@@ -97,12 +98,6 @@ public class StudentServiceImpl implements StudentService {
 	public List<Student> selectWeifenpei() {
 		return studentMapper.selectWeifenpei();
 	}
-
-	public Integer addAskNames(Student student) {
-		Integer addAskNames = studentMapper.addAskNames(student);
-		return addAskNames;
-	}
-
 	public List<Ask> selectWeightId() {
 
 		return studentMapper.selectWeightId();

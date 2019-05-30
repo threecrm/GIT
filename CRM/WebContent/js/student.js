@@ -19,7 +19,6 @@ $(function() {
 		valueField : 'askId',
 		textField : 'askName'
 	})
-	/* zixuntrue(); */
 })
 
 function init() {
@@ -91,9 +90,7 @@ function add() {
 }
 // 添加学生确认按钮
 function addtrue() {
-	
 	var tur = $("#tur").switchbutton("options").checked;
-	
 	$.post("addStudent", {
 		Sname : $("#addSname").val(),
 		Sex : $("#addSex").combobox("getValue"),
@@ -111,14 +108,41 @@ function addtrue() {
 		IsReturnVisit : $("#AddisReturnVisit").combobox("getValue"),
 		tur:tur
 	}, function(res) {
-		if (res > 0) {
+		if (res == -1) {
+			$.messager.alert("提示", "请输入姓名");
+		} else if (res == -2) {
+			$.messager.alert("提示", "请输入年龄");
+		} else if (res == -3) {
+			$.messager.alert("提示", "请输入正确格式电话，手机号长度必须为11位");
+		} else if (res == -4) {
+			$.messager.alert("提示", "请输入来源关键字");
+		} else if (res == -5) {
+			$.messager.alert("提示", "请输入正确格式的邮箱");
+		} else if (res == -6) {
+			$.messager.alert("提示", "请输入微信号");
+		} else if (res == -7) {
+			$.messager.alert("提示", "请输入在线备注");
+		} else if (res == -8) {
+			$.messager.alert("提示", "请输入性别");
+		} else if (res == -9) {
+			$.messager.alert("提示", "请输入状态");
+		} else if (res == -10) {
+			$.messager.alert("提示", "请输入学历");
+		} else if (res == -11) {
+			$.messager.alert("提示", "请输入来源渠道");
+		} else if (res == -12) {
+			$.messager.alert("提示", "请输入来源网站");
+		} else if (res == -13) {
+			$.messager.alert("提示", "请输入是否报备");
+		} else if (res == -14) {
+			$.messager.alert("提示", "请输入回访情况");
+		}else if(res>0){
 			$.messager.alert("提示", "添加成功");
 			$("#addWindow").window("close");
 			$("#tab").datagrid("reload");
 			$("#addForm").form("reset");
-
-		} else {
-			$.messager.alert("提示", "姓名添加重复了，不能继续添加了！");
+		}else{
+			$.messager.alert("提示", "添加失败");
 		}
 	}, "json")
 }
@@ -222,7 +246,7 @@ function zixunfalse() {
 }
 // 自动添加咨询师
 function fenpei() {
-	var rows = $("#tab").datagrid("getSelections"); // 获取所有选中的行
+	var rows = $("#tab").datagrid("getSelections"); // 获取复选框选中的行
 	var AskerId = [];
 	for (var i = 0; i < rows.length; i++) {
 		AskerId[i] = rows[i].sid;
@@ -291,20 +315,6 @@ $(function() {
 		$('#tab').datagrid('hideColumn', this.value);// 将没选中的列隐藏起来
 	});
 });
-// 跟踪
-/*function genzong() {
-	var rows = $("#tab").datagrid("getSelected"); // 获取所有选中的行
-	
-	var row = $("#tab").datagrid("getSelections"); // 获取所有选中的行
-	if (row.length == 0) {
-		$.messager.alert("提示", "请选择要操作的行！", "info");
-		return;
-	} else {
-		$("#genzongid").window("open");
-		$("#genzongForm").form("load", rows);
-	}
-
-}*/
 
 function GenZong(index){
 	 var datas=$("#tab").datagrid("getData");

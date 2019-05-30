@@ -89,8 +89,8 @@
 	<!-- 添加学生 -->
 	<insert id="addStudent" parameterType="Student">
 		INSERT INTO
-		student(Sname,Sex,Age,Phone,StuStatus,PerStatus,MsgSource,SourceUrl,SourceKeyWord,QQ,WeiXin,isBaoBei,Content,IsReturnVisit,AskerId)
-		VALUES(#{Sname},#{Sex},#{Age},#{Phone},#{StuStatus},#{PerStatus},#{MsgSource},#{SourceUrl},#{SourceKeyWord},#{QQ},#{WeiXin},#{isBaoBei},#{Content},#{IsReturnVisit},#{AskerId})
+		student(Sname,Sex,Age,Phone,StuStatus,PerStatus,MsgSource,SourceUrl,SourceKeyWord,QQ,WeiXin,isBaoBei,Content,IsReturnVisit,AskerId,CreatTimes)
+		VALUES(#{Sname},#{Sex},#{Age},#{Phone},#{StuStatus},#{PerStatus},#{MsgSource},#{SourceUrl},#{SourceKeyWord},#{QQ},#{WeiXin},#{isBaoBei},#{Content},#{IsReturnVisit},#{AskerId},#{CreatTimes})
 	</insert>
 	<!-- 删除学生 -->
 	<delete id="deleteStudent" parameterType="int">
@@ -136,11 +136,6 @@
 	<update id="addAskName" parameterType="Student">
 		update student set
 		AskerId=#{AskerId} where sid=#{sid} and AskerId is null
-	</update>
-	<!--手动分配 -->
-	<update id="addAskNames" parameterType="Student">
-		UPDATE student set
-		AskerId =2 where sid=#{sid} and AskerId is null
 	</update>
 	<!--查询咨询师下的姓名 -->
 	<select id="selectNames" resultType="Ask">

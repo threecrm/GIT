@@ -7,7 +7,7 @@
 <select id="selectNetStudent" parameterType="fenye" resultType="Student">
 SELECT * from student s,askteacher a 
 <where> 
-s.AskerId=a.AskId and AskName=#{ask.askName} and RoleNames='网络咨询师' and IsValid='是'	order by sid desc
+s.AskerId=a.AskId and AskName=#{ask.askName} and RoleNames='网络咨询师' and IsValid='是'	
 	 <if test="student.AskerId!=null and student.AskerId!=''">
 	and AskerId=#{student.AskerId}
 	</if>
@@ -63,6 +63,7 @@ s.AskerId=a.AskId and AskName=#{ask.askName} and RoleNames='网络咨询师' and
 	and inClassTime&lt;#{student.EndinClassTime}
 	</if> 
 </where>
+order by sid desc
  limit #{page},#{pageSize}
 </select><!-- AskName=#{ask.askName}  -->
 <!--查看它的数量 -->

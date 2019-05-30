@@ -33,9 +33,6 @@ public interface StudentService {
 	// 手动分配（添加咨询师）
 	public Integer addAskName(Student student);
 
-	// 自动分配（添加咨询师）
-	public Integer addAskNames(Student student);
-
 	// 查询咨询师下的姓名
 	public List<Ask> selectNames();
 

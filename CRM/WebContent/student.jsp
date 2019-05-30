@@ -369,7 +369,7 @@
 					</select></td>
 				</tr>
 				<tr>
-					<td><label for="name">学员QQ:</label></td>
+					<td><label for="name">邮箱:</label></td>
 					<td><input class="easyui-validatebox" type="text" id="addQQ" />
 					</td>
 					<td><label for="name">来源网站:</label></td>
