@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.crm.dao.NetStudentMapper;
+import com.crm.entity.Ask;
 import com.crm.entity.Sign_in;
 import com.crm.filter.PdDate;
+import com.crm.service.AskService;
 import com.crm.service.Sign_inService;
 
 @Controller
@@ -22,7 +25,10 @@ public class Sign_inController {
 	private Sign_inService sign_inService;
 	@Autowired
 	private Sign_in sign_in;
-
+	@Autowired
+	private AskService askService;
+	@Autowired
+	private NetStudentMapper netStudentMapper;
 	/**
 	 * 签到
 	 * 
@@ -62,6 +68,12 @@ public class Sign_inController {
 				sign_in.setLoginUserName(LoginUserName);
 				sign_in.setCreat_time(sd.format(dat));
 				Integer i = sign_inService.addSign(sign_in);
+				if(i>0){
+					Ask selectAsk = netStudentMapper.selectAsk(uid);
+					Ask ask = new Ask();
+					ask.setAskId(selectAsk.getAskId());
+					askService.updateQianDao(ask);
+				}
 				// 签到成功
 				return i;
 			}
@@ -73,7 +85,13 @@ public class Sign_inController {
 				// 签到成功，但是迟到
 				sign_in.setLoginUserName(LoginUserName);
 				sign_in.setCreat_time(sd.format(dat));
-				sign_inService.addChidaoSign(sign_in);
+				Integer i = sign_inService.addChidaoSign(sign_in);
+				if(i>0){
+					Ask selectAsk = netStudentMapper.selectAsk(uid);
+					Ask ask = new Ask();
+					ask.setAskId(selectAsk.getAskId());
+					askService.updateQianDao(ask);
+				}
 				return -1;
 			}
 		} else if (sjd == 3) {
@@ -122,20 +140,38 @@ public class Sign_inController {
 				sign_in.setLoginUserName(LoginUserName);
 				selectSign.setEndState("已签退");
 				selectSign.setEnd_time(sd.format(dat));
-				sign_inService.updateSign(selectSign);
+				Integer i = sign_inService.updateSign(selectSign);
+				if(i>0){
+					Ask selectAsk = netStudentMapper.selectAsk(uid);
+					Ask ask = new Ask();
+					ask.setAskId(selectAsk.getAskId());
+					askService.updateQianTui(ask);
+				}
 				return 1;
 			} else if (sjd == 2) {
 				sign_in.setLoginUserName(LoginUserName);
 				selectSign.setEndState("已签退");
 				selectSign.setEnd_time(sd.format(dat));
-				sign_inService.updateSign(selectSign);
+				Integer i = sign_inService.updateSign(selectSign);
+				if(i>0){
+					Ask selectAsk = netStudentMapper.selectAsk(uid);
+					Ask ask = new Ask();
+					ask.setAskId(selectAsk.getAskId());
+					askService.updateQianTui(ask);
+				}
 				return 2;
 			} else if (sjd == 3) {
 				// 签退成功，但是早退
 				sign_in.setLoginUserName(LoginUserName);
 				selectSign.setEndState("早退");
 				selectSign.setEnd_time(sd.format(dat));
-				sign_inService.updateSign(selectSign);
+				Integer i = sign_inService.updateSign(selectSign);
+				if(i>0){
+					Ask selectAsk = netStudentMapper.selectAsk(uid);
+					Ask ask = new Ask();
+					ask.setAskId(selectAsk.getAskId());
+					askService.updateQianTui(ask);
+				}
 				return 3;
 			}
 		} else {
