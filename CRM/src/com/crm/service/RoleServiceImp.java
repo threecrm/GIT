@@ -129,6 +129,16 @@ public class RoleServiceImp implements RoleService {
 		Integer insertRolesModulesByName = roleMapper.insertRolesModulesByName(roleModules);
 		return insertRolesModulesByName;
 	}
+	@Override
+	public String selectName(String LonginName) {
+		List<Roles> selectName = roleMapper.selectName(LonginName);
+		for(int i=0;i<selectName.size();i++){
+			if("×ÉÑ¯Ê¦¾­Àí".equals(selectName.get(i).getRoleName())){
+				return "true";
+			}
+		}
+		return "false";
+	}
 	
 
 }

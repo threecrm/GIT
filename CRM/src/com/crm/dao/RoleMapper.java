@@ -69,4 +69,7 @@ public interface RoleMapper {
 	Integer deleteRolesModulesByRid(Integer rid);
 	//添加角色模块表
 	Integer insertRolesModulesByName(RoleModules roleModules);
+	
+	//根据用户名查询该用户包含咨询师经理角色
+	List<Roles> selectName(String LonginName);
 }

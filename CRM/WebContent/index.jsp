@@ -40,6 +40,7 @@
 			    	loginName:str
 			    }
 			}); 
+			$.post("selectRoleName",{loginName:str});
 		}else{
 			var st = sessionStorage.obj;
 			if(st!=null && st!=""){
@@ -52,6 +53,7 @@
 				    	loginName:obj
 				    }
 				}); 
+				$.post("selectRoleName",{loginName:obj});
 				userinfo(st)
 			}
 		}
@@ -280,9 +282,11 @@ span {
 	</div>
 	<div data-options="region:'center'">
 		<div id="tabs" class="easyui-tabs">
-			<div title="默认页">
-				<iframe style="width: 100%; height: 700px" src="image.jsp"></iframe>
-			</div>
+			<c:if test="${selectName =='true'}">
+				<div title="默认页">
+					<iframe style="width: 100%; height: 700px" src="image.jsp"></iframe>
+				</div>
+			</c:if>
 		</div>
 	</div>
 	<!-- 用户信息 -->
@@ -293,11 +297,13 @@ span {
 			<label for="name">用户名:</label> <input class="easyui-validatebox"
 				type="text" id="userlonginName" readonly="true" /><br> <br>
 			<label for="name">邮箱&emsp;:</label> <input class="easyui-validatebox"
-				type="text" id="userprotectEMail" data-options="required:true,validType:'email'" /><br>
-			<br> <label for="name">电话&emsp;:</label> <input
-				class="easyui-validatebox" type="text" id="userprotectMTel" data-options="required:true,validType:['minLength[11]','maxLength[11]']" /><br>
-			<br> 
-			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="javascript:void(0)" class="easyui-linkbutton"
+				type="text" id="userprotectEMail"
+				data-options="required:true,validType:'email'" /><br> <br>
+			<label for="name">电话&emsp;:</label> <input class="easyui-validatebox"
+				type="text" id="userprotectMTel"
+				data-options="required:true,validType:['minLength[11]','maxLength[11]']" /><br>
+			<br> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a
+				href="javascript:void(0)" class="easyui-linkbutton"
 				iconCls="icon-edit" onclick="updatePim()">修改个人信息</a>
 		</div>
 	</div>

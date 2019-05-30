@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -108,5 +109,12 @@ public class RoleController {
 		
 		return true;
 	}
-
+	@RequestMapping(value="/selectRoleName",method=RequestMethod.POST)
+	@ResponseBody
+	public String selectRoleName(String loginName,HttpSession session) {
+		String selectName = roleService.selectName(loginName);
+		session.setAttribute("selectName",selectName );
+		session.setAttribute("selectNameTrue","true" );
+		return selectName;
+	}
 }

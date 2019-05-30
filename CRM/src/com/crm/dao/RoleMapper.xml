@@ -2,96 +2,105 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- <mapper namespace="com.crm.dao.RoleMapper">
-   <!--  手动映射 -->
- 	<resultMap type="roles" id="selectRoles">
- 		<id property="rid" column="rid"/>
- 		<result property="RoleName" column="RoleName"/>
- 	</resultMap>
- 	<resultMap type="modules" id="modul">
+<mapper namespace="com.crm.dao.RoleMapper">
+	<!-- 手动映射 -->
+	<resultMap type="roles" id="selectRoles">
+		<id property="rid" column="rid" />
+		<result property="RoleName" column="RoleName" />
+	</resultMap>
+	<resultMap type="modules" id="modul">
 		<id property="id" column="mid" />
 		<result property="text" column="ModuleName" />
 		<result property="url" column="Path" />
 		<result property="Weight" column="Weight" />
 		<result property="ParentId" column="ParentId" />
 	</resultMap>
- 	<!-- 分页查询 -->
- 	<select id="selectRole" resultMap="selectRoles" parameterType="fenye">
- 		select * from roles
- 		 <where>
- 		     <if test="RoleName!=null and RoleName!=''">
- 		         and RoleName like "%"#{RoleName}"%"
- 		     </if>
- 		  </where>
- 		
- 		 limit #{page},#{pageSize}
- 	</select>
- 	<!-- 查询总条数 -->
- 	<select id="selectCount" resultType="int" parameterType="fenye">
- 		select count(rid) from roles 
- 		  <where>
- 		     <if test="RoleName!=null and RoleName!=''">
- 		         and RoleName like "%"#{RoleName}"%"
- 		     </if>
- 		  </where>
- 	</select>
- 	
- 	<!-- 根据角色名查询角色 -->
- 	<select id="selectRoleByName" parameterType="roles" resultType="roles">
- 	     SELECT * from roles WHERE RoleName=#{RoleName}
- 	</select>
- 	
- 	<!-- 添加角色 -->
- 	<insert id="addRole" parameterType="roles">
- 	   insert into roles 
- 	   <set>
- 	     <if test="RoleName!=null and RoleName!=''">
- 	         RoleName=#{RoleName}
- 	     </if>
- 	   </set>
- 	</insert>
- 	
- 	<!-- 修改角色 -->
- 	<update id="updateRole" parameterType="roles">
- 	     update roles
- 	    <set>
- 	       <if test="RoleName!=null and RoleName!=''" >
- 	          RoleName=#{RoleName}
- 	       </if>
- 	    </set>
- 	    <where>
- 	       <if test="rid!=null and rid!=''">
- 	          rid=#{rid}
- 	       </if>
- 	    </where>
- 	</update>
- 	<!-- 删除角色 -->
- 	<delete id="delRoles" parameterType="int">
- 	   delete from roles where rid=#{rid}
- 	</delete>
- 	<!-- 根据角色id查询模块 -->
- 	<select id="selectModules" parameterType="int" resultType="rolemodules">
- 		SELECT * from rolemodules where roleid=#{roleid}
- 	</select>
- 	<!-- 查询是否有用户拥有该角色 -->
- 	<select id="selectRoles" parameterType="int" resultType="userroles">
- 	      select * from userroles where roleid=#{roleid}
- 	</select>
- 	
- 	
- 	<select id="selectModulesSubmodule" parameterType="int" resultMap="modul">
- 		SELECT * from modules WHERE ParentId=#{id}
- 	</select>
+	<!-- 分页查询 -->
+	<select id="selectRole" resultMap="selectRoles" parameterType="fenye">
+		select * from roles
+		<where>
+			<if test="RoleName!=null and RoleName!=''">
+				and RoleName like "%"#{RoleName}"%"
+			</if>
+		</where>
+
+		limit #{page},#{pageSize}
+	</select>
+	<!-- 查询总条数 -->
+	<select id="selectCount" resultType="int" parameterType="fenye">
+		select count(rid) from roles
+		<where>
+			<if test="RoleName!=null and RoleName!=''">
+				and RoleName like "%"#{RoleName}"%"
+			</if>
+		</where>
+	</select>
+
+	<!-- 根据角色名查询角色 -->
+	<select id="selectRoleByName" parameterType="roles" resultType="roles">
+		SELECT * from roles WHERE RoleName=#{RoleName}
+	</select>
+
+	<!-- 添加角色 -->
+	<insert id="addRole" parameterType="roles">
+		insert into roles
+		<set>
+			<if test="RoleName!=null and RoleName!=''">
+				RoleName=#{RoleName}
+			</if>
+		</set>
+	</insert>
+
+	<!-- 修改角色 -->
+	<update id="updateRole" parameterType="roles">
+		update roles
+		<set>
+			<if test="RoleName!=null and RoleName!=''">
+				RoleName=#{RoleName}
+			</if>
+		</set>
+		<where>
+			<if test="rid!=null and rid!=''">
+				rid=#{rid}
+			</if>
+		</where>
+	</update>
+	<!-- 删除角色 -->
+	<delete id="delRoles" parameterType="int">
+		delete from roles where rid=#{rid}
+	</delete>
+	<!-- 根据角色id查询模块 -->
+	<select id="selectModules" parameterType="int" resultType="rolemodules">
+		SELECT * from rolemodules where roleid=#{roleid}
+	</select>
+	<!-- 查询是否有用户拥有该角色 -->
+	<select id="selectRoles" parameterType="int" resultType="userroles">
+		select * from userroles where roleid=#{roleid}
+	</select>
+
+
+	<select id="selectModulesSubmodule" parameterType="int"
+		resultMap="modul">
+		SELECT * from modules WHERE ParentId=#{id}
+	</select>
 	<select id="selectRoleModules" parameterType="int" resultType="rolemodules">
 		select * from rolemodules where moduleid=#{id}
 	</select>
 	<select id="selectMid" parameterType="int" resultMap="modul">
-		SELECT * from modules WHERE mid=#{id}
+		SELECT *
+		from modules WHERE mid=#{id}
 	</select>
 	<delete id="deleteRolesModulesByRid" parameterType="int">
-		DELETE FROM rolemodules where roleid=#{rid}
+		DELETE FROM
+		rolemodules where roleid=#{rid}
 	</delete>
 	<insert id="insertRolesModulesByName" parameterType="rolemodules">
-		insert into rolemodules(roleid,moduleid) values(#{roleid},#{moduleid})
+		insert into
+		rolemodules(roleid,moduleid) values(#{roleid},#{moduleid})
 	</insert>
- </mapper>
+	<select id="selectName" parameterType="string" resultType="roles">
+		SELECT
+		* FROM users u,userroles ur,roles r WHERE u.uid=ur.UserId AND
+		ur.RoleId=r.rid AND u.LonginName=#{longinName}
+	</select>
+</mapper>
