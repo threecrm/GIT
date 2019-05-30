@@ -34,12 +34,6 @@
 				$("#tb-frm").form("reset");
 			}
 		
-		//格式化签到状态
-	    /*  function formatterSign(value,row,index){
-			    return value==0? "已签到":"未签到"
-	   }   */
-			
-		
 		function formatterCaozuo(value,row,index){
 			
 			return "<a href='javascript:void(0)' onclick='edit("+index+")'>修改</a>  <a href='javascript:void(0)' onclick='del("+index+")'>删除</a> <a href='javascript:void(0)' onclick='lookUser("+index+")'>查看</a>"
@@ -348,7 +342,6 @@
 					<th data-options="field:'isLockout',align:'center',width:100,">是否锁定</th>
 					<th data-options="field:'createTime',align:'center',width:160,">创建时间</th>
 					<th data-options="field:'lastLoginTime',align:'center',width:160,">最后登录的时间</th>
-					<!-- <th data-options="field:'state',align:'center',width:100,formatter:formatterSign">签到状态</th> -->
 					<th data-options="field:'psdWrongTime',align:'center',width:80,formatter:formatterPsd">密码错误次数</th>
 					<th data-options="field:'caozuo',align:'center',width:100,formatter:formatterCaozuo">操作</th>
 					<th data-options="field:'juese',align:'center',width:60,formatter:formatterJuese">角色设置</th>
@@ -420,7 +413,7 @@
 						<label for="name">手机号:</label>
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="uphone" name="protectMTel"  data-options="required:true,validType:['minLength[11]','maxLength[11]']"  />
+						<input class="easyui-numberbox" type="text" id="uphone" name="protectMTel"  data-options="required:true,validType:['minLength[11]','maxLength[11]']"  />
 					</td>
 				</tr>
 			</table>

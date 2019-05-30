@@ -39,6 +39,7 @@
  	<select id="selectUser" resultMap="selectUser" parameterType="fenye">
  		SELECT * FROM users 
  		<include refid="sql"></include>
+ 		   order by uid desc
  		 limit #{page},#{pageSize}
  	</select>
  	<select id="selectCount" resultType="int" parameterType="fenye">
