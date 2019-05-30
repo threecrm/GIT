@@ -280,10 +280,33 @@
 			
 			/*新增用户角色*/
 			function addUserRole(){
-				//获取用户信息
-				var userRow=$("#tab").datagrid("getSelected");
+				var data=$("#juese").datagrid("getData");
+				
+				var datas=$("#User-juese").datagrid("getData");
+				
 				//获取角色信息
 				var roleRow=$("#juese").datagrid("getSelected");
+				if(roleRow.roleName=="管理员"){
+					return $.messager.alert("提示信息","管理员唯一");
+				}
+				
+				
+				
+				for(var i=0;i<data.rows.length;i++){
+					if(datas.rows[i]!=undefined){
+						if(datas.rows[i].roles.roleName=="网络咨询师" && roleRow.roleName=="咨询师"){
+							return $.messager.alert("提示信息","不能同时拥有网络咨询师和咨询师");
+						}
+						if(datas.rows[i].roles.roleName=="咨询师" && roleRow.roleName=="网络咨询师"){
+							return $.messager.alert("提示信息","不能同时拥有咨询师和网络咨询师");
+						}
+					}
+				}
+				//获取用户信息
+				var userRow=$("#tab").datagrid("getSelected");
+				
+				
+				
 				 if(userRow!=null && roleRow!=null){
 					$.post(
 							"addUserRoles",
