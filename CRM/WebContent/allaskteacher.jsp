@@ -18,7 +18,10 @@
 	src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
 	$(function() {
-		init();
+		$.post("updateAskStatue",{},function(res){
+			init();
+		});
+		
 		//下拉框(一加载就执行)
 		$('#roleNames').combobox({
 			url : 'selectA',

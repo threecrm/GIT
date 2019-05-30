@@ -25,4 +25,9 @@ public interface AskService {
 	 public	Integer updateQianTui(Ask ask);
 	//权重排序
 	public	List<Ask> paixun(Ask ask);
+	/**
+	 * 把未签到的咨询师修改成未签到状态
+	 * @return
+	 */
+	Integer updateASkStatue();
 }

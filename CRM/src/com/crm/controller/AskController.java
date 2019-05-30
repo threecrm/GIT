@@ -231,4 +231,19 @@ public class AskController {
 		return paixun;
 	}
 
+	/**
+	 * 把未签到的咨询师修改为未签到状态
+	 * @return
+	 */
+	@RequestMapping(value = "/updateAskStatue", method = RequestMethod.POST)
+	@ResponseBody
+	public Boolean updateAskStatue() {
+		Integer updateASkStatue = askService.updateASkStatue();
+		if(updateASkStatue==null){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 }

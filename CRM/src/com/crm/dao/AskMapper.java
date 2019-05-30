@@ -31,6 +31,17 @@ public interface AskMapper {
 	List<Ask> paixun(Ask ask);
 	//根据用户名称查询用户
 	Users selectUsers(String longinName);
-	
+	/**
+	 * 查询出当天未签到的咨询师
+	 * @param ask
+	 * @return
+	 */
+	List<Ask> selectAskStatue(String date);
+	/**
+	 * 未签到的咨询师修改未签到
+	 * @param ask
+	 * @return
+	 */
+	Integer updateAskStatue(Ask ask);
 
 }

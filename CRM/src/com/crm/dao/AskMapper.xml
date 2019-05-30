@@ -36,7 +36,8 @@
 	</select>
 	<!-- 查询角色 -->
 	<select id="selectRoles" resultType="Roles">
-		SELECT * from roles LIMIT 2,2
+		SELECT * from roles LIMIT
+		2,2
 	</select>
 	<!-- 修改网络咨询师 -->
 	<update id="updateAsk" parameterType="Ask">
@@ -74,17 +75,36 @@
 	</select>
 	<!--签到 -->
 	<update id="updateQianDao" parameterType="Ask">
-		UPDATE askteacher set Statue ='已签到' where askId=#{askId}
+		UPDATE askteacher set
+		Statue ='已签到' where askId=#{askId}
 	</update>
 	<!--签退 -->
 	<update id="updateQianTui" parameterType="Ask">
-		UPDATE askteacher set Statue ='已签退' where askId=#{askId}
+		UPDATE askteacher set
+		Statue ='已签退' where askId=#{askId}
 	</update>
 	<!-- 权重排序 -->
 	<select id="paixun" parameterType="ask" resultType="Ask">
-		SELECT * from askteacher ORDER BY Weights DESC
+		SELECT * from
+		askteacher ORDER BY Weights DESC
 	</select>
 	<select id="selectUsers" parameterType="string" resultType="users">
 		SELECT * FROM users WHERE LonginName=#{longinName}
 	</select>
+	<!-- 查询当天未签到的咨询师 -->
+	<select id="selectAskStatue" parameterType="string" resultType="ask">
+		SELECT * FROM askteacher WHERE AskName NOT in(
+			SELECT AskName FROM askteacher WHERE AskName in(
+				SELECT LoginUserName FROM sign_in
+				WHERE creat_time LIKE "%"#{date}"%"
+				AND LoginUserName
+				in(SELECT AskName FROM askteacher)
+			)
+		)
+	</select>
+	<!-- 把未签到的咨询师修改成未签到状态 -->
+	<update id="updateAskStatue" parameterType="ask">
+		UPDATE askteacher set
+		Statue ='未签到' where askId=#{askId}
+	</update>
 </mapper>
