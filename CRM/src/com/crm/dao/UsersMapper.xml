@@ -78,20 +78,25 @@
         </if>
    </where>
 </update>
-
+<!-- 查询该用户的角色 -->
+<select id="selectRoleNameBy" parameterType="String" resultType="users">
+    SELECT * from users u,roles r,userroles ur
+		WHERE u.uid=ur.UserId and r.rid=ur.RoleId AND r.roleName=#{roleName}
+		  AND u.LonginName=#{LonginName}
+</select>
 <!-- 锁定用户 -->
 <update id="lockUser" parameterType="users">
- update users IsLockout set IsLockout='是' where IsLockout= '否' AND LonginName=#{LonginName}
+ update users set IsLockout='是' where IsLockout= '否' AND LonginName=#{LonginName}
 </update>
 
 <!-- 解锁用户 -->
 <update id="unlockUser" parameterType="users">
-   update users IsLockout set IsLockout='否' where IsLockout= '是' AND LonginName=#{LonginName}
+   update users  set IsLockout='否' where IsLockout= '是' AND LonginName=#{LonginName}
 </update>
 
 <!-- 重置密码 -->
 <update id="chongzhiPwd" parameterType="users">
-      update users PassWord set PassWord=md5('ysd123') where LonginName=#{LonginName}
+      update users  set PassWord=md5('ysd123') where LonginName=#{LonginName}
 </update>
 <!-- 根据用户名查询当前用户的角色 -->
  <select id="selectRoles" parameterType="string" resultMap="selectUser">
