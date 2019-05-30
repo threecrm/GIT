@@ -251,4 +251,5 @@
 		AskName=#{LonginName}
 		</where>
 	</select>
+	
  </mapper>
