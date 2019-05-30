@@ -18,10 +18,10 @@
 	src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$.post("updateAskStatue",{},function(res){
+		$.post("updateAskStatue", {}, function(res) {
 			init();
 		});
-		
+
 		//下拉框(一加载就执行)
 		$('#roleNames').combobox({
 			url : 'selectA',
@@ -36,7 +36,10 @@
 			valueField : 'roleName',
 			textField : 'roleName'
 		});
-
+		$('#dd').dialog({    
+		    closed: true,
+		    cache: false
+		});
 	})
 
 	function init() {
@@ -44,6 +47,7 @@
 			url : 'selectAskAll',
 			method : 'post',
 			pagination : true,
+			singleSelect:true,
 			toolbar : '#seachid',
 			queryParams : {
 				askName : $("#askName").val(),
@@ -60,7 +64,48 @@
 				+ "<a href='javascrip:void(0)'  onclick='qiandao(" + index
 				+ ")'>签到</a> "
 				+ "<a href='javascrip:void(0)'  onclick='qiantui(" + index
-				+ ")'>签退</a> "
+				+ ")'>签退</a> <a href='javascrip:void(0)'  onclick='message("
+				+ index + ")'>消息</a>"
+	}
+	var u = "<%=session.getAttribute("uid")%>";
+	var webscoket = new WebSocket("ws:localhost:8080/CRM/webscoket/" + u);
+	function send() {
+		var data = $("#tab").datagrid("getSelected");
+		$.post("selectUsersNameMessage", {
+			Name : data.askName
+		}, function(d) {
+			var da = $("#message").val();
+			webscoket.send("" + u + "," + d.uid + "," + da + "");
+			$('#dd').dialog({
+				title : '消息',
+				width : 400,
+				height : 200,
+				closed : true,
+				cache : false
+			})
+			alert("提示成功")
+		})
+	}
+	function message(index) {
+		$('#dd').dialog({
+			title : '消息',
+			width : 400,
+			height : 200,
+			closed : false,
+			cache : false,
+			modal : true,
+			buttons : [ {
+				text : '发送',
+				handler : function() {
+					send();
+				}
+			}, {
+				text : '关闭',
+				handler : function() {
+
+				}
+			} ]
+		});
 	}
 	//查看网络学生
 	function look(index) {
@@ -179,7 +224,7 @@
 			pagination : true
 		})
 	}
-	
+
 	//一键签退
 	function allQiantui() {
 		$.post("allQiantui", {
@@ -211,10 +256,8 @@
 					onclick="init()">搜索</a> <a class="easyui-linkbutton"
 					data-options="iconCls:'icon-redo'" onclick="paixun()">权重排序</a> <a
 					class="easyui-linkbutton" data-options="iconCls:'icon-reload'"
-					onclick='chongzhiAsk()'>所有咨询师</a>
-					
-					<a	class="easyui-linkbutton" data-options="iconCls:'icon-sum'"
-					     onclick='allQiantui()'>一键签退</a>
+					onclick='chongzhiAsk()'>所有咨询师</a> <a class="easyui-linkbutton"
+					data-options="iconCls:'icon-sum'" onclick='allQiantui()'>一键签退</a>
 			</form>
 		</div>
 		<thead>
@@ -357,6 +400,9 @@
 				</tr>
 			</table>
 		</form>
+	</div>
+	<div id="dd">
+		<textarea id="message" rows="" cols=""></textarea>
 	</div>
 </body>
 </html>
