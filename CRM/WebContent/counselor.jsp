@@ -36,29 +36,6 @@
 4．点击保存按钮，提交信息；点击取消按钮，关闭窗口
 5．提交信息之后，窗口关闭，刷新学生列表
 */     
-
-<%-- $(function(){
-	var u_id="<%=session.getAttribute("uid")%>"
-	
-	$.post("SelectMessage",{
-		u_id:u_id
-	},function(res){
-		if(res!=""){
-			$().datagrid({
-				url:'SelectMessage',
-				method:"post",
-				singleSelect:true,
-				quertParams:{
-					uid:u_id
-				}
-			})
-			$("#MessageWin").dialog("open");
-		}
-		
-		
-	},"json")
-}) --%>
-
 $(function(){
 	init();
 })
@@ -275,32 +252,9 @@ function submit(){
   	});
   });
   
-  <%-- function DeleteMessage() {
-	  u_id="<%=session.getAttribute("uid")%>";
-	$.post("DeleteMessage",{
-		u_id:u_id
-	},function(res){
-		$("#MessageWin").dialog("close");
-	},"json")
-} --%>
 </script>
 </head>
 <body>
-
-<div id="MessageWin" class="easyui-dialog" title="新消息" style="width:300px;height:300px;">
-      <h2>你有新客户需要你稳住他们</h2>
-      <table id="messages" class="easyui-datagrid">
-       <thead>
-       <tr>     
-                <th data-options="field:'sid',title:'编号'"></th>
-                <th data-options="field:'Sname',title:'客户姓名'"></th>
-      </tr>
-      </thead>
-      </table>
-      <br>
-      <br>
-      <a class="easyui-linkbutton"  onclick="DeleteMessage()">收到</a>
-</div>
 
 <div id="SeleteNetwork_traceLogWindow" class="easyui-window" data-options="modal:true,title:'跟踪日志',closed:true" style="width:1000px;height:500px">
 <table id="dg">
