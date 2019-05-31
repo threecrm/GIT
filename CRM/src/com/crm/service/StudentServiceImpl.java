@@ -61,7 +61,6 @@ public class StudentServiceImpl implements StudentService {
 				}
 			}
 		}
-		student.setIsValid("ÊÇ");
 		Integer addStudent = studentMapper.addStudent(student);
 		return addStudent;
 	}
