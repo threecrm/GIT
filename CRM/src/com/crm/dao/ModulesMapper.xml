@@ -14,16 +14,16 @@
 	
 	<!-- 根据父模块id查询子模块 -->
 	<select id="selectModulesSubmodule" parameterType="int" resultMap="modul">
-		SELECT * from modules WHERE ParentId=#{id}
+		SELECT * from modules  WHERE ParentId=#{id} order by Weight desc
 	</select>
 	<!-- 根据mid查询模块 -->
 	<select id="GetModuleById" parameterType="int" resultType="modules">
-	    select * from modules where mid=#{mid}
+	    select * from modules   where mid=#{mid} order by Weight desc
 	</select>
 	
 	<!-- 根据名称查询模块 -->
 	<select id="selectMoudleByName" parameterType="modules" resultType="modules">
-	    select * from modules where ModuleName=#{ModuleName}
+	    select * from modules where ModuleName=#{ModuleName} 
 	</select>
 	
 	<!-- 添加父模块  -->

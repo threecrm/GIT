@@ -51,7 +51,7 @@ public interface UsersMapper {
 	 * @param users
 	 * @return
 	 */
-	Users selectRoleNameBy(String LonginName);
+	List<Roles> selectRoleNameBy(String LonginName);
 	/**
 	 * 锁定用户
 	 * @param LonginName
@@ -82,6 +82,12 @@ public interface UsersMapper {
 	 * @return
 	 */
 	List<UserRoles> selectUserRoles(UserRoles userRoles);
+	/**
+	 * 查询咨询经理角色有没有被引用
+	 * @param userRoles
+	 * @return
+	 */
+	List<UserRoles> selectUserRolesByRoleName(UserRoles userRoles);
 	/**
 	 * 为用户设置角色
 	 * @param users

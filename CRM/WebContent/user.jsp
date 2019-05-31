@@ -119,7 +119,7 @@
 			var name = $("#name").val();
 			var email = $("#email").val();
 			var mtel = $("#mtel").val();
-			var pwd = $("#pwd").val();
+		    var pwd = $("#pwd").val(); 
 		    var isSuoding=$("#isSuoding").val();
 			var wrongPwd=$("#wrongPwd").val()
 			if(flag){
@@ -129,14 +129,13 @@
 					LonginName:name,
 					ProtectEMail:email,
 					ProtectMTel:mtel,
-					PassWord:pwd,
+					PassWord:pwd, 
 				    IsLockout:isSuoding,
 					PsdWrongTime:wrongPwd
 				},
-
 				function(addInfo){
 				  if(addInfo>0){
-						$.messager.alert("提示","添加成功");
+						$.messager.alert("提示","添加成功,默认密码为ysd123");
 						$("#adduser_dialog").window("close");
 						$("#tab").datagrid("reload");
 					}else if(addInfo==0){
@@ -212,7 +211,7 @@
 								$.messager.alert("提示", "锁定成功！");
 								$("#tab").datagrid("reload");
 							}else if(res==-1){
-								$.messager.alert("提示", "该用户是管理员不能被锁定！！！");
+								$.messager.alert("提示", "该用户是管理员,不能被锁定！！！");
 							}else{
 								$.messager.alert("提示","该用户已是被锁定状态！");
 							}
@@ -282,12 +281,13 @@
 			
 			/*新增用户角色*/
 			function addUserRole(){
+				//获取系统角色的表格信息
 				var data=$("#juese").datagrid("getData");
-				//获取用户角色信息
+				//获取用户角色表格信息
 				var datas=$("#User-juese").datagrid("getData");
-				//获取系统角色信息
+				//获取系统角色选中的信息
 				var roleRow=$("#juese").datagrid("getSelected");
-				//获取用户信息
+				//获取选中的用户信息
 				var userRow=$("#tab").datagrid("getSelected");
 				  if(roleRow.roleName=="管理员"){
 					return $.messager.alert("提示信息","管理员是唯一的！！");
@@ -318,6 +318,8 @@
 							$("#User-juese").datagrid("reload");
 						}else if(res==0){
 							$.messager.alert("提示","角色设置失败")
+						}else if(res==-2) {
+							$.messager.alert("提示","咨询师经理是唯一的！")
 						}else{
 							$.messager.alert("提示","改用户已有该角色！")
 						}
@@ -334,7 +336,7 @@
 				var roleRow=$("#User-juese").datagrid("getSelected");
 				//判断要删除的是不是管理员
 				if(roleRow.roles.roleName=="管理员"){
-					return $.messager.alert("提示信息","管理员是不能删除的！！");
+					return $.messager.alert("提示信息","管理员角色是不能移除的！！");
 				}
 				 if(userRow!=null && roleRow!=null){
 					$.post(
@@ -505,10 +507,10 @@
                         <td>用户名:</td>
                         <td><input class="easyui-textbox" type="text" name="name" id="name" data-options="required:true,missingMessage:'请输入用户名'"></input></td>
                     </tr>
-                    <tr>
+                     <tr style="display: none">
                         <td>用戶密码:</td>
-                        <td><input type="text" class="easyui-textbox" id="pwd" name="pwd" data-options="required:true"></td>
-                    </tr>
+                        <td><input type="text" class="easyui-textbox" id="pwd" name="pwd" value="ysd123" data-options="required:true"></td>
+                    </tr> 
                     <tr>
                         <td>邮箱:</td>
                         <td><input class="easyui-textbox" type="text" name="email" id="email" data-options="required:true,validType:'email'"></input></td>

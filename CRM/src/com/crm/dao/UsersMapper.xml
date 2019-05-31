@@ -14,12 +14,26 @@
  		<result property="LockTime" column="LockTime"/>
  		<result property="ProtectEMail" column="ProtectEMail"/>
  		<result property="ProtectMTel" column="ProtectMTel"/>
- 		<!-- <result property="sign_in.state" column="state"/> -->
  		<result property="roles.rid" column="rid"/>
  		<result property="roles.RoleName" column="RoleName"/>
  		<result property="userRoles.userid" column="userid"/>
  		<result property="userRoles.roleid" column="roleid"/>
  	</resultMap> 
+ 	
+ 	<resultMap type="roles" id="selectRolesByUser">
+ 		<id property="rid" column="rid"/>
+ 		<result property="RoleName" column="RoleName"/>
+ 	</resultMap>
+ 	
+ 	<resultMap type="userRoles" id="selectRolesByName">
+ 		<id property="urid" column="urid"/>
+ 		<result property="userid" column="userid"/>
+ 		<result property="roleid" column="roleid"/>
+ 		<result property="rid" column="rid"/>
+ 		<result property="RoleName" column="RoleName"/>
+ 	</resultMap>
+ 	
+ 	
  	<sql id="sql">
  		<where>
  			<if test="users.LonginName !=null and users.LonginName!=''">
@@ -52,7 +66,7 @@
  	</select>
  	<!-- 添加用户 -->
  	<insert id="insertUser" parameterType="users">
- 		INSERT INTO users(LonginName,PassWord,CreateTime,ProtectEMail,ProtectMTel,IsLockout,PsdWrongTime) VALUES(#{LonginName},md5(#{PassWord}),#{CreateTime},#{ProtectEMail},#{ProtectMTel},'否',1);
+ 		INSERT INTO users(LonginName,PassWord,CreateTime,ProtectEMail,ProtectMTel,IsLockout,PsdWrongTime) VALUES(#{LonginName},md5('ysd123'),#{CreateTime},#{ProtectEMail},#{ProtectMTel},'否',1);
  	</insert>
  <!-- 删除用户 -->
    <delete id="delUser" parameterType="int">
@@ -79,9 +93,9 @@
    </where>
 </update>
 <!-- 查询该用户的角色 -->
-<select id="selectRoleNameBy" parameterType="String" resultType="users">
+<select id="selectRoleNameBy" parameterType="string" resultMap="selectRolesByUser">
     SELECT * from users u,roles r,userroles ur
-		WHERE u.uid=ur.UserId and r.rid=ur.RoleId AND r.roleName=#{roleName}
+		WHERE u.uid=ur.UserId and r.rid=ur.RoleId 
 		  AND u.LonginName=#{LonginName}
 </select>
 <!-- 锁定用户 -->
@@ -109,11 +123,16 @@
 <insert id="addUserRoles" parameterType="userRoles" >
     INSERT INTO userroles(userid,roleid) VALUES(#{userid},#{roleid})
 </insert>
-<!-- 查询用户是否拥有该角色 -->
+<!-- 查询该用户是否拥有该角色 -->
 <select id="selectUserRoles" parameterType="userRoles" resultType="userRoles">
 	select * from userroles where userid=#{userid} and roleid=#{roleid}
 </select>
-
+<!-- 查询咨询经理有没有被引用 -->
+<select id="selectUserRolesByRoleName" parameterType="userRoles" resultMap="selectRolesByName"  >
+    SELECT * from users u,roles r,userroles ur
+		WHERE u.uid=ur.UserId and r.rid=ur.RoleId
+		  AND r.roleName='咨询师经理' 
+</select>
 <!-- 查询用户名 -->
 <select id="selectUsersName" parameterType="int" resultType="users">
     SELECT * FROM users where uid =#{uid}

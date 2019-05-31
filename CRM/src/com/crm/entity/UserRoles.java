@@ -7,6 +7,22 @@ public class UserRoles {
 	private Integer urid;
 	private Integer userid;
 	private Integer roleid;
+	private Integer rid;
+	private String RoleName;
+	
+	
+	public Integer getRid() {
+		return rid;
+	}
+	public void setRid(Integer rid) {
+		this.rid = rid;
+	}
+	public String getRoleName() {
+		return RoleName;
+	}
+	public void setRoleName(String roleName) {
+		RoleName = roleName;
+	}
 	public Integer getUrid() {
 		return urid;
 	}
@@ -28,7 +44,7 @@ public class UserRoles {
 	@Override
 	public String toString() {
 		return "UserRoles [urid=" + urid + ", userid=" + userid + ", roleid="
-				+ roleid + "]";
+				+ roleid + ", rid=" + rid + ", RoleName=" + RoleName + "]";
 	}
 	
 }

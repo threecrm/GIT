@@ -69,12 +69,13 @@ public class UsersServiceImp implements UsersService {
 	 * 锁定用户
 	 */
 	public Integer lockUser(String LonginName) {
-		/*Users selectRoleNameBy = usersMapper.selectRoleNameBy(LonginName);
-		System.out.println(selectRoleNameBy);
-		if(selectRoleNameBy.getRoles().getRoleName().equals("管理员")){
-			return -1;
-		}*/
-		// TODO Auto-generated method stub
+		//查询该用户的角色
+		List<Roles> selectRoleNameBy = usersMapper.selectRoleNameBy(LonginName);
+		for(int i=0;i <selectRoleNameBy.size();i++){
+			if(selectRoleNameBy.get(i).getRoleName().equals("管理员")){
+				return -1;
+			}
+		}
 		return usersMapper.lockUser(LonginName);
 	}
 	/**
@@ -104,7 +105,13 @@ public class UsersServiceImp implements UsersService {
 	public Integer addUserRoles(UserRoles userRoles) {
 		// TODO Auto-generated method stub
 		Integer addUserRoles = null;
+		//查询该用户是否拥有该角色
 		List<UserRoles> selectUserRoles = usersMapper.selectUserRoles(userRoles);
+		//查询咨询经理角色有没有被引用
+		List<UserRoles> selectUserRolesByName = usersMapper.selectUserRolesByRoleName(userRoles);
+		if(selectUserRolesByName.size()!=0){
+			return -2;
+		}
 		if(selectUserRoles.size()==0){
 			addUserRoles = usersMapper.addUserRoles(userRoles);
 			/*查询出用户名*/
