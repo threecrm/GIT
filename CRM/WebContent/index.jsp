@@ -80,16 +80,16 @@
 	$(function(){
 	var u_id="<%=session.getAttribute("uid")%>"
 	
-	$.post("SelectMessage",{
-		AskId:u_id
-	},function(res){
-		if(res!=""){
-			$("#MessageWin").dialog("open");
-		}
+		$.post("SelectMessage",{
+			AskId:u_id
+		},function(res){
+			if(res!=""){
+				$("#MessageWin").dialog("open");
+			}
+				
 			
-		
-	},"json")
-})
+		},"json")
+	})
 	
 	function xianshi(){
 		$('#mm').menu('show', {    
@@ -291,13 +291,12 @@
 	
 	function DeleteMessage() {
 		  u_id="<%=session.getAttribute("uid")%>";
-		$.post("DeleteMessage",{
-			AskId:u_id
-		},function(res){
+		$.post("DeleteMessage", {
+			AskId : u_id
+		}, function(res) {
 			$("#MessageWin").dialog("close");
-		},"json")
-	} 
-	
+		}, "json")
+	}
 </script>
 <style type="text/css">
 span {
@@ -307,15 +306,13 @@ span {
 </head>
 <body class="easyui-layout">
 
- <div id="MessageWin" class="easyui-dialog" data-options="modal:true,title:'有新增消息',closed:true"   style="width:200px;height:150px;">
-      <br>
-      &emsp;&emsp;你有新客户需要你稳住他们
-      <br>
-      <br>
-      <br>
-      &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-      <a class="easyui-linkbutton"  onclick="DeleteMessage()">收到</a>
-</div> 
+	<div id="MessageWin" class="easyui-dialog"
+		data-options="modal:true,title:'有新增消息',closed:true"
+		style="width: 200px; height: 150px;">
+		<br> &emsp;&emsp;你有新客户需要你稳住他们 <br> <br> <br>
+		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <a class="easyui-linkbutton"
+			onclick="DeleteMessage()">收到</a>
+	</div>
 
 	<div data-options="region:'north'" style="width: 100%; height: 40px;">
 		<div style="margin-left: 10%">
@@ -423,7 +420,11 @@ span {
 				onclick="closed()">取消</a>
 		</form>
 	</div>
-	<div id="dd"><textarea id="messageBox" rows="8" cols="57"></textarea></div> 
-	<div id="message"><textarea id="messages" rows="8" cols="57" readonly></textarea></div> 
+	<div id="dd">
+		<textarea id="messageBox" rows="8" cols="57"></textarea>
+	</div>
+	<div id="message">
+		<textarea id="messages" rows="8" cols="57" readonly></textarea>
+	</div>
 </body>
 </html>

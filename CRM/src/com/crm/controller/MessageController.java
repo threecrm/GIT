@@ -34,8 +34,11 @@ public class MessageController {
 	          Users user=counselorService.selectUsersInfo(AskId);
 		//查询咨询师id
 			  Ask ask =counselorService.selectAskInfo(user.getLonginName());
+			  if(ask==null){
+				  return null;
+			  }
 		//根据咨询师Id   查询是否有新增消息记录
-			  List<Message>selectMessage=messageService.SelectMessage(ask.getAskId());
+			  List<Message> selectMessage=messageService.SelectMessage(ask.getAskId());
 		return selectMessage;
 	}
 	

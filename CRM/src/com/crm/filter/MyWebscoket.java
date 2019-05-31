@@ -24,7 +24,6 @@ public class MyWebscoket {
 		this.name = name;
 		map.put(name, this);
 		count++;
-		System.out.println("连接建立了" + name);
 	}
 
 	@OnMessage
@@ -45,7 +44,6 @@ public class MyWebscoket {
 
 	@OnClose
 	public void onclose() {
-		System.out.println("连接退出了");
 		map.remove(name);
 		count--;
 	}

@@ -24,7 +24,8 @@ public class MessageServiceImp implements MessageService {
 	@Override
 	public List<Message> SelectMessage(Integer AskId) {
 		// TODO Auto-generated method stub
-		return messageMapper.SelectMessage(AskId);
+		List<Message> selectMessage = messageMapper.SelectMessage(AskId);
+		return selectMessage;
 	}
 	@Override
 	public Integer DeleteMessage(Integer AskId) {
