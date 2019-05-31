@@ -76,6 +76,21 @@
 	            }
 	        });
 	})
+	
+	$(function(){
+	var u_id="<%=session.getAttribute("uid")%>"
+	
+	$.post("SelectMessage",{
+		AskId:u_id
+	},function(res){
+		if(res!=""){
+			$("#MessageWin").dialog("open");
+		}
+			
+		
+	},"json")
+})
+	
 	function xianshi(){
 		$('#mm').menu('show', {    
 			  left: 1700,    
@@ -274,6 +289,14 @@
 		});
 	}
 	
+	function DeleteMessage() {
+		  u_id="<%=session.getAttribute("uid")%>";
+		$.post("DeleteMessage",{
+			AskId:u_id
+		},function(res){
+			$("#MessageWin").dialog("close");
+		},"json")
+	} 
 	
 </script>
 <style type="text/css">
@@ -283,6 +306,17 @@ span {
 </style>
 </head>
 <body class="easyui-layout">
+
+ <div id="MessageWin" class="easyui-dialog" data-options="modal:true,title:'有新增消息',closed:true"   style="width:200px;height:150px;">
+      <br>
+      &emsp;&emsp;你有新客户需要你稳住他们
+      <br>
+      <br>
+      <br>
+      &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+      <a class="easyui-linkbutton"  onclick="DeleteMessage()">收到</a>
+</div> 
+
 	<div data-options="region:'north'" style="width: 100%; height: 40px;">
 		<div style="margin-left: 10%">
 			<%

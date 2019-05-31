@@ -6,4 +6,21 @@
  	<select id="seleUsers" parameterType="string" resultType="users">
  		SELECT * FROM users WHERE LonginName=#{Name}
  	</select>
+ 	
+ 	
+ 	<insert id="insertMessage" parameterType="message" >
+ 	 
+ 	   INSERT INTO message(Sid,AskId) 
+		      VALUES(#{Sid},#{AskId})
+ 	</insert>
+ 	
+ 	
+ 	<select id="SelectMessage" parameterType="int" resultType="message">
+ 		SELECT * FROM message WHERE AskId=#{AskId}
+ 	</select>
+ 	
+ 	<delete id="DeleteMessage" parameterType="int">
+ 	DELETE FROM message 
+          WHERE AskId=#{AskId}
+ 	</delete>
  </mapper>

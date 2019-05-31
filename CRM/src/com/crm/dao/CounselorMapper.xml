@@ -123,7 +123,9 @@
 	and Address like "%"#{student.Address}"%"
 	</if>
 	</where> 
- limit #{page},#{pageSize}
+	ORDER BY (student.sid) DESC
+    limit #{page},#{pageSize}
+   
  </select>
  
  <insert id="InsertInfo" parameterType="network_trace"  >
@@ -187,8 +189,9 @@
                 and uid =#{ask.askId}
              </if>
          </where>
+         ORDER BY network_trace.n_id DESC
          limit #{page},#{pageSize}
-          <!-- ORDER BY network_trace.n_id DESC  -->
+         
  </select>
  
   <select id="SeleteNetwork_traceLogCount" parameterType="fenye" resultType="int">
@@ -199,8 +202,8 @@
 			 SELECT *
 			  FROM `network_trace` 
 			 where sid=#{network_trace.sid} 
+			 ORDER BY network_trace.n_id DESC
           limit #{page},#{pageSize}
-          <!-- ORDER BY #{network_trace.n_id} DESC -->
  </select>
  
  <delete id="Delete" parameterType="int" >

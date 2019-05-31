@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,9 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.crm.entity.Ask;
 import com.crm.entity.Fenye;
-
+import com.crm.entity.Message;
 import com.crm.entity.Roles;
 import com.crm.entity.Student;
+import com.crm.service.MessageService;
 import com.crm.service.StudentService;
 
 @Controller
@@ -25,6 +27,8 @@ public class StudentController {
 	private Fenye<Student> fenye;
 	@Autowired
 	private HttpServletRequest request;
+	@Autowired
+	private MessageService messageService;
 
 	// 分页显示所有
 	@RequestMapping(value = "/selectAllStudent", method = RequestMethod.POST)
@@ -113,6 +117,12 @@ public class StudentController {
 	@ResponseBody
 	public Integer addAskName(Student student) {
 		Integer addAskName = studentService.addAskName(student);
+		
+		Message message =new Message();
+		message.setAskId(student.getAskerId());
+		message.setSid(student.getSid());
+		Integer insertMessage=messageService.insertMessage(message);
+		
 		return addAskName;
 	}
 

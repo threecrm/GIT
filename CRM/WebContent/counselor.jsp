@@ -157,8 +157,8 @@ function submit(){
 		    url:'SeleteNetwork_traceLog',    
 		    columns:[[    
 		        {field:'n_sname',title:'学生姓名',width:100},    
-		        {field:'name',title:'跟踪开始时间',width:100},    
-		        {field:'n_date',title:'跟踪者',width:100,},
+		        {field:'n_date',title:'跟踪开始时间',width:100},    
+		        {field:'uname',title:'跟踪者',width:100,},
 		        {field:'n_qingkuang',title:'回访情况',width:100},
 		        {field:'n_fangshi',title:'跟踪方式',width:100},
 		        {field:'n_ask',title:'拜访详细',width:100},

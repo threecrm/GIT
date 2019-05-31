@@ -34,7 +34,9 @@ public Fenye<Student> SelectStudent(Student student,Integer page,Integer rows){
 		
 		//²éÑ¯×ÉÑ¯Ê¦id
 		Ask ask =counselorService.selectAskInfo(user.getLonginName());
-		
+		if(ask==null){
+			return studentfenye;
+		}
 	studentfenye.setPage((page-1)*rows);
 	studentfenye.setPageSize(rows);
 	studentfenye.setStudent(student);

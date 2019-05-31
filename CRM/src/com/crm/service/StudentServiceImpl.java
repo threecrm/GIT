@@ -7,18 +7,22 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.crm.dao.MessageMapper;
 import com.crm.dao.StudentMapper;
 import com.crm.entity.Ask;
 import com.crm.entity.Fenye;
 import com.crm.entity.GenZong;
+import com.crm.entity.Message;
 import com.crm.entity.Roles;
 import com.crm.entity.Student;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-	@Autowired
+	@Autowired  
 	private StudentMapper studentMapper;
-
+	@Autowired
+    private MessageMapper messageMapper;
+	
 	public Fenye<Student> selectAllStudent(Fenye<Student> fenye) {
 		List<Student> selectStudentAll = studentMapper.selectStudentAll(fenye);
 		Integer countStudent = studentMapper.countStudent(fenye);
@@ -61,6 +65,7 @@ public class StudentServiceImpl implements StudentService {
 				}
 			}
 		}
+		student.setIsValid("是");
 		Integer addStudent = studentMapper.addStudent(student);
 		return addStudent;
 	}
@@ -115,10 +120,12 @@ public class StudentServiceImpl implements StudentService {
 		//查询出所有的当天已经签到的咨询师
 		List<Ask> selectAskAll = studentMapper.selectAskAll(sdf.format(date));
 		for (int y = 0; y < selecStudent.size(); y++) {
+			Message message =new Message();
 			Integer Max = 100;
 			Student student = new Student();
 			student.setSid(selecStudent.get(y).getSid());
 			for (int i = 0; i < selectAskAll.size(); i++) {
+				
 				//查询出已签到的咨询师有多少学生个数
 				Integer selectAskStu = studentMapper.selectAskStu(sdf.format(date),selectAskAll.get(i).getAskId());
 				//没有为零
@@ -129,10 +136,14 @@ public class StudentServiceImpl implements StudentService {
 				if (selectAskStu < Max) {
 					Max = selectAskStu;
 					student.setAskerId(selectAskAll.get(i).getAskId());
+					message.setAskId(selectAskAll.get(i).getAskId());
 				} 
 			}
 			//修改学生的咨询师Id
 			updateStudentAsk = studentMapper.updateStudentAsk(student);
+			
+			message.setSid(selecStudent.get(y).getSid());
+			Integer insertMessage=messageMapper.insertMessage(message);
 		}
 		return updateStudentAsk;
 	}
