@@ -127,32 +127,32 @@
 			if (res == -1) {
 				$.messager.alert("提示", "请输入姓名");
 			} else if (res == -2) {
-				$.messager.alert("提示", "请输入性别");
-			} else if (res == -3) {
 				$.messager.alert("提示", "请输入年龄");
+			} else if (res == -3) {
+				$.messager.alert("提示", "请输入正确格式电话，手机号长度必须为11位");
 			} else if (res == -4) {
-				$.messager.alert("提示", "请输入手机号，手机号长度必须为11位");
+				$.messager.alert("提示", "请输入来源关键字");
 			} else if (res == -5) {
-				$.messager.alert("提示", "请输入学历");
-			} else if (res == -6) {
-				$.messager.alert("提示", "请输入状态");
-			} else if (res == -7) {
-				$.messager.alert("提示", "请输入来源渠道");
-			} else if (res == -8) {
-				$.messager.alert("提示", "请输入来源网站");
-			} else if (res == -9) {
-				$.messager.alert("提示", "请输入来源关键词");
-			} else if (res == -10) {
 				$.messager.alert("提示", "请输入正确格式的邮箱");
-			} else if (res == -11) {
-				$.messager.alert("提示", "请输入微信");
-			} else if (res == -12) {
-				$.messager.alert("提示", "请输入报备");
-			} else if (res == -13) {
+			} else if (res == -6) {
+				$.messager.alert("提示", "请输入微信号");
+			} else if (res == -7) {
 				$.messager.alert("提示", "请输入在线备注");
+			} else if (res == -8) {
+				$.messager.alert("提示", "请输入性别");
+			} else if (res == -9) {
+				$.messager.alert("提示", "请输入状态");
+			} else if (res == -10) {
+				$.messager.alert("提示", "请输入学历");
+			} else if (res == -11) {
+				$.messager.alert("提示", "请输入来源渠道");
+			} else if (res == -12) {
+				$.messager.alert("提示", "请输入来源网站");
+			} else if (res == -13) {
+				$.messager.alert("提示", "请输入是否报备");
 			} else if (res == -14) {
 				$.messager.alert("提示", "请输入回访情况");
-			} else if (res > 0) {
+			}else if (res > 0) {
 				$.messager.alert("提示", "添加成功");
 				$("#addWindow").window("close");
 				$("#tabs").datagrid("reload");
@@ -983,7 +983,7 @@
 
 	<!--  添加跟踪-->
 	<div id="genzongid" class="easyui-window"
-		data-options="closed:true,title:'添加跟踪'">
+		data-options="closed:true,title:'添加跟踪'" style="width:350px;height:400px">
 		<form id="genzongForm" class="easyui-form">
 			<table>
 				<tr>

@@ -47,32 +47,29 @@ public class NetStudentController {
 		student.setAskerId(selectAsk.getAskId());
 		if (student.getSname().length() <= 0) {
 			return -1;
-		} else if (student.getSex().equals("--ÇëÑ¡Ôñ--")) {
+		} else if (student.getAge()==null) {
 			return -2;
-		} else if (student.getAge() == null) {
-			return -3;
 		} else if (student.getPhone().length() != 11) {
+			return -3;
+		} else if (student.getSourceKeyWord().length()<=0) {
 			return -4;
-		} else if (student.getStuStatus().equals("--ÇëÑ¡Ôñ--")) {
-			return -5;
-		} else if (student.getPerStatus().equals("--ÇëÑ¡Ôñ--")) {
-			return -6;
-		} else if (student.getMsgSource().equals("--ÇëÑ¡Ôñ--")) {
-			return -7;
-		} else if (student.getSourceUrl().equals("--ÇëÑ¡Ôñ--")) {
-			return -8;
-		}
-		if (student.getSourceKeyWord().length() <= 0) {
-			return -9;
 		} else if (!student.getQQ().matches("^\\w+@(\\w+\\.)+\\w+$")) {
+			return -5;
+		} else if (student.getWeiXin().length()<=0) {
+			return -6;
+		} else if (student.getContent().length()<=0) {
+			return -7;
+		} else if (student.getSex().equals("--ÇëÑ¡Ôñ--")) {
+			return -8;
+		}else if (student.getPerStatus().equals("--ÇëÑ¡Ôñ--")) {
+			return -9;
+		} else if (student.getStuStatus().equals("--ÇëÑ¡Ôñ--")) {
 			return -10;
-		}
-		if (student.getWeiXin().length() <= 0) {
+		}else if (student.getMsgSource().equals("--ÇëÑ¡Ôñ--")) {
 			return -11;
-		} else if (student.getIsBaoBei().equals("--ÇëÑ¡Ôñ--")) {
+		} else if (student.getSourceUrl().equals("--ÇëÑ¡Ôñ--")) {
 			return -12;
-		}
-		if (student.getContent().length() <= 0) {
+		}else if (student.getIsBaoBei().equals("--ÇëÑ¡Ôñ--")) {
 			return -13;
 		} else if (student.getIsReturnVisit().equals("--ÇëÑ¡Ôñ--")) {
 			return -14;

@@ -242,6 +242,39 @@
 			}
 		}, "json")
 	}
+	
+	
+	var uid="<%=session.getAttribute("uid")%>"
+	var webscoket=new WebSocket("ws:localhost:8080/CRM/webscoket/"+uid);
+
+	webscoket.onmessage=function(event){
+		alert(event.data);
+		
+	}
+	function dialogBox(){
+		$('#dd').dialog({    
+		    title: '消息',    
+		    width: 400,    
+		    height: 200,    
+		    closed: false,    
+		    cache: false,    
+		    modal: true,
+		    buttons:[{
+				text:'发送',
+				handler:function(){
+					send();
+				}
+			},{
+				text:'关闭',
+				handler:function(){
+					
+					
+				}
+			}]
+		});
+	}
+	
+	
 </script>
 <style type="text/css">
 span {
@@ -271,6 +304,9 @@ span {
 				<div data-options="" onclick="qiandao()">签到</div>
 				<div data-options="" onclick="qiantui()">签退</div>
 				<div data-options="" onclick="pim()">个人信息</div>
+				<c:if test="${selectName !='true'}">
+					<div data-options="" onclick="dialogBox()">呼叫经理</div>
+				</c:if>
 				<div data-options="" onclick="UserSafety()">安全设置</div>
 				<div class="menu-sep"></div>
 				<div onclick="drop()">退出</div>
@@ -353,5 +389,7 @@ span {
 				onclick="closed()">取消</a>
 		</form>
 	</div>
+	<div id="dd"><textarea id="messageBox" rows="8" cols="57"></textarea></div> 
+	<div id="message"><textarea id="messages" rows="8" cols="57" readonly></textarea></div> 
 </body>
 </html>

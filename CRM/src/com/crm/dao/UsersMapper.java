@@ -47,6 +47,12 @@ public interface UsersMapper {
 	 */
 	Integer updateUser(Users users);
 	/**
+	 * 查询该用户的角色
+	 * @param users
+	 * @return
+	 */
+	Users selectRoleNameBy(String LonginName);
+	/**
 	 * 锁定用户
 	 * @param LonginName
 	 * @return

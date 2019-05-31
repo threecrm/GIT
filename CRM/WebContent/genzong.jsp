@@ -93,8 +93,7 @@ function Delete(index) {
 
 <table id="stuTab" class="easyui-datagrid" >
 		<thead>
-			<tr> <th field="ck" checkbox="true" title="批量删除"></th> 
-			    <th data-options="field:'choose',title:'操作',formatter:formatterChoose"></th>   
+			<tr> 
 				<th data-options="field:'n_id',title:'ID',width:100"></th>
 				<th data-options="field:'n_sname',title:'学生姓名',width:100"></th>
 				<th data-options="field:'n_date',title:'跟踪开始时间',width:100"></th>
@@ -103,12 +102,13 @@ function Delete(index) {
 				<th data-options="field:'n_fangshi',title:'跟踪方式',width:100"></th>
 				<th data-options="field:'n_ask',title:'拜访详细',width:100"></th>
 				<th data-options="field:'n_aftertime',title:'跟踪结束时间',width:100"></th>
+		       <th data-options="field:'choose',title:'操作',formatter:formatterChoose"></th> 
 				
 			</tr>
 		</thead>
 	</table>
 	    
-		<div id="ZhuiZongWin" class="easyui-window" data-options="modal:true,title:'拜访学生页面',closed:true" style="width:600px;height:500px">
+		<div id="ZhuiZongWin" class="easyui-window" data-options="modal:true,title:'拜访学生页面',closed:true" style="width:350px;height:400px">
 	    <form id="ZhuiZongform" class="easyui-form" >
 	    <table>
 	    <tr>

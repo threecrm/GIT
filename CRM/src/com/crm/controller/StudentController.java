@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.crm.entity.Ask;
 import com.crm.entity.Fenye;
-import com.crm.entity.GenZong;
+
 import com.crm.entity.Roles;
 import com.crm.entity.Student;
 import com.crm.service.StudentService;
@@ -54,6 +51,35 @@ public class StudentController {
 	@RequestMapping(value = "/addStudent", method = RequestMethod.POST)
 	@ResponseBody
 	public Integer addStudent(Student student,Boolean tur) {
+		if (student.getSname().length() <= 0) {
+			return -1;
+		} else if (student.getAge()==null) {
+			return -2;
+		} else if (student.getPhone().length() != 11) {
+			return -3;
+		} else if (student.getSourceKeyWord().length()<=0) {
+			return -4;
+		} else if (!student.getQQ().matches("^\\w+@(\\w+\\.)+\\w+$")) {
+			return -5;
+		} else if (student.getWeiXin().length()<=0) {
+			return -6;
+		} else if (student.getContent().length()<=0) {
+			return -7;
+		} else if (student.getSex().equals("--ÇëÑ¡Ôñ--")) {
+			return -8;
+		}else if (student.getPerStatus().equals("--ÇëÑ¡Ôñ--")) {
+			return -9;
+		} else if (student.getStuStatus().equals("--ÇëÑ¡Ôñ--")) {
+			return -10;
+		}else if (student.getMsgSource().equals("--ÇëÑ¡Ôñ--")) {
+			return -11;
+		} else if (student.getSourceUrl().equals("--ÇëÑ¡Ôñ--")) {
+			return -12;
+		}else if (student.getIsBaoBei().equals("--ÇëÑ¡Ôñ--")) {
+			return -13;
+		} else if (student.getIsReturnVisit().equals("--ÇëÑ¡Ôñ--")) {
+			return -14;
+		}
 		Integer addStudent = studentService.addStudent(student,tur);
 		return addStudent;
 	}

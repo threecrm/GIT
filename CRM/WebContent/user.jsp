@@ -211,8 +211,10 @@
 							if(res>0){
 								$.messager.alert("提示", "锁定成功！");
 								$("#tab").datagrid("reload");
+							}else if(res==-1){
+								$.messager.alert("提示", "该用户是管理员不能被锁定！！！");
 							}else{
-								$.messager.alert("提示","该用户已被锁定！");
+								$.messager.alert("提示","该用户已是被锁定状态！");
 							}
 						}, "json")
 				    }
@@ -232,7 +234,7 @@
 								$.messager.alert("提示", "解锁成功！");
 								$("#tab").datagrid("reload");
 							}else{
-								$.messager.alert("提示","该用户已解锁！");
+								$.messager.alert("提示","该用户已是被解锁状态！");
 							}
 						}, "json")
 				    }
@@ -280,10 +282,30 @@
 			
 			/*新增用户角色*/
 			function addUserRole(){
+				var data=$("#juese").datagrid("getData");
+				//获取用户角色信息
+				var datas=$("#User-juese").datagrid("getData");
+				//获取系统角色信息
+				var roleRow=$("#juese").datagrid("getSelected");
 				//获取用户信息
 				var userRow=$("#tab").datagrid("getSelected");
-				//获取角色信息
-				var roleRow=$("#juese").datagrid("getSelected");
+				  if(roleRow.roleName=="管理员"){
+					return $.messager.alert("提示信息","管理员是唯一的！！");
+				}  
+				  /* if(roleRow.roleName=="咨询经理"){
+						return $.messager.alert("提示信息","咨询师经理是唯一的！！");
+					}   */
+				  
+				for(var i=0;i<data.rows.length;i++){
+					if(datas.rows[i]!=undefined){
+						if(datas.rows[i].roles.roleName=="网络咨询师" && roleRow.roleName=="咨询师"){
+							return $.messager.alert("提示信息","不能同时拥有网络咨询师和咨询师！！");
+						}
+						if(datas.rows[i].roles.roleName=="咨询师" && roleRow.roleName=="网络咨询师"){
+							return $.messager.alert("提示信息","不能同时拥有咨询师和网络咨询师！！");
+						}
+					}
+				}
 				 if(userRow!=null && roleRow!=null){
 					$.post(
 							"addUserRoles",
@@ -310,6 +332,10 @@
 				var userRow=$("#tab").datagrid("getSelected");
 				//获取角色信息
 				var roleRow=$("#User-juese").datagrid("getSelected");
+				//判断要删除的是不是管理员
+				if(roleRow.roles.roleName=="管理员"){
+					return $.messager.alert("提示信息","管理员是不能删除的！！");
+				}
 				 if(userRow!=null && roleRow!=null){
 					$.post(
 							"delUserRoles",

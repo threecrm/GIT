@@ -21,6 +21,10 @@ public class UsersServiceImp implements UsersService {
 	private Fenye<Users> fenye;
 	@Autowired
 	private Ask ask;
+	@Autowired
+	private Users users;
+	@Autowired
+	private Roles roles;
 
 	/**
 	 * 分页查询
@@ -65,6 +69,11 @@ public class UsersServiceImp implements UsersService {
 	 * 锁定用户
 	 */
 	public Integer lockUser(String LonginName) {
+		/*Users selectRoleNameBy = usersMapper.selectRoleNameBy(LonginName);
+		System.out.println(selectRoleNameBy);
+		if(selectRoleNameBy.getRoles().getRoleName().equals("管理员")){
+			return -1;
+		}*/
 		// TODO Auto-generated method stub
 		return usersMapper.lockUser(LonginName);
 	}
