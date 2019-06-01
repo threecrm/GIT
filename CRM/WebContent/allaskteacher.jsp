@@ -48,6 +48,7 @@
 			method : 'post',
 			pagination : true,
 			singleSelect:true,
+			fitColumns:true,
 			toolbar : '#seachid',
 			queryParams : {
 				askName : $("#askName").val(),
@@ -262,16 +263,16 @@
 		</div>
 		<thead>
 			<tr>
-				<th data-options="field:'askId',title:'编号'"></th>
-				<th data-options="field:'askName',title:'姓名'"></th>
-				<th data-options="field:'checkState',title:'咨询状态'"></th>
-				<th data-options="field:'checkInTime',title:'咨询日期'"></th>
-				<th data-options="field:'changeState',title:'上班状态'"></th>
-				<th data-options="field:'weights',title:'权重'"></th>
-				<th data-options="field:'roleNames',title:'角色'"></th>
-				<th data-options="field:'bakContent',title:'咨询内容'"></th>
-				<th data-options="field:'statue',title:'状态'"></th>
-				<th data-options="field:'caozuo',title:'操作' ,formatter:formatterSet"></th>
+				<th data-options="field:'askId',align:'center',title:'编号'"></th>
+				<th data-options="field:'askName',align:'center',title:'姓名'"></th>
+				<th data-options="field:'checkState',align:'center',title:'咨询状态'"></th>
+				<th data-options="field:'checkInTime',align:'center',title:'签到时间'"></th>
+				<th data-options="field:'changeState',align:'center',title:'上班状态'"></th>
+				<th data-options="field:'weights',align:'center',title:'权重'"></th>
+				<th data-options="field:'roleNames',align:'center',title:'角色'"></th>
+				<th data-options="field:'bakContent',align:'center',title:'分量状态'"></th>
+				<th data-options="field:'statue',align:'center',title:'状态'"></th>
+				<th data-options="field:'caozuo',align:'center',title:'操作' ,formatter:formatterSet"></th>
 
 			</tr>
 
@@ -402,7 +403,7 @@
 		</form>
 	</div>
 	<div id="dd">
-		<textarea id="message" rows="" cols=""></textarea>
+		<input class="easyui-textbox" id="message" data-options="multiline:true,height:50,prompt:'备注...'" type="text" name="s_inClassContent"/>
 	</div>
 </body>
 </html>

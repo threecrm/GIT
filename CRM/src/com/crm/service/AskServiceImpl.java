@@ -103,4 +103,10 @@ public class AskServiceImpl implements AskService {
 		return updateAskStatue;
 	}
 
+	@Override
+	public Integer updateFenLiang(Ask ask) {
+		Integer updateFenLiang = askMapper.updateFenLiang(ask);
+		return updateFenLiang;
+	}
+
 }

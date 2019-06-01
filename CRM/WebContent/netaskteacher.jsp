@@ -103,7 +103,7 @@
 				<th data-options="field:'changeState',title:'上班状态'"></th>
 				<th data-options="field:'weights',title:'权重'"></th>
 				<th data-options="field:'roleNames',title:'角色'"></th>
-				<th data-options="field:'bakContent',title:'咨询内容'"></th>
+				<th data-options="field:'bakContent',title:'分量状态'"></th>
 				<th data-options="field:'caozuo',title:'操作' ,formatter:formatterSet"></th>
 			</tr>
 

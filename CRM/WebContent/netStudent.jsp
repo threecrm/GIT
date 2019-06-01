@@ -15,7 +15,7 @@
 	src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
 <script type="text/javascript"
 	src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
-	<!--导出excel的文件包 -->
+<!--导出excel的文件包 -->
 <script type="text/javascript"
 	src="js/jquery-easyui-1.4.3/datagrid-export.js"></script>
 <style type="text/css">
@@ -26,7 +26,27 @@
 <script type="text/javascript">
 	$(function() {
 		init();
+		fenliang();
 	})
+	function fenliang(){
+		$.post("selectFenLiangOpen",{
+			AskName:"${LoginUserName}"
+		},function(data){
+			if(data.bakContent=="已关闭"){
+				 $('#tur').switchbutton({ 
+				      checked: false,
+				      readonly:true
+				    }) 
+				 document.getElementById("fenliang").style.display = "block"; 
+			}else{
+				 $('#tur').switchbutton({ 
+				      checked: true,
+				      readonly:true
+				    }) 
+				document.getElementById("fenliang").style.display = "block"; 
+			}
+		})
+	}
 	function formatterSet(value, row, index) {
 		return "<a href='javascrip:void(0)' onclick='look("
 				+ index
@@ -107,6 +127,7 @@
 	}
 	// 添加学生确认按钮
 	function addtrue() {
+		var tur = $("#tur").switchbutton("options").checked;
 		$.post("addNetStudent", {
 			AskerId : $("#uid").val(),
 			Sname : $("#addSname").val(),
@@ -122,7 +143,8 @@
 			WeiXin : $("#addWeiXin").val(),
 			isBaoBei : $("#addisBaoBei").combobox("getValue"),
 			Content : $("#addContent").val(),
-			IsReturnVisit : $("#AddisReturnVisit").combobox("getValue")
+			IsReturnVisit : $("#AddisReturnVisit").combobox("getValue"),
+			tur:tur
 		}, function(res) {
 			if (res == -1) {
 				$.messager.alert("提示", "请输入姓名");
@@ -152,7 +174,7 @@
 				$.messager.alert("提示", "请输入是否报备");
 			} else if (res == -14) {
 				$.messager.alert("提示", "请输入回访情况");
-			}else if (res > 0) {
+			} else if (res > 0) {
 				$.messager.alert("提示", "添加成功");
 				$("#addWindow").window("close");
 				$("#tabs").datagrid("reload");
@@ -341,7 +363,7 @@
 	function genzongfalse() {
 		$("#genzongid").window("close")
 	}
-	
+
 	// 导出excel(导 js/jquery-easyui-1.4.3/datagrid-export.js 包)
 	function exportExcel() {
 		$('#tabs').datagrid('toExcel', 'dg.xls');
@@ -349,8 +371,6 @@
 </script>
 </head>
 <body>
-
-
 	<input type="hidden" id="LoginUserName" value="${LoginUserName}">
 	<!--获取登陆者姓名  -->
 	<input type="hidden" id="uid" value="${uid}">
@@ -361,12 +381,12 @@
 				<td>学生姓名:<input class="easyui-textbox a" id="sname"></td>
 				<td>电话：<input class="easyui-textbox a" id="phone"></td>
 				<td>邮箱：<input class="easyui-textbox a" id="qq"></td>
-				<td>是否有效： <select id="isValid" class="easyui-combobox a">
+				<td>是否有效： <select id="isValid" class="easyui-combobox a" data-options="editable:false">
 						<option value=''>--请选择--</option>
 						<option>是</option>
 						<option>否</option>
 				</select></td>
-				<td>回访情况: <select id="isReturnVisit" class="easyui-combobox a">
+				<td>回访情况: <select id="isReturnVisit" class="easyui-combobox a" data-options="editable:false">
 						<option value=''>--请选择--</option>
 						<option>已回访</option>
 						<option>未回访</option>
@@ -375,7 +395,7 @@
 						<option>报名未进班</option>
 						<option>未上门</option>
 				</select></td>
-				<td>是否缴费： <select id="isPay" class="easyui-combobox a">
+				<td>是否缴费： <select id="isPay" class="easyui-combobox a" data-options="editable:false">
 						<option value=''>--请选择--</option>
 						<option>是</option>
 						<option>否</option>
@@ -422,7 +442,6 @@
 			</tr>
 		</table>
 	</div>
-
 	<table id="tabs" class="easyui-datagrid">
 		<thead>
 			<tr>
@@ -469,7 +488,6 @@
 				<th data-options="field:'preMoneyTime',title:'交定金时间'"></th>
 				<th data-options="field:'askerId',title:'咨询师编号'"></th>
 				<th data-options="field:'hahha',title:'操作' ,formatter:formatterSet"></th>
-
 			</tr>
 		</thead>
 	</table>
@@ -553,7 +571,6 @@
 				<td><input class="checkeds" checked="checked" type="checkbox"
 					name="isHome" onclick="checkOrClose(this)" /></td>
 				<td>是否家访</td>
-
 			</tr>
 			<tr>
 				<td><input class="checkeds" checked="checked" type="checkbox"
@@ -568,7 +585,6 @@
 				<td><input class="checkeds" checked="checked" type="checkbox"
 					name="payTime" onclick="checkOrClose(this)" /></td>
 				<td>缴费时间</td>
-
 			</tr>
 			<tr>
 				<td><input class="checkeds" checked="checked" type="checkbox"
@@ -583,7 +599,6 @@
 				<td><input class="checkeds" checked="checked" type="checkbox"
 					name="inClassTime" onclick="checkOrClose(this)" /></td>
 				<td>进班时间</td>
-
 			</tr>
 			<tr>
 				<td><input class="checkeds" checked="checked" type="checkbox"
@@ -617,7 +632,6 @@
 				<td><input class="checkeds" checked="checked" type="checkbox"
 					name="askerId" onclick="checkOrClose(this)" /></td>
 				<td>咨询师编号</td>
-
 			</tr>
 		</table>
 	</div>
@@ -626,20 +640,23 @@
 		data-options="closed:true,width:600,title:'添加表单'">
 		<form id="addForm">
 			<table>
-
 				<tr>
-					<td>姓名:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input class="easyui-validatebox" type="text"
-						id="addSname" placeholder="请输入姓名" data-options="required:true" /></td>
-					<td>性别:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<select id="addSex" class="easyui-combobox a">
+					<td>姓名:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input
+						class="easyui-validatebox" type="text" id="addSname"
+						placeholder="请输入姓名" data-options="required:true" /></td>
+					<td>性别:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<select id="addSex"
+						class="easyui-combobox a" data-options="editable:false">
 							<option>--请选择--</option>
 							<option>男</option>
 							<option>女</option>
 					</select></td>
 				</tr>
 				<tr>
-					<td>年龄:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input class="easyui-validatebox" type="text"
-						id="addAge" data-options="required:true" placeholder="请输入年龄" /></td>
-					<td>学历:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<select id="addStuStatus" class="easyui-combobox a">
+					<td>年龄:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input
+						class="easyui-validatebox" type="text" id="addAge"
+						data-options="required:true" placeholder="请输入年龄" /></td>
+					<td>学历:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<select
+						id="addStuStatus" class="easyui-combobox a" data-options="editable:false">
 							<option>--请选择--</option>
 							<option>未知</option>
 							<option>大专</option>
@@ -651,9 +668,11 @@
 					</select></td>
 				</tr>
 				<tr>
-					<td>电话:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input class="easyui-validatebox" type="text"
-						id="addPhone" data-options="required:true" placeholder="请输入电话" /></td>
-					<td>状态:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<select id="addPerStatus" class="easyui-combobox a">
+					<td>电话:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input
+						class="easyui-validatebox" type="text" id="addPhone"
+						data-options="required:true" placeholder="请输入电话" /></td>
+					<td>状态:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<select
+						id="addPerStatus" class="easyui-combobox a" data-options="editable:false">
 							<option>--请选择--</option>
 							<option>未知</option>
 							<option>待业</option>
@@ -662,10 +681,11 @@
 					</select></td>
 				</tr>
 				<tr>
-					<td>来源关键词:&ensp;&ensp;<input class="easyui-validatebox" type="text"
-						id="addSourceKeyWord" data-options="required:true"
+					<td>来源关键词:&ensp;&ensp;<input class="easyui-validatebox"
+						type="text" id="addSourceKeyWord" data-options="required:true"
 						placeholder="请输入来源关键字" /></td>
-					<td>来源渠道:&ensp;&ensp;<select id="addMsgSource" class="easyui-combobox a">
+					<td>来源渠道:&ensp;&ensp;<select id="addMsgSource"
+						class="easyui-combobox a" data-options="editable:false">
 							<option>--请选择--</option>
 							<option>未知</option>
 							<option>百度</option>
@@ -683,10 +703,11 @@
 					</select></td>
 				</tr>
 				<tr>
-					<td>邮箱::&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input class="easyui-validatebox" type="text"
-						id="addQQ" data-options="required:true" placeholder="请输入学院QQ" /></td>
+					<td>邮箱::&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input
+						class="easyui-validatebox" type="text" id="addQQ"
+						data-options="required:true" placeholder="请输入学院QQ" /></td>
 					<td>回访情况:<select id="AddisReturnVisit"
-						class="easyui-combobox a">
+						class="easyui-combobox a" data-options="editable:false">
 							<option value=''>--请选择--</option>
 							<option>已回访</option>
 							<option>未回访</option>
@@ -697,9 +718,10 @@
 					</select></td>
 				</tr>
 				<tr>
-					<td>微信号::&ensp;&ensp;&ensp;&ensp;<input class="easyui-validatebox" type="text"
-						id="addWeiXin" data-options="required:true" placeholder="请输入微信号" /></td>
-					<td>来源网站:<select id="addSourceUrl" class="easyui-combobox a">
+					<td>微信号::&ensp;&ensp;&ensp;&ensp;<input
+						class="easyui-validatebox" type="text" id="addWeiXin"
+						data-options="required:true" placeholder="请输入微信号" /></td>
+					<td>来源网站:<select id="addSourceUrl" class="easyui-combobox a" data-options="editable:false">
 							<option>--请选择--</option>
 							<option>其它</option>
 							<option>职英B站</option>
@@ -708,25 +730,25 @@
 					</select></td>
 				</tr>
 				<tr>
-					<td>在线备注::&ensp;&ensp;<input class="easyui-validatebox" type="text"
-						id="addContent" data-options="required:true" placeholder="请输入在线备注" /></td>
-					<td>是否报备:<select id="addisBaoBei" class="easyui-combobox a">
+					<td>在线备注::&ensp;&ensp;<input class="easyui-validatebox"
+						type="text" id="addContent" data-options="required:true"
+						placeholder="请输入在线备注" /></td>
+					<td>是否报备:<select id="addisBaoBei" class="easyui-combobox a" data-options="editable:false">
 							<option value="">--请选择--</option>
 							<option>是</option>
 							<option>否</option>
 					</select></td>
 				</tr>
-
-			
-
+			</table>
+			<table>
 				<tr>
 					<td><a href="javascript:void(0)" icon="icon-ok"
 						class="easyui-linkbutton" onclick="addtrue()">提交</a></td>
 					<td><a href="javascript:void(0)" icon="icon-cancel"
 						class="easyui-linkbutton" onclick="addfalse()">取消</a></td>
+					<td style="display: none" id="fenliang">分量开关<input id="tur" class="easyui-switchbutton" data-options="disabled:true"></td>
 				</tr>
 			</table>
-
 		</form>
 	</div>
 	<!--修改-->
@@ -834,7 +856,7 @@
 				<tr>
 					<td><label for="name">课程方向:</label></td>
 					<td><select id="updateLearnForword" name="learnForword"
-						class="easyui-combobox">
+						class="easyui-combobox" data-options="editable:false">
 							<option value="">--请选择--</option>
 							<option>软件开发</option>
 							<option>软件设计</option>
@@ -849,7 +871,7 @@
 				<tr>
 					<td><label for="name">是否回访:</label></td>
 					<td><select id="updateIsReturnVisit" name="isReturnVisit"
-						class="easyui-combobox">
+						class="easyui-combobox" data-options="editable:false">
 							<option value=''>--请选择--</option>
 							<option>已回访</option>
 							<option>未回访</option>
@@ -867,7 +889,7 @@
 				<tr>
 					<td><label for="name">是否家访:</label></td>
 					<td><select id="updateisHome" name="isHome"
-						class="easyui-combobox">
+						class="easyui-combobox" data-options="editable:false">
 							<option value="">--请选择--</option>
 							<option>是</option>
 							<option>否</option>
@@ -886,7 +908,7 @@
 				<tr>
 					<td><label for="name">是否缴费:</label></td>
 					<td><select id="updateIsPay" name="isPay"
-						class="easyui-combobox">
+						class="easyui-combobox" data-options="editable:false">
 							<option value="">--请选择--</option>
 							<option>是</option>
 							<option>否</option>
@@ -915,7 +937,7 @@
 				<tr>
 					<td><label for="name">是否有效： </label></td>
 					<td><select id="isValid" class="easyui-combobox"
-						disabled="disabled">
+						disabled="disabled" data-options="editable:false">
 							<option value=''>--请选择--</option>
 							<option>是</option>
 							<option>否</option>
@@ -983,7 +1005,8 @@
 
 	<!--  添加跟踪-->
 	<div id="genzongid" class="easyui-window"
-		data-options="closed:true,title:'添加跟踪'" style="width:350px;height:400px">
+		data-options="closed:true,title:'添加跟踪'"
+		style="width: 350px; height: 400px">
 		<form id="genzongForm" class="easyui-form">
 			<table>
 				<tr>
@@ -1017,7 +1040,7 @@
 				</tr>
 				<tr>
 					<td>跟踪状态:</td>
-					<td><select id="n_qingkuang" class="easyui-combobox">
+					<td><select id="n_qingkuang" class="easyui-combobox" data-options="editable:false">
 							<option value=''>--请选择--</option>
 							<option>已跟踪</option>
 							<option>跟踪中</option>

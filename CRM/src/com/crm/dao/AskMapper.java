@@ -49,5 +49,15 @@ public interface AskMapper {
 	 * @return
 	 */
 	Integer updateAskStatue(Ask ask);
-
+	/**
+	 * 分量设置
+	 * @return
+	 */
+	Integer updateFenLiang(Ask ask);
+	/**
+	 * 根据名字查询咨询师
+	 * @param Name
+	 * @return
+	 */
+	Ask selectAskName(String AskName);
 }

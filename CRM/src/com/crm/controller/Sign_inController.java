@@ -70,6 +70,9 @@ public class Sign_inController {
 				Integer i = sign_inService.addSign(sign_in);
 				if(i>0){
 					Ask selectAsk = netStudentMapper.selectAsk(uid);
+					if(selectAsk==null){
+						return -1;
+					}
 					Ask ask = new Ask();
 					ask.setAskId(selectAsk.getAskId());
 					askService.updateQianDao(ask);
@@ -88,6 +91,9 @@ public class Sign_inController {
 				Integer i = sign_inService.addChidaoSign(sign_in);
 				if(i>0){
 					Ask selectAsk = netStudentMapper.selectAsk(uid);
+					if(selectAsk==null){
+						return -1;
+					}
 					Ask ask = new Ask();
 					ask.setAskId(selectAsk.getAskId());
 					askService.updateQianDao(ask);

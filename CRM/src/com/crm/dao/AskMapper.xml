@@ -112,4 +112,12 @@
 		UPDATE askteacher set
 		Statue ='未签到' where askId=#{askId}
 	</update>
+	<update id="updateFenLiang" parameterType="ask">
+		UPDATE askteacher set
+		BakContent =#{bakContent} where askId=#{askId}
+	</update>
+	<!-- 根据用户名查询咨询师信息 -->
+	<select id="selectAskName" parameterType="string" resultType="ask">
+		select * from askteacher where AskName=#{AskName}
+	</select>
 </mapper>

@@ -23,7 +23,10 @@ public class NetStudentServiceImpl implements NetStudentService {
 		return fenye;
 	}
 // Ìí¼ÓÑ§Éú
-public Integer addStudent(Student student) {
+public Integer addStudent(Student student,Boolean tur) {
+	if(tur!=true){
+		student.setAskerId(null);
+	}
 	Date date=new Date();
 	SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	student.setCreatTimes(sdf.format(date));

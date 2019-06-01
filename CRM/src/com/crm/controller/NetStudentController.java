@@ -42,7 +42,7 @@ public class NetStudentController {
 	// 添加学生
 	@RequestMapping(value = "/addNetStudent", method = RequestMethod.POST)
 	@ResponseBody
-	public Integer addStudent(Student student) {
+	public Integer addStudent(Student student,Boolean tur) {
 		Ask selectAsk = netStudentMapper.selectAsk(student.getAskerId());
 		student.setAskerId(selectAsk.getAskId());
 		if (student.getSname().length() <= 0) {
@@ -74,7 +74,7 @@ public class NetStudentController {
 		} else if (student.getIsReturnVisit().equals("--请选择--")) {
 			return -14;
 		}
-		return netStudentService.addStudent(student);
+		return netStudentService.addStudent(student,tur);
 	}
 
 	// 查看失效学生名单

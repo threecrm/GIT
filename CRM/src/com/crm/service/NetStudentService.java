@@ -8,7 +8,7 @@ public interface NetStudentService {
 	 //查看所有网络咨询师
 	 public Fenye<Student> selectNetStudent(Fenye<Student> fenye);
 	 //添加学生
-	 public Integer addStudent(Student student);
+	 public Integer addStudent(Student student,Boolean tur);
 	 //查看失效学生名单
 	 public List<Student>  selectShiXiaoStudent(String askName);
 	  //查看所有咨询师下的学生

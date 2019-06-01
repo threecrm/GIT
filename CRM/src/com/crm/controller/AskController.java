@@ -255,4 +255,27 @@ public class AskController {
 	public Integer allQiantui(Ask ask){
 		return askService.allQiantui(ask);
 	}
+	/**
+	 * 开启分量
+	 * @param ask
+	 * @return
+	 */
+	@RequestMapping(value = "/FenLiangOpen", method = RequestMethod.POST)
+	@ResponseBody
+	public Integer FenLiangOpen(Ask ask){
+		Integer updateFenLiang = askService.updateFenLiang(ask);
+		return updateFenLiang;
+	}
+	/**
+	 * 查询咨询师分量是否被开启
+	 * @param ask
+	 * @return
+	 */
+	@RequestMapping(value = "/selectFenLiangOpen", method = RequestMethod.POST)
+	@ResponseBody
+	public Ask selectFenLiangOpen(String AskName){
+		Ask selectAskName = askMapper.selectAskName(AskName);
+		return selectAskName;
+	}
+	
 }

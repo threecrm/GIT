@@ -36,4 +36,9 @@ public interface AskService {
 	 * @return
 	 */
 	Integer updateASkStatue();
+	/**
+	 * ∑÷¡ø…Ë÷√
+	 * @return
+	 */
+	Integer updateFenLiang(Ask ask);
 }
