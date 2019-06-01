@@ -29,6 +29,13 @@ public interface UsersMapper {
 	 * @return
 	 */
 	List<Users> selectUserName(Users users);
+	
+	/**
+	 * 添加用户
+	 * @param users
+	 * @return
+	 */
+	Integer insertUser(Users users);
 	/**
 	 * 查询该用户下有没有学生
 	 * @param student
@@ -36,11 +43,11 @@ public interface UsersMapper {
 	 */
 	List<Student> selectStudent(Integer uid);
 	/**
-	 * 添加用户
-	 * @param users
+	 * 查询该用户的角色
+	 * @param LonginName
 	 * @return
 	 */
-	Integer insertUser(Users users);
+	List<Roles> selectRoleNameByRole(Integer uid);
 	/**
 	 * 删除用户
 	 * @param uid

@@ -82,6 +82,8 @@
 							$.messager.alert("提示","删除成功");
 						}else if(res==-1){
 							$.messager.alert("提示","该员工下有正在跟踪的学生不能删除！")
+						}else if(res==-2){
+							$.messager.alert("提示","该用户是管理员不能删除！")
 						}else{
 							$.messager.alert("提示","删除失败")
 						}
