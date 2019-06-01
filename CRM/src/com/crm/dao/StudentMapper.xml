@@ -133,9 +133,9 @@
 		state='迟到') AND creat_time LIKE "%"#{date}"%") ORDER BY Weights DESC;
 	</select>
 	<!-- 手动分配 -->
-	<update id="addAskName" parameterType="Student">
+	<update id="addAskName" >
 		update student set
-		AskerId=#{AskerId} where sid=#{sid} and AskerId is null
+		AskerId=#{1} where sid=#{0} and AskerId is null
 	</update>
 	<!--查询咨询师下的姓名 -->
 	<select id="selectNames" resultType="Ask">

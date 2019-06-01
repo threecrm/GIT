@@ -33,7 +33,7 @@ public interface StudentMapper {
 	List<Ask> selectAskName(String date);
 
 	// 手动分配（批量添加咨询师）
-	Integer addAskName(Student student);
+	Integer addAskName(Integer stuid,Integer askid);
 
 	// 自动分配（批量添加咨询师）
 	Integer addAskNames(Student student);

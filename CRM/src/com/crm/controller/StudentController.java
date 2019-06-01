@@ -112,17 +112,26 @@ public class StudentController {
 		return selectAskName;
 	}
 
+	/**
+	 * 
+	 * @param stuid 所有的学生ID
+	 * @param askid 咨询师id
+	 * @return
+	 */
 	// 手动分配（添加咨询师）
 	@RequestMapping(value = "/addAskName", method = RequestMethod.POST)
 	@ResponseBody
-	public Integer addAskName(Student student) {
-		Integer addAskName = studentService.addAskName(student);
+	public Integer addAskName(String stuid,Integer askid) {
 		
-		Message message =new Message();
-		message.setAskId(student.getAskerId());
-		message.setSid(student.getSid());
-		Integer insertMessage=messageService.insertMessage(message);
 		
+		// 分割stuid取出所有的学生Id添加到list集合里面
+		String[] split = stuid.split(",");
+		List<Integer> list = new ArrayList<Integer>();
+		for (int i = 0; i < split.length; i++) {
+			list.add(Integer.parseInt(split[i]));
+		}
+		//调service层分配方法
+		Integer addAskName = studentService.addAskName(list,askid);
 		return addAskName;
 	}
 

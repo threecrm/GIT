@@ -86,10 +86,29 @@ public class StudentServiceImpl implements StudentService {
 		List<Ask> selectAskName = studentMapper.selectAskName(sdf.format(date));
 		return selectAskName;
 	}
-
-	public Integer addAskName(Student student) {
-		Integer i = studentMapper.addAskName(student);
-		return i;
+	/**
+	 * 手动分配方法
+	 */
+	public Integer addAskName(List<Integer> list,Integer askid) {
+		
+		//查询出所有未分配的学生
+		List<Student> selecStudent = studentMapper.selecStudent(list);
+		//没查到返回-1说明你选中的学生已经被分配过了，没有要分配的学生了
+		if(selecStudent.size()==0){
+			return -1;
+		}
+		Integer j = null;
+		//如果有分配的学生，循环所有学生
+		for(int i=0;i<selecStudent.size();i++){
+			//进行分配
+			j = studentMapper.addAskName(selecStudent.get(i).getSid(),askid);
+			//记录给某一个咨询师分配多少学生
+			Message message =new Message();
+			message.setAskId(askid);
+			message.setSid(selecStudent.get(i).getSid());
+			messageMapper.insertMessage(message);
+		}
+		return j;
 	}
 
 	public List<Ask> selectNames() {

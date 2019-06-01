@@ -225,16 +225,24 @@ function caozuo() {
 }
 // 手动添加咨询师确认按钮
 function zixuntrue() {
-	var rows = $("#tab").datagrid("getSelected"); // 获取所有选中的行
+	var rows = $("#tab").datagrid("getSelections"); // 获取所有选中的行
+	var AskerId = [];
+	//循环rows取出所有的学生Id并添加到数组AskerId
+	for (var i = 0; i < rows.length; i++) {
+		AskerId[i] = rows[i].sid;
+	}
+	//将AskerId转换成字符串
+	var b = AskerId.join(",");
 	$.post("addAskName", {
-		sid : rows.sid,
-		AskerId : $("#cc").combobox("getValue")
+		//将所有的学生id以字符串的形式传递到后台
+		stuid : b,
+		askid : $("#cc").combobox("getValue")//获取到咨询师Id
 	}, function(res) {
 		if (res > 0) {
 			$.messager.alert("提示", "操作成功");
 			$("#caozuoWindow").window("close");
 			$("#tab").datagrid("reload");
-		} else {
+		} else if(res==-1){
 			$.messager.alert("提示", "已分配过了，不能二次分配");
 			$("#caozuoWindow").window("close");
 		}

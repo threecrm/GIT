@@ -30,8 +30,14 @@ public interface StudentService {
 	// 查询咨询师姓名
 	public List<Ask> selectAskName();
 
+	/**
+	 * 
+	 * @param stuid 所有的学生ID
+	 * @param askid 咨询师id
+	 * @return
+	 */
 	// 手动分配（添加咨询师）
-	public Integer addAskName(Student student);
+	public Integer addAskName(List<Integer> list,Integer askid);
 
 	// 查询咨询师下的姓名
 	public List<Ask> selectNames();
