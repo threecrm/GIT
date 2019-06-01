@@ -57,6 +57,7 @@ public class UsersServiceImp implements UsersService {
 	 */
 	public Integer delUser(Integer uid) {
 		// TODO Auto-generated method stub
+		//查询该用户下的学生
 		List<Student> selectStudent = usersMapper.selectStudent(uid);
 		if(selectStudent.size()!=0){
 			return -1;
@@ -114,7 +115,7 @@ public class UsersServiceImp implements UsersService {
 		List<UserRoles> selectUserRoles = usersMapper.selectUserRoles(userRoles);
 		//查询咨询经理角色有没有被引用
 		List<UserRoles> selectUserRolesByName = usersMapper.selectUserRolesByRoleName(userRoles);
-		if(selectUserRolesByName.size()!=0){
+		if(selectUserRolesByName.size()!=0 ){
 			return -2;
 		}
 		if(selectUserRoles.size()==0){

@@ -178,7 +178,7 @@
 <select id="selectUserRolesByRoleName" parameterType="userRoles" resultMap="selectRolesByName"  >
     SELECT * from users u,roles r,userroles ur
 		WHERE u.uid=ur.UserId and r.rid=ur.RoleId
-		  AND r.roleName='咨询师经理' 
+		  AND r.roleName='咨询师经理' and ur.roleid=#{roleid}
 </select>
 <!-- 查询用户名 -->
 <select id="selectUsersName" parameterType="int" resultType="users">
