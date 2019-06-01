@@ -21,15 +21,20 @@
 	    select * from modules   where mid=#{mid} order by Weight desc
 	</select>
 	
-	<!-- 根据名称查询模块 -->
-	<select id="selectMoudleByName" parameterType="modules" resultType="modules">
-	    select * from modules where ModuleName=#{ModuleName} 
-	</select>
 	
+	<!-- 根据名称查询模块判断添加父模块时是否相同  -->
+	<select id="selectMoudleByNames" parameterType="modules" resultType="modules">
+	    select * from modules where ModuleName=#{ModuleName} and parentId=0
+	</select>
 	<!-- 添加父模块  -->
 	<insert id="addParentModules" parameterType="modules">
 	    insert INTO modules(ModuleName,Path,Weight,ParentId) VALUES(#{ModuleName},#{Path},#{Weight},0) 
 	</insert>
+	
+	<!-- 根据名称查询模块添加子模块时是否相同 -->
+	<select id="selectMoudleByName" parameterType="modules" resultType="modules">
+	    select * from modules where ModuleName=#{ModuleName} and parentId=#{parentId}
+	</select>
 	<!-- 添加子模块 -->
 	<insert id="addModules" parameterType="modules">
 	    insert INTO modules(ModuleName,Path,Weight,ParentId) VALUES(#{ModuleName},#{Path},#{Weight},#{ParentId}) 

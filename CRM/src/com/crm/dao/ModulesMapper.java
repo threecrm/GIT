@@ -12,14 +12,24 @@ public interface ModulesMapper {
 	 * @return
 	 */
 		List<Modules> selectModulesSubmodule(Integer id);
-		
+		/**
+		 * 根据名称查询模块判断添加父模块时是否相同
+		 * @param modules
+		 * @return
+		 */
+		List<Modules> selectMoudleByNames(Modules modules);
 		/**
 		 * 添加父模块
 		 * @param modules
 		 * @return
 		 */
 		Integer addParentModules(Modules modules);
-		
+		/**
+		 * 根据名称查询模块添加子模块时是否相同
+		 * @param modules
+		 * @return
+		 */
+		List<Modules> selectMoudleByName(Modules modules);
 		/**
 		 * 添加子模块
 		 * @param modules
@@ -57,11 +67,6 @@ public interface ModulesMapper {
 		 * @return
 		 */
 		Integer deleteModules(Integer mid);
-		/**
-		 * 根据名称查询模块
-		 * @param modules
-		 * @return
-		 */
-		List<Modules> selectMoudleByName(Modules modules);
+		
 
 }

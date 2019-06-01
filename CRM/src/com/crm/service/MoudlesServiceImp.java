@@ -37,8 +37,8 @@ public class MoudlesServiceImp implements ModulesService {
 	public Integer addParentModules(Modules modules) {
 		// TODO Auto-generated method stub
 		Integer addParentModules =null;
-		List<Modules> selectRoleByName = modulesMapper.selectMoudleByName(modules);
-		if(selectRoleByName.size()==0){
+		List<Modules> selectMoudleByNames = modulesMapper.selectMoudleByNames(modules);
+		if(selectMoudleByNames.size()==0){
 			addParentModules = modulesMapper.addParentModules(modules);
 		}else{
 			addParentModules = -1;
@@ -52,8 +52,8 @@ public class MoudlesServiceImp implements ModulesService {
 	public Integer addModules(Modules modules) {
 		// TODO Auto-generated method stub
 		Integer addModules =null;
-		List<Modules> selectRoleByName = modulesMapper.selectMoudleByName(modules);
-		if(selectRoleByName.size()==0){
+		List<Modules> selectMoudleByName = modulesMapper.selectMoudleByName(modules);
+		if(selectMoudleByName.size()==0){
 			addModules = modulesMapper.addModules(modules);
 		}else{
 			addModules=-1;
