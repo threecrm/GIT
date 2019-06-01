@@ -5,6 +5,7 @@ import java.util.List;
 import com.crm.entity.Ask;
 import com.crm.entity.Fenye;
 import com.crm.entity.Roles;
+import com.crm.entity.Student;
 import com.crm.entity.UserRoles;
 import com.crm.entity.Users;
 
@@ -28,6 +29,12 @@ public interface UsersMapper {
 	 * @return
 	 */
 	List<Users> selectUserName(Users users);
+	/**
+	 * 查询该用户下有没有学生
+	 * @param student
+	 * @return
+	 */
+	List<Student> selectStudent(Integer uid);
 	/**
 	 * 添加用户
 	 * @param users

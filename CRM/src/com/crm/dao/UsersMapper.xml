@@ -33,6 +33,48 @@
  		<result property="RoleName" column="RoleName"/>
  	</resultMap>
  	
+ 	<resultMap type="student" id="selectStudent">
+ 		<id property="sid" column="sid"/>
+ 		<result property="Sname" column="Sname"/>
+ 		<result property="Age" column="Age"/>
+ 		<result property="Sex" column="Sex"/>
+ 		<result property="Phone" column="Phone"/>
+ 		<result property="StuStatus" column="StuStatus"/>
+ 		<result property="PerStatus" column="PerStatus"/>
+ 		<result property="MsgSource" column="MsgSource"/>
+ 		<result property="SourceUrl" column="SourceUrl"/>
+ 		<result property="SourceKeyWord" column="SourceKeyWord"/>
+ 		<result property="Address" column="Address"/>
+ 		<result property="NetPusherId" column="NetPusherId"/>
+ 		<result property="AskerId" column="AskerId"/>
+ 		<result property="QQ" column="QQ"/>
+ 		<result property="WeiXin" column="WeiXin"/>
+ 		<result property="Content" column="Content"/>
+ 		<result property="CreatTimes" column="CreatTimes"/>
+ 		<result property="LearnForword" column="LearnForword"/>
+ 		<result property="IsValid" column="IsValid"/>
+ 		<result property="Reoord" column="Reoord"/>
+ 		<result property="IsReturnVisit" column="IsReturnVisit"/>
+ 		<result property="FirstVisitTime" column="FirstVisitTime"/>
+ 		<result property="isHome" column="isHome"/>
+ 		<result property="homeTime" column="homeTime"/>
+ 		<result property="LostValid" column="LostValid"/>
+ 		<result property="IsPay" column="IsPay"/>
+ 		<result property="PayTime" column="PayTime"/>
+ 		<result property="Money" column="Money"/>
+ 		<result property="isReturnMoney" column="isReturnMoney"/>
+ 		<result property="isInClass" column="isInClass"/>
+ 		<result property="inClassTime" column="inClassTime"/>
+ 		<result property="inClassContent" column="inClassContent"/>
+ 		<result property="AskerContent" column="AskerContent"/>
+ 		<result property="isDel" column="isDel"/>
+ 		<result property="FromPart" column="FromPart"/>
+ 		<result property="stuConcern" column="stuConcern"/>
+ 		<result property="isBaoBei" column="isBaoBei"/>
+ 		<result property="AskName" column="AskName"/>
+ 		<result property="RoleNames" column="RoleNames"/>
+ 	</resultMap>
+ 	
  	
  	<sql id="sql">
  		<where>
@@ -68,6 +110,11 @@
  	<insert id="insertUser" parameterType="users">
  		INSERT INTO users(LonginName,PassWord,CreateTime,ProtectEMail,ProtectMTel,IsLockout,PsdWrongTime) VALUES(#{LonginName},md5('ysd123'),#{CreateTime},#{ProtectEMail},#{ProtectMTel},'否',1);
  	</insert>
+ 	
+ <!-- 查询该用户下有没有学生 -->
+ 	<select id="selectStudent" parameterType="int" resultMap="selectStudent">
+ 	     SELECT * FROM users u,student s where u.uid=#{uid} and u.uid=s.askerId
+ 	</select>	
  <!-- 删除用户 -->
    <delete id="delUser" parameterType="int">
        delete from users where uid=#{uid}

@@ -80,6 +80,8 @@
 						if(res>0){
 							$("#tab").datagrid("reload");
 							$.messager.alert("提示","删除成功");
+						}else if(res==-1){
+							$.messager.alert("提示","该员工下有正在跟踪的学生不能删除！")
 						}else{
 							$.messager.alert("提示","删除失败")
 						}
@@ -290,11 +292,8 @@
 				//获取选中的用户信息
 				var userRow=$("#tab").datagrid("getSelected");
 				  if(roleRow.roleName=="管理员"){
-					return $.messager.alert("提示信息","管理员是唯一的！！");
+					return $.messager.alert("提示信息","管理员只能有一个哦！！");
 				}  
-				  /* if(roleRow.roleName=="咨询经理"){
-						return $.messager.alert("提示信息","咨询师经理是唯一的！！");
-					}   */
 				  
 				for(var i=0;i<data.rows.length;i++){
 					if(datas.rows[i]!=undefined){
@@ -319,7 +318,7 @@
 						}else if(res==0){
 							$.messager.alert("提示","角色设置失败")
 						}else if(res==-2) {
-							$.messager.alert("提示","咨询师经理是唯一的！")
+							$.messager.alert("提示","咨询师经理只能有一个哦！")
 						}else{
 							$.messager.alert("提示","改用户已有该角色！")
 						}

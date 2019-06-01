@@ -61,6 +61,78 @@ public class Student {
 	private String EndinClassTime;
 	private Integer u_id;
 	
+	private Integer uid;
+	private String LonginName;
+	private String PassWord;
+	private String IsLockout;
+	private String LastLoginTime;
+	private String CreateTime;
+	private Integer PsdWrongTime;
+	private String LockTime;
+	private String ProtectEMail;
+	private String ProtectMTel;
+	
+	
+	public Integer getUid() {
+		return uid;
+	}
+	public void setUid(Integer uid) {
+		this.uid = uid;
+	}
+	public String getLonginName() {
+		return LonginName;
+	}
+	public void setLonginName(String longinName) {
+		LonginName = longinName;
+	}
+	public String getPassWord() {
+		return PassWord;
+	}
+	public void setPassWord(String passWord) {
+		PassWord = passWord;
+	}
+	public String getIsLockout() {
+		return IsLockout;
+	}
+	public void setIsLockout(String isLockout) {
+		IsLockout = isLockout;
+	}
+	public String getLastLoginTime() {
+		return LastLoginTime;
+	}
+	public void setLastLoginTime(String lastLoginTime) {
+		LastLoginTime = lastLoginTime;
+	}
+	public String getCreateTime() {
+		return CreateTime;
+	}
+	public void setCreateTime(String createTime) {
+		CreateTime = createTime;
+	}
+	public Integer getPsdWrongTime() {
+		return PsdWrongTime;
+	}
+	public void setPsdWrongTime(Integer psdWrongTime) {
+		PsdWrongTime = psdWrongTime;
+	}
+	public String getLockTime() {
+		return LockTime;
+	}
+	public void setLockTime(String lockTime) {
+		LockTime = lockTime;
+	}
+	public String getProtectEMail() {
+		return ProtectEMail;
+	}
+	public void setProtectEMail(String protectEMail) {
+		ProtectEMail = protectEMail;
+	}
+	public String getProtectMTel() {
+		return ProtectMTel;
+	}
+	public void setProtectMTel(String protectMTel) {
+		ProtectMTel = protectMTel;
+	}
 	public Integer getU_id() {
 		return u_id;
 	}
@@ -421,7 +493,13 @@ public class Student {
 				+ ", EndfirstVisitTime=" + EndfirstVisitTime
 				+ ", StartpayTime=" + StartpayTime + ", EndpayTime="
 				+ EndpayTime + ", StartinClassTime=" + StartinClassTime
-				+ ", EndinClassTime=" + EndinClassTime + ", u_id=" + u_id + "]";
+				+ ", EndinClassTime=" + EndinClassTime + ", u_id=" + u_id
+				+ ", uid=" + uid + ", LonginName=" + LonginName + ", PassWord="
+				+ PassWord + ", IsLockout=" + IsLockout + ", LastLoginTime="
+				+ LastLoginTime + ", CreateTime=" + CreateTime
+				+ ", PsdWrongTime=" + PsdWrongTime + ", LockTime=" + LockTime
+				+ ", ProtectEMail=" + ProtectEMail + ", ProtectMTel="
+				+ ProtectMTel + "]";
 	}
 	
 }

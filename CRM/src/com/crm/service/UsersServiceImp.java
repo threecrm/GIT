@@ -11,6 +11,7 @@ import com.crm.dao.UsersMapper;
 import com.crm.entity.Ask;
 import com.crm.entity.Fenye;
 import com.crm.entity.Roles;
+import com.crm.entity.Student;
 import com.crm.entity.UserRoles;
 import com.crm.entity.Users;
 @Service         
@@ -56,6 +57,10 @@ public class UsersServiceImp implements UsersService {
 	 */
 	public Integer delUser(Integer uid) {
 		// TODO Auto-generated method stub
+		List<Student> selectStudent = usersMapper.selectStudent(uid);
+		if(selectStudent.size()!=0){
+			return -1;
+		}
 		return usersMapper.delUser(uid);
 	}
 	/**
