@@ -31,14 +31,18 @@ public class AskServiceImpl implements AskService {
 	// ²éÑ¯ÍøÂç×ÉÑ¯Ê¦
 	public Fenye<Ask> selectInternetAsk(Fenye<Ask> fenye) {
 		List<Ask> selectInternetAsk = askMapper.selectInternetAsk(fenye);
+		Integer selectNetAskCount = askMapper.selectNetAskCount(fenye);
 		fenye.setRows(selectInternetAsk);
+		fenye.setTotal(selectNetAskCount);
 		return fenye;
 	}
 
 	// ²éÑ¯×ÉÑ¯Ê¦
 	public Fenye<Ask> selectAskTeacher(Fenye<Ask> fenye) {
 		List<Ask> selectAskTeacher = askMapper.selectAskTeacher(fenye);
+		Integer selectAskCount = askMapper.selectAskCount(fenye);
 		fenye.setRows(selectAskTeacher);
+		fenye.setTotal(selectAskCount);
 		return fenye;
 	}
 

@@ -29,10 +29,18 @@
 		SELECT * from askteacher where RoleNames='网络咨询师' limit
 		#{page},#{pageSize}
 	</select>
+	<!-- 查询网络咨询师数量 -->
+	<select id="selectNetAskCount" parameterType="fenye" resultType="int">
+	SELECT COUNT(AskId) from askteacher where RoleNames='网络咨询师'
+	</select>
 	<!-- 查询咨询师 -->
 	<select id="selectAskTeacher" parameterType="fenye" resultType="Ask">
 		SELECT * from askteacher where RoleNames='咨询师' limit
 		#{page},#{pageSize}
+	</select>
+	<!-- 查询咨询师数量 -->
+		<select id="selectAskCount" parameterType="fenye" resultType="int">
+	SELECT COUNT(AskId) from askteacher where RoleNames='咨询师'
 	</select>
 	<!-- 查询角色 -->
 	<select id="selectRoles" resultType="Roles">

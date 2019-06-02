@@ -16,8 +16,12 @@ public interface AskMapper {
 	Integer selectCountAsk(Fenye<Ask> fenye);
 	//查询网络咨询师
 	List<Ask> selectInternetAsk(Fenye<Ask> fenye);
+	//查询网络咨询师数量
+	Integer selectNetAskCount(Fenye<Ask> fenye);
 	//查询咨询师
 	List<Ask> selectAskTeacher(Fenye<Ask> fenye);	
+	//查询咨询师数量
+	Integer selectAskCount(Fenye<Ask> fenye);
 	//查询角色
 	List<Roles> selectRoles();
 	//修改网络咨询师
