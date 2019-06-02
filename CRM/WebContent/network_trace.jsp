@@ -11,9 +11,9 @@
 <script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="js/network_trace.js"></script>
 </head>
-<script type="text/javascript">
-$(function(){
+<%-- $(function(){
 	initStu();	
         })
         
@@ -76,12 +76,10 @@ function Delete(index) {
     function breakPage() {
     	window.location.reload(true);
 		
-	}
+	} --%>
 
-   
-</script>
 <body>
-
+<input id="u_id" value="<%=session.getAttribute("uid")%>" style="display: none"/>
  <div id="stuTool">
 			 <label for="name">学生名称:</label>
 			 <input class="easyui-textbox"  id="n_sname" style="width: 100px"/> 

@@ -10,9 +10,8 @@
 <script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="js/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript">
 
-/* 1,跟踪：对学生进行后续的跟踪，添加跟踪记录信息   步骤：1.在学生信息列表中找到要跟踪的行
+ <!-- 1,跟踪：对学生进行后续的跟踪，添加跟踪记录信息   步骤：1.在学生信息列表中找到要跟踪的行
 2.点击跟踪按钮，弹出新建跟踪窗口。字段信息：回访时间、回访情况、跟踪方式、下次跟踪时间、备注
 3.按要求输入信息
 4.点击保存按钮，提交信息；点击取消按钮，关闭窗口
@@ -34,228 +33,12 @@
 2.咨询师录入：姓名（咨询）、课程方向、打分、是否有效、无效原因、是否回访、首访时间、是否上门（是，否）、上门时间、定金金额、定金时间、是否缴费（是，否）、缴费时间、缴费金额、是否退费（是，否）、退费原因、是否进班（是，否）、进班时间、进班备注、咨询师备注
 3．对需要更新的字段按要求进行编辑
 4．点击保存按钮，提交信息；点击取消按钮，关闭窗口
-5．提交信息之后，窗口关闭，刷新学生列表
-*/     
-$(function(){
-	init();
-})
+5．提交信息之后，窗口关闭，刷新学生列表 -->
 
-function init(){
-	 var u_id="<%=session.getAttribute("uid")%>"
-	   $("#tab").datagrid({
-		   url:'ShowStudent',
-		   method:'post',
-		   pagination:true,
-		   fitColumns:true,
-		   singleSelect:true,
-		   toolbar:'#seachId',
-		   queryParams:{
-			   Sname:$("#sname").val(),
-			   Phone:$("#phone").val(),
-			   QQ:$("#qq").val(),
-			   IsReturnVisit:$("#IsReturnVisit").combobox("getValue"),
-			   Address:$("#Address").combobox("getValue"),
-			   IsPay:$("#isPay").combobox("getValue"),
-			   IsValid:$("#isValid").combobox("getValue"),
-			   StartcreatTimes:$("#StartcreatTimes").datetimebox("getValue"),
-			   EndcreatTimes:$("#EndcreatTimes").datetimebox("getValue"),
-			   StarthomeTime:$("#StarthomeTime").datetimebox("getValue"),
-			   EndhomeTime:$("#EndhomeTime").datetimebox("getValue"),
-			   StartfirstVisitTime:$("#StartfirstVisitTime").datetimebox("getValue"),
-			   EndfirstVisitTime:$("#EndfirstVisitTime").datetimebox("getValue"),
-			   StartpayTime:$("#StartpayTime").datetimebox("getValue"),
-			   EndpayTime:$("#EndpayTime").datetimebox("getValue"),
-			   StartinClassTime:$("#StartinClassTime").datetimebox("getValue"),
-			   EndinClassTime:$("#EndinClassTime").datetimebox("getValue"),
-			   u_id:u_id,
-		     }
-	   })
-	    $("#seachForm").form("reset");
-}
-
-function formatterSet(value,row,index){
-	
-	   return "<a href='javascript:void(0)' onclick='Choose(" + index+ ")'>回访</a> <a href='javascript:void(0)' onclick='log(" + index+ ")'>日志</a> <a href='javascrip:void(0)' onclick='look("+index+")'>查看</a> <a href='javascrip:void(0)' onclick='update("+index+")'>编辑</a>  "
-} 
-
-/* 回访 */
- function Choose(index){
-	 var datas=$("#tab").datagrid("getData");
-	 var row=datas.rows[index];
-	 
-	 $("#address").val("");
-	 $("#date").datetimebox("setValue","");
-	 $("#ask").val("");
-	 $("#aftertime").datetimebox("setValue","");
-	 //打开弹窗
-	 $("#ZhuiZongWin").dialog("open");
-	 //填充表单
-	 $("#ZhuiZongform").form("load",row)
-} 
-
-function submit(){
-	 var u_id="<%=session.getAttribute("uid")%>"
-	 var data=$("#tab").datagrid("getSelected");
-	 
-	var sname=$("#sName").val();
-	var uname=$("#userlonginName").val();
-	var n_qingkuang=$("#n_qingkuang").val();
-	var n_fangshi=$("#sn_fangshi").combobox("getValue");
-	var date=$("#date").datetimebox('getValue');
-	var ask=$("#ask").val();
-	var aftertime=$("#aftertime").datetimebox('getValue');
-	var flg = $("#ZhuiZongform").form("validate");
-	if (flg) {
-		if(date<=aftertime){
-			$.post("insert",{
-				sid:data.sid,
-	    		n_sname:sname,
-	    		uname:uname,
-	    		n_qingkuang:n_qingkuang,
-	    		n_fangshi:n_fangshi,
-	    		n_date:date,
-	    		n_ask:ask,
-	    		n_aftertime:aftertime,
-	    		uid:u_id
-	    	},function(res){
-	    		if (res > 0) {
-					//拜访成功
-					$("#ZhuiZongWin").dialog("close");
-					
-					$.messager.alert("提示", "回访成功");
-				} else {
-					//拜访失败
-					$.messager.alert("提示", "回访失败")
-				}
-	    	},"json")
-		}else{
-			$.messager.alert("提示", "结束日期要大于开始日期哦")
-		}
-		
-	}
-}
-
-    function look(index){
-    	  var data=$("#tab").datagrid("getData");
-      	   var row=data.rows[index];
-      	   $("#lookForm").form("load",row);
-        	$("#lookWindow").window("open");
-    }
-    
-  //日志
-  function log(index) {
-	    var data=$("#tab").datagrid("getData");
- 	   var row=data.rows[index];
-	  $('#dg').datagrid({ 
-		    method:"post",
-		    pagination:true,
-		    fitColumns : true,
-		    singleSelect:true,
-		  queryParams: {
-			  sid:row.sid, 
-			},
-		    url:'SeleteNetwork_traceLog',    
-		    columns:[[    
-		        {field:'n_sname',title:'学生姓名',width:100},    
-		        {field:'n_date',title:'跟踪开始时间',width:100},    
-		        {field:'uname',title:'跟踪者',width:100,},
-		        {field:'n_qingkuang',title:'回访情况',width:100},
-		        {field:'n_fangshi',title:'跟踪方式',width:100},
-		        {field:'n_ask',title:'拜访详细',width:100},
-		        {field:'n_aftertime',title:'跟踪结束时间',width:100},
-		    ]]    
-		});
-	  $("#SeleteNetwork_traceLogWindow").window("open"); 
-}
-
-  /* 编辑 */
-  function update(index){
-      	   var data=$("#tab").datagrid("getData");
-       	   var row=data.rows[index];
-       	   $("#updateForm").form("load",row);
-           $("#updateWindow").window("open");
-  }
-  
-//编辑确认按钮   
-  function UpdateStudenntInfo(){
-  	$.post("UpdateStudentInfo",{
-  		sid:$("#Updatesid1").val(),
-  		LearnForword:$("#learnForword1").val(),
-  		IsValid:$("#isValid1").combobox("getValue"),
-  		LostValid:$("#lostValid1").val(),
-  		IsReturnVisit:$("#isReturnVisit1").combobox("getValue"),
-  		FirstVisitTime:$("#firstVisitTime1").datetimebox("getValue"),
-  		isHome:$("#isHome1").combobox("getValue"),
-  		homeTime:$("#homeTime1").datetimebox("getValue"),
-  		ZiXunName:$("#ziXunName1").val(),
-  		stuConcern:$("#stuConcern1").val(),
-  		Reoord:$("#reoord1").val(),
-  		IsPay:$("#isPay1").combobox("getValue"),
-  		PayTime:$("#payTime1").datetimebox("getValue"),
-  		Money:$("#money1").val(),
-  		isReturnMoney:$("#isReturnMoney1").combobox("getValue"),
-  		ReturnMoneyReason:$("#returnMoneyReason1").val(),
-  		isInClass:$("#isInClass1").combobox("getValue"),
-  		inClassTime:$("#inClassTime1").datetimebox("getValue"),
-  		inClassContent:$("#inClassContent1").val(),
-  		AskerContent:$("#askerContent1").val(),
-  		FromPart:$("#fromPart1").val(),
-  		isBaoBei:$("#isBaoBei1").combobox("getValue"),
-  		CreatUser:$("#creatUser1").val(),
-  		
-  	},function(res){
-  		  if(res>0){
-				   $.messager.alert("提示","编辑成功");
-				   $("#updateWindow").window("close");
-				   $("#tab").datagrid("reload");
-			   }else{
-				   $.messager.alert("提示","编辑失败");
-			   }
-  	},"json")
-  	
-  }
-//修改取消按钮
-  function updatefalse(){
-  	 $("#updateWindow").window("close");
-  }
-  
-//动态设置显示列（第一步）
-  function shezhi() {
-  	$("#win").window("open");
-  }
-  // 动态设置显示列（第二步）
-  function test(row) {// 接受文本框this自身的所有的值
-  	var checked = $('p input:checkbox:checked');// 获取p标签所有选中的复选框
-  	checked.each(function(i) {// 依次存储到localStorage里面
-  		localStorage.setItem(i, this.value);
-  		localStorage.setItem('length', i);
-  	});
-  	console.log(localStorage.getItem('length'));// 控制台输出
-  	if (row.checked == true) {
-  		$('#tab').datagrid('showColumn', row.value);// 显示
-  	} else {
-  		$('#tab').datagrid('hideColumn', row.value);// 隐藏
-  	}
-  }
-  // 动态设置显示列（第三步）
-  $(function() {
-  	// 取得本地存储的被选中checkbox的个数，循环将checkbox选中
-  	var length = localStorage.getItem('length');// 获取localStorage数据
-  	for (var i = 0; i <= length; i++) {
-  		var a = localStorage.getItem(i);
-  		$("p input:checkbox[value=" + a + "]").attr("checked", "checked");// 选中状态
-  	}
-  	var checked = $('p input:checkbox:not(:checked)');// 获取所有未选中的复选框
-  	checked.each(function() {// 遍历
-
-  		$('#tab').datagrid('hideColumn', this.value);// 将没选中的列隐藏起来
-  	});
-  });
-  
-</script>
+<script type="text/javascript" src="js/counselor.js"></script>
 </head>
 <body>
-
+<input id="u_id" value="<%=session.getAttribute("uid")%>" style="display: none"/>
 <div id="SeleteNetwork_traceLogWindow" class="easyui-window" data-options="modal:true,title:'跟踪日志',closed:true" style="width:1000px;height:500px">
 <table id="dg">
 </table>
@@ -288,30 +71,28 @@ function submit(){
 		   <option>已回访</option>
 		   <option>未回访</option> 
       </select>
- 所在区域:     
-      <select id="Address" class="easyui-combobox">
+ 所在区域:   <select id="Address" class="easyui-combobox">
 		   <option value=''>--请选择--</option>
-		   <option>郑州 </option>
-		   <option>开封 </option>
-		   <option>洛阳 </option>
-		   <option>周口 </option>
-		   <option>商丘 </option>
-		   <option>新乡 </option>
-		   <option>漯河 </option>
-		   <option>鹤壁 </option>
-		   <option>南阳 </option>
-		   <option>三门峡 </option>
-		   <option>驻马店 </option>
-		   <option>平顶山 </option>
-		   <option>焦作 </option>
-		   <option>濮阳 </option>
-		   <option>安阳 </option> 
-		   <option>信阳 </option>
-		   <option>济源 </option>
-		   <option>未知 </option>
-		   <option>其它 </option>
-		  
-      </select>
+		   <option>郑州</option>
+		   <option>开封</option>
+		   <option>洛阳</option>
+		   <option>周口</option>
+		   <option>商丘</option>
+		   <option>新乡</option>
+		   <option>漯河</option>
+		   <option>鹤壁</option>
+		   <option>南阳</option>
+		   <option>三门峡</option>
+		   <option>驻马店</option>
+		   <option>平顶山</option>
+		   <option>焦作</option>
+		   <option>濮阳</option>
+		   <option>安阳</option> 
+		   <option>信阳</option>
+		   <option>济源</option>
+		   <option>未知</option>
+		   <option>其它</option> 
+             </select>
   
   <br><br>
    创建时间：&emsp;&emsp;<input class="easyui-datetimebox" id="StartcreatTimes">~<input class="easyui-datetimebox" id="EndcreatTimes">

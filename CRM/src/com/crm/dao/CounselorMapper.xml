@@ -25,6 +25,9 @@
 	<if test="student.isValid!=null and student.isValid!=''">
 	and isValid=#{student.isValid}
 	</if>
+	<if test="student.Address!=null and student.Address!=''">
+	and Address like "%"#{student.Address}"%"
+	</if>
 	<if test="student.StartcreatTimes!=null and student.StartcreatTimes!=''">
 	and creatTimes&gt;=#{student.StartcreatTimes}
 	</if>
@@ -58,9 +61,7 @@
 	<if test="ask.askId!=null and ask.askId!=''">
 	and AskerId=#{ask.askId}
 	</if> 
-	<if test="student.Address!=null and student.Address!=''">
-	and Address like "%"#{student.Address}"%"
-	</if>
+	
 	</where> 
  </select> 
  
@@ -86,6 +87,9 @@
 	<if test="student.isValid!=null and student.isValid!=''">
 	and isValid=#{student.isValid}
 	</if>
+	<if test="student.Address!=null and student.Address!=''">
+	and Address like "%"#{student.Address}"%"
+	</if>
 	<if test="student.StartcreatTimes!=null and student.StartcreatTimes!=''">
 	and creatTimes&gt;=#{student.StartcreatTimes}
 	</if>
@@ -119,9 +123,6 @@
 	<if test="ask.askId!=null and ask.askId!=''">
 	and AskerId=#{ask.askId}
 	</if> 
-	<if test="student.Address!=null and student.Address!=''">
-	and Address like "%"#{student.Address}"%"
-	</if>
 	</where> 
 	ORDER BY (student.sid) DESC
     limit #{page},#{pageSize}

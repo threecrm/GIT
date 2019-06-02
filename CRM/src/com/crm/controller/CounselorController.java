@@ -26,7 +26,7 @@ public class CounselorController {
 	@ResponseBody
 	public Fenye<Student> SelectStudent(Student student, Integer page,
 			Integer rows) {
-
+System.out.println(student);
 		// 查询用户名信息 得到name
 		Users user = counselorService.selectUsersInfo(student.getU_id());
 
@@ -39,9 +39,7 @@ public class CounselorController {
 		studentfenye.setPageSize(rows);
 		studentfenye.setStudent(student);
 		studentfenye.setAsk(ask);
-
 		studentfenye = counselorService.SelectStudent(studentfenye);
-
 		return studentfenye;
 	}
 
