@@ -139,77 +139,118 @@ function submit(){
   }
   
 //编辑确认按钮   
-  function UpdateStudenntInfo(){
-  	$.post("UpdateStudentInfo",{
-  		sid:$("#Updatesid1").val(),
-  		LearnForword:$("#learnForword1").val(),
-  		IsValid:$("#isValid1").combobox("getValue"),
-  		LostValid:$("#lostValid1").val(),
-  		IsReturnVisit:$("#isReturnVisit1").combobox("getValue"),
-  		FirstVisitTime:$("#firstVisitTime1").datetimebox("getValue"),
-  		isHome:$("#isHome1").combobox("getValue"),
-  		homeTime:$("#homeTime1").datetimebox("getValue"),
-  		ZiXunName:$("#ziXunName1").val(),
-  		stuConcern:$("#stuConcern1").val(),
-  		Reoord:$("#reoord1").val(),
-  		IsPay:$("#isPay1").combobox("getValue"),
-  		PayTime:$("#payTime1").datetimebox("getValue"),
-  		Money:$("#money1").val(),
-  		isReturnMoney:$("#isReturnMoney1").combobox("getValue"),
-  		ReturnMoneyReason:$("#returnMoneyReason1").val(),
-  		isInClass:$("#isInClass1").combobox("getValue"),
-  		inClassTime:$("#inClassTime1").datetimebox("getValue"),
-  		inClassContent:$("#inClassContent1").val(),
-  		AskerContent:$("#askerContent1").val(),
-  		FromPart:$("#fromPart1").val(),
-  		isBaoBei:$("#isBaoBei1").combobox("getValue"),
-  		CreatUser:$("#creatUser1").val(),
-  		
-  	},function(res){
-  		  if(res>0){
-				   $.messager.alert("提示","编辑成功");
-				   $("#updateWindow").window("close");
-				   $("#tab").datagrid("reload");
-			   }else{
-				   $.messager.alert("提示","编辑失败");
-			   }
-  	},"json")
-  	
-  }
+  
+		 function UpdateStudenntInfo(){
+			 var flg = $("#updateForm").form("validate");
+				if (flg) {
+			  	$.post("UpdateStudentInfo",{
+			  		sid:$("#Updatesid1").val(),
+			  		LearnForword:$("#learnForword1").combobox("getValue"),
+			  		IsValid:$("#isValid1").combobox("getValue"),
+			  		LostValid:$("#lostValid1").val(),
+			  		IsReturnVisit:$("#isReturnVisit1").combobox("getValue"),
+			  		FirstVisitTime:$("#firstVisitTime1").datetimebox("getValue"),
+			  		isHome:$("#isHome1").combobox("getValue"),
+			  		homeTime:$("#homeTime1").datetimebox("getValue"),
+			  		ZiXunName:$("#ziXunName1").val(),
+			  		stuConcern:$("#stuConcern1").val(),
+			  		Reoord:$("#reoord1").val(),
+			  		IsPay:$("#isPay1").combobox("getValue"),
+			  		PayTime:$("#payTime1").datetimebox("getValue"),
+			  		Money:$("#money1").val(),
+			  		isReturnMoney:$("#isReturnMoney1").combobox("getValue"),
+			  		ReturnMoneyReason:$("#returnMoneyReason1").val(),
+			  		isInClass:$("#isInClass1").combobox("getValue"),
+			  		inClassTime:$("#inClassTime1").datetimebox("getValue"),
+			  		inClassContent:$("#inClassContent1").val(),
+			  		AskerContent:$("#askerContent1").val(),
+			  		FromPart:$("#fromPart1").val(),
+			  		isBaoBei:$("#isBaoBei1").combobox("getValue"),
+			  		CreatUser:$("#creatUser1").val(),
+			  		
+			  	},function(res){
+			  		  if(res>0){
+							   $.messager.alert("提示","编辑成功");
+							   $("#updateWindow").window("close");
+							   $("#tab").datagrid("reload");
+						   }else{
+							   $.messager.alert("提示","编辑失败");
+						   }
+			  	},"json")
+			  }
+	}
+ 
 //修改取消按钮
   function updatefalse(){
   	 $("#updateWindow").window("close");
   }
-  
-//动态设置显示列（第一步）
-  function shezhi() {
-  	$("#win").window("open");
-  }
-  // 动态设置显示列（第二步）
-  function test(row) {// 接受文本框this自身的所有的值
-  	var checked = $('p input:checkbox:checked');// 获取p标签所有选中的复选框
-  	checked.each(function(i) {// 依次存储到localStorage里面
-  		localStorage.setItem(i, this.value);
-  		localStorage.setItem('length', i);
-  	});
-  	console.log(localStorage.getItem('length'));// 控制台输出
-  	if (row.checked == true) {
-  		$('#tab').datagrid('showColumn', row.value);// 显示
-  	} else {
-  		$('#tab').datagrid('hideColumn', row.value);// 隐藏
-  	}
-  }
-  // 动态设置显示列（第三步）
-  $(function() {
-  	// 取得本地存储的被选中checkbox的个数，循环将checkbox选中
-  	var length = localStorage.getItem('length');// 获取localStorage数据
-  	for (var i = 0; i <= length; i++) {
-  		var a = localStorage.getItem(i);
-  		$("p input:checkbox[value=" + a + "]").attr("checked", "checked");// 选中状态
-  	}
-  	var checked = $('p input:checkbox:not(:checked)');// 获取所有未选中的复选框
-  	checked.each(function() {// 遍历
 
-  		$('#tab').datagrid('hideColumn', this.value);// 将没选中的列隐藏起来
-  	});
-  });
+  
+  
+//打开设置隐藏列对话框
+	function lookstu() {
+		$("#hiddenColumn_dialog").dialog("open");
+	}
+	function saveColumn() {
+		var cbx = $("#hiddenColumn_form input[type='checkbox']"); //获取Form里面是checkbox的Object
+		var checkedValue = "";
+		var unCheckValue = "";
+		for (var i = 0; i < cbx.length; i++) {
+			if (cbx[i].checked) {//获取已经checked的Object
+				if (checkedValue.length > 0) {
+					checkedValue += "," + cbx[i].value; //获取已经checked的value
+
+				} else {
+					checkedValue = cbx[i].value;
+				}
+			}
+			if (!cbx[i].checked) {//获取没有checked的Object
+				if (unCheckValue.length > 0) {
+					unCheckValue += "," + cbx[i].value; //获取没有checked的value
+
+				} else {
+					unCheckValue = cbx[i].value;
+				}
+			}
+		}
+		var checkeds = new Array();
+		if (checkedValue != null && checkedValue != "") {
+			checkeds = checkedValue.split(',');
+			for (var i = 0; i < checkeds.length; i++) {
+				$('#tab').datagrid('hideColumn', checkeds[i]); //隐藏相应的列
+			}
+
+		}
+		var unChecks = new Array();
+
+		if (unCheckValue != null && unCheckValue != "") {
+			unChecks = unCheckValue.split(',');
+			for (var i = 0; i < unChecks.length; i++) {
+				$('#tab').datagrid('showColumn', unChecks[i]); //显示相应的列
+			}
+		}
+		$('#hiddenColumn_dialog').dialog('close');
+	}
+	//关闭设置隐藏列弹框
+	function closed_hiddenColumn() {
+		$('#hiddenColumn_dialog').dialog('close');
+	}
+	//全选按钮
+	function ChooseAll() {
+
+		var a = $("#isQuanXuan").text();//获取按钮的值
+		if ("全选" == a.trim()) {
+			$("#hiddenColumn_form input[type='checkbox']")
+					.prop("checked", true);//全选
+			$('#isQuanXuan').linkbutton({
+				text : '全不选'
+			});
+		} else {
+			$("#hiddenColumn_form input[type='checkbox']").removeAttr(
+					"checked", "checked");//取消全选
+			$('#isQuanXuan').linkbutton({
+				text : '全选'
+			});
+		}
+
+	}

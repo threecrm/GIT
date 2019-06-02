@@ -44,9 +44,8 @@
 </table>
 </div>
 
-
-<table id="tab" class="easyui-datagrid">
-   <div id="seachId">
+<!-- 模糊查询导航条 -->
+<div id="seachId">
   <form id="seachForm" class="easyui-form">
  
    学生姓名:<input class="easyui-textbox" id="sname" style="width: 75px">
@@ -70,6 +69,7 @@
 		   <option value=''>--请选择--</option>
 		   <option>已回访</option>
 		   <option>未回访</option> 
+		   <option>思量</option>
       </select>
  所在区域:   <select id="Address" class="easyui-combobox">
 		   <option value=''>--请选择--</option>
@@ -104,20 +104,21 @@
    <a class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="init()">搜索</a>
     <br> 
     <br> 
-        <a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick='shezhi()'>设置</a>
+        <a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick='lookstu()'>设置</a>
   </form>  
   </div> 
 
+<table id="tab" class="easyui-datagrid">
   <thead>
        <tr>     
                <!-- <th field="ck" checkbox="true"></th> -->
                 <th data-options="field:'sid',title:'编号'"></th>  
-				<th data-options="field:'sname',title:'学生姓名'"></th>
+				<th data-options="field:'sname',title:'姓名'"></th>
 				<th data-options="field:'age',title:'年龄'"></th>
 				<th data-options="field:'sex',title:'性别'"></th>
 				<th data-options="field:'phone',title:'电话'"></th>
-				<th data-options="field:'stuStatus',title:'学生学历'"></th>
-				<th data-options="field:'perStatus',title:'个人状态'"></th>
+				<th data-options="field:'stuStatus',title:'学历'"></th>
+				<th data-options="field:'perStatus',title:'状态'"></th>
 				<th data-options="field:'msgSource',title:'来源渠道'"></th>
                	<th data-options="field:'sourceUrl',title:'来源网址'"></th>
                	<th data-options="field:'sourceKeyWord',title:'来源关键字'"></th>
@@ -129,7 +130,7 @@
                	<th data-options="field:'learnForword',title:'课程方向'"></th>
                	<th data-options="field:'isValid',title:'是否有效'"></th>
                	<th data-options="field:'reoord',title:'学生简述'"></th>
-               	<th data-options="field:'isReturnVisit',title:'是否回访'"></th>
+               	<th data-options="field:'isReturnVisit',title:'回访状态'"></th>
                	<th data-options="field:'firstVisitTime',title:'第一次回访时间'"></th>
                	<th data-options="field:'isHome',title:'是否家访'"></th>
                	<th data-options="field:'homeTime',title:'家访时间'"></th>
@@ -152,85 +153,92 @@
               	<!-- <th data-options="field:'preMoney',title:'缴费金额'"></th>
                	<th data-options="field:'preMoneyTime',title:'交定金时间'"></th> -->
                	<!-- <th data-options="field:'askerId',title:'咨询师编号'"></th> -->
-               	<th data-options="field:'',title:'操作' ,formatter:formatterSet"></th>
+               	<th data-options="field:'caozuo',title:'操作' ,formatter:formatterSet"></th>
         </tr>
   </thead>
   </table>
   
-  <!-- 设置显示列 -->
-	<div id="win" class="easyui-window" title="设置" style="width: 750px; height: 400px" data-options="iconCls:'icon-save',modal:true,closed:true">
-		<table style="margin: 10px 30px">
-			<tr>
-				<td><input type="checkbox" value="sid" onclick="test(this)" />编号</td>
-				<td><input type="checkbox" value="sname" onclick="test(this)" />学生姓名</td>
-				<td><input type="checkbox" value="age" onclick="test(this)" />年龄</td>
-				<td><input type="checkbox" value="sex" onclick="test(this)" />性别</td>
-				<td><input type="checkbox" value="phone" onclick="test(this)" />电话</td>
-				<td><input type="checkbox" value="stuStatus"
-					onclick="test(this)" />学生学历</td>
-				<td><input type="checkbox" value="firstVisitTime"
-					onclick="test(this)" />第一次回访时间</td>
-				<td><input type="checkbox" value="perStatus"
-					onclick="test(this)" />个人状态</td>
-			</tr>
-			<tr>
-				<td><input type="checkbox" value="msgSource"
-					onclick="test(this)" />来源渠道</td>
-				<td><input type="checkbox" value="sourceUrl"
-					onclick="test(this)" />来源网址</td>
-				<td><input type="checkbox" value="sourceKeyWord"
-					onclick="test(this)" />来源关键字</td>
-				<td><input type="checkbox" value="address" onclick="test(this)" />学生地址</td>
-				<td><input type="checkbox" value="qq" onclick="test(this)" />qq号</td>
-				<td><input type="checkbox" value="weiXin" onclick="test(this)" />微信号</td>
-				<td><input type="checkbox" value="content" onclick="test(this)" />备注</td>
-				<td><input type="checkbox" value="creatTimes"
-					onclick="test(this)" />创建时间</td>
-			</tr>
-			<tr>
-				<td><input type="checkbox" value="learnForword"
-					onclick="test(this)" />课程方向</td>
-				<td><input type="checkbox" value="isValid" onclick="test(this)" />是否有效
-				</td>
-				<td><input type="checkbox" value="isReturnVisit"
-					onclick="test(this)" />回访情况</td>
-				<td><input type="checkbox" value="isHome" onclick="test(this)" />是否家访</td>
-				<td><input type="checkbox" value="homeTime"
-					onclick="test(this)" />家访时间</td>
-				<td><input type="checkbox" value="lostValid"
-					onclick="test(this)" />无效原因</td>
-				<td><input type="checkbox" value="isPay" onclick="test(this)" />是否缴费</td>
-				<td><input type="checkbox" value="payTime" onclick="test(this)" />缴费时间</td>
-			</tr>
-			<tr>
-				<td><input type="checkbox" value="money" onclick="test(this)" />缴费金额</td>
-				<td><input type="checkbox" value="isReturnMoney"
-					onclick="test(this)" />是否退费</td>
-				<td><input type="checkbox" value="isInClass"
-					onclick="test(this)" />是否进班</td>
-				<td><input type="checkbox" value="inClassContent"
-					onclick="test(this)" />进班备注</td>
-				<td><input type="checkbox" value="askerContent"
-					onclick="test(this)" />咨询师备注</td>
-				<td><input type="checkbox" value="stuConcern"
-					onclick="test(this)" />学生担忧情况</td>
-				<td><input type="checkbox" value="isHome" onclick="test(this)" />是否报备</td>
-				<td><input type="checkbox" value="ziXunName"
-					onclick="test(this)" />咨询内容</td>
-			</tr>
-			<tr>
-				<td><input type="checkbox" value="returnMoneyReason"
-					onclick="test(this)" />退费原因</td>
-				<td><input type="checkbox" value="preMoney"
-					onclick="test(this)" />定金金额</td>
-				<td><input type="checkbox" value="preMoneyTime"
-					onclick="test(this)" />交定金时间</td>
-				<td><input type="checkbox" value="askerId" onclick="test(this)" />咨询师编号</td>
-				<td><input type="checkbox" value="hahha" onclick="test(this)" />操作</td>
-			</tr>
-		</table>
+  <div id="hiddenColumn_dialog" class="easyui-dialog"
+		data-options="title:'设置隐藏列',modal:true,closed:'true',
+			buttons:[{
+				text:'保存',
+				handler:function(){
+				saveColumn();<!-- 保存 -->
+				initStu();<!-- 刷新 -->
+				closed_hiddenColumn();<!-- 关闭弹窗 -->
+				}
+			},{
+				text:'关闭',
+				handler:function(){
+				closed_hiddenColumn();
+				}
+			}]">
+		<form style="width: 450px; height: 300px;" id="hiddenColumn_form"
+			class="easyui-form">
+			<a href="javascript:void()" class="easyui-linkbutton" id="isQuanXuan"
+				onclick="ChooseAll()" data-options="iconCls:'icon-edit'">全选</a>
+			<table>
+				<tr>
+					<td><input type="checkbox" value="sid" />编号</td>
+					<td><input type="checkbox" value="sname" />姓名</td>
+					<td><input type="checkbox" value="sex" />性别</td>
+					<td><input type="checkbox" value="age" />年龄</td>
+				</tr>
+				
+				<tr>
+					<td><input type="checkbox" value="phone" />电话</td>
+					<td><input type="checkbox" value="stuStatus" />学历</td>
+					<td><input type="checkbox" value="perStatus" />状态</td>
+					<td><input type="checkbox" value="msgSource" />来源渠道</td>
+				</tr>
+				
+				<tr>
+					<td><input type="checkbox" value="sourceUrl" />来源网址</td>
+					<td><input type="checkbox" value="sourceKeyWord" />来源关键字</td>
+					<td><input type="checkbox" value="address" />学生地址</td>
+					<td><input type="checkbox" value="qq" />QQ号</td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" value="weiXin" />微信号</td>
+					<td><input type="checkbox" value="content" />备注</td>
+					<td><input type="checkbox" value="creatTimes" />创建时间</td>
+					<td><input type="checkbox" value="learnForword" />课程方向</td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" value="isValid" />是否有效</td>
+					<td><input type="checkbox" value="reoord" />学生简述</td>
+					<td><input type="checkbox" value="isReturnVisit" />是否回访</td>
+					<td><input type="checkbox" value="firstVisitTime" />第一次回访时间</td>
+					
+				</tr>
+				<tr>
+					<td><input type="checkbox" value="isHome" />是否家访</td>
+					<td><input type="checkbox" value="homeTime" />家访时间</td>
+					<td><input type="checkbox" value="lostValid" />无效原因</td>
+					<td><input type="checkbox" value="isPay" />是否缴费</td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" value="payTime" />缴费时间</td>
+					<td><input type="checkbox" value="money" />缴费金额</td>
+					<td><input type="checkbox" value="isReturnMoney" />是否退费</td>
+					<td><input type="checkbox" value="returnMoneyReason" />退费原因</td>
+				</tr>
+				<tr>
+				   <td><input type="checkbox" value="isInClass" />是否进班</td>
+					<td><input type="checkbox" value="inClassTime" />进班时间</td>
+					<td><input type="checkbox" value="inClassContent" />进班备注</td>
+					<td><input type="checkbox" value="askerContent" />咨询师备注</td>
+				</tr>
+				<tr>
+				    <td><input type="checkbox" value="fromPart" />打分</td>
+					<td><input type="checkbox" value="stuConcern" />学生担忧情况</td>
+					<td><input type="checkbox" value="isBaoBei" />是否报备</td>
+					<td><input type="checkbox" value="creatUser" />咨询师姓字</td>
+					<td><input type="checkbox" value="ziXunName" />咨询内容</td>
+				</tr>
+			</table>
+		</form>
 	</div>
-  
   <!-- 查看 -->
   <div id="lookWindow" class="easyui-window" modal="true" data-options="closed:true,title:'查看表单'" style="width:900px;height:550px">
  <form id="lookForm">
@@ -240,22 +248,21 @@
 						学生姓名：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name="sname" />
+						<input class="easyui-textbox" type="text"  name="sname" readonly="true"/>
 					</td>
 					
 					<td>
 						学生年龄：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name="age" />
+						<input class="easyui-textbox" type="text"  name="age" readonly="true"/>
 					</td>
 					<td>
 						学生性别：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name="sex" />
+						<input class="easyui-textbox" type="text"  name="sex" readonly="true"/>
 					</td>
-					
 				</tr>
 				
 				 <tr>
@@ -263,19 +270,19 @@
 						学生电话：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name="phone" />
+						<input class="easyui-textbox" type="text"  name="phone" readonly="true"/>
 					</td>
 					<td>
 						学生学历：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name="stuStatus" />
+						<input class="easyui-textbox" type="text"  name="stuStatus" readonly="true"/>
 					</td>
 					<td>
 						个人状态：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name="perStatus" />
+						<input class="easyui-textbox" type="text"  name="perStatus" readonly="true"/>
 					</td>
 				</tr>
 				
@@ -284,41 +291,39 @@
 						来源渠道：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name="msgSource" />
+						<input class="easyui-textbox" type="text"  name="msgSource" readonly="true"/>
 					</td>
 					<td>
 						来源网址：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name="sourceUrl" />
+						<input class="easyui-textbox" type="text"  name="sourceUrl" readonly="true"/>
 					</td>
 					<td>
 						来源关键字：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name="sourceKeyWord" />
+						<input class="easyui-textbox" type="text"  name="sourceKeyWord" readonly="true"/>
 					</td>
 				</tr>
-				
-				
 				<tr>
 					<td>
 						学生地址：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name="address" />
+						<input class="easyui-textbox" type="text"  name="address" readonly="true"/>
 					</td>
 					<td>
 						学生QQ：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name="qq" />
+						<input class="easyui-textbox" type="text"  name="qq" readonly="true"/>
 					</td>
 					<td>
 						学生微信：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name="sname" />
+						<input class="easyui-textbox" type="text" name="weiXin" readonly="true"/>
 					</td>
 				</tr>
 				
@@ -327,19 +332,19 @@
 						  学生备注 ：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" content" />
+						<input class="easyui-textbox" type="text"  name="content" readonly="true"/>
 					</td>
 					<td>
 						  创建时间：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" creatTimes" />
+						<input class="easyui-textbox" type="text"  name="creatTimes" readonly="true"/>
 					</td>
 					<td>
 						 课程方向 ：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" learnForword" />
+						<input class="easyui-textbox" type="text"  name="learnForword" readonly="true"/>
 					</td>
 				</tr>
 				
@@ -348,19 +353,19 @@
 						  是否有效 ：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" isValid" />
+						<input class="easyui-textbox" type="text" name="isValid" readonly="true"/>
 					</td>
 					<td>
 						  学生简述：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" reoord" />
+						<input class="easyui-textbox" type="text" name="reoord" readonly="true"/>
 					</td>
 					<td>
 						  是否回访：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" isReturnVisit" />
+						<input class="easyui-textbox" type="text" name="isReturnVisit" readonly="true"/>
 					</td>
 				</tr>
 				
@@ -369,19 +374,19 @@
 						  第一次回访时间 ：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" firstVisitTime" />
+						<input class="easyui-textbox" type="text" name="firstVisitTime" readonly="true"/>
 					</td>
 					<td>
 						  是否家访：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" isHome" />
+						<input class="easyui-textbox" type="text" name="isHome" readonly="true"/>
 					</td>
 					<td>
 						  家访时间：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" homeTime" />
+						<input class="easyui-textbox" type="text" name="homeTime" readonly="true"/>
 					</td>
 				</tr>
 				
@@ -390,19 +395,19 @@
 						  无效原因 ：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" lostValid" />
+						<input class="easyui-textbox" type="text" name="lostValid" readonly="true"/>
 					</td>
 					<td>
 						  是否缴费：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" isPay" />
+						<input class="easyui-textbox" type="text" name="isPay" readonly="true"/>
 					</td>
 					<td>
 						  缴费时间：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" payTime" />
+						<input class="easyui-textbox" type="text" name="payTime" readonly="true"/>
 					</td>
 				</tr>
 				
@@ -411,61 +416,61 @@
 						  缴费金额 ：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" money" />
+						<input class="easyui-textbox" type="text" name="money" readonly="true"/>
 					</td>
 					<td>
 						  是否退费：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" isReturnMoney" />
+						<input class="easyui-textbox" type="text" name="isReturnMoney" readonly="true"/>
 					</td>
 					<td>
-						  是否进班：
+						  退费原因 ：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" isInClass" />
+						<input class="easyui-textbox" type="text" name="returnMoneyReason" readonly="true"/>
 					</td>
 				</tr>
 				
-				
 				<tr>
+				     <td>
+						  是否进班：
+					</td>
+					<td>
+						<input class="easyui-textbox" type="text" name="isInClass" readonly="true"/>
+					</td>
 					<td>
 						  进班时间：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" inClassTime" />
+						<input class="easyui-textbox" type="text" name="inClassTime" readonly="true"/>
 					</td>
 					<td>
 						  进班备注：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" inClassContent" />
+						<input class="easyui-textbox" type="text" name="inClassContent" readonly="true"/>
 					</td>
+					
+				</tr>
+				<tr>
 					<td>
 						  咨询师备注：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" askerContent" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						  预留：
+						<input class="easyui-textbox" type="text" name="askerContent" readonly="true"/>
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" isDel" />
+						 打分：
 					</td>
 					<td>
-						 预留：
-					</td>
-					<td>
-						<input class="easyui-textbox" type="text"  name=" fromPart" />
+						<input class="easyui-textbox" type="text" name="fromPart" readonly="true"/>
 					</td>
 					<td>
 						  学生担忧：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" stuConcern" />
+						<input class="easyui-textbox" type="text" name="stuConcern" readonly="true"/>
 					</td>
 				</tr>
 				<tr>
@@ -473,47 +478,28 @@
 						  是否报备 ：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" isBaoBei" />
+						<input class="easyui-textbox" type="text" name="isBaoBei" readonly="true"/>
 					</td>
 					<td>
 						  咨询内容：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" ziXunName" />
+						<input class="easyui-textbox" type="text" name="ziXunName" readonly="true"/>
 					</td>
 					<td>
 						  咨询师名字：
 					</td>
 					<td>
-						<input class="easyui-textbox" type="text"  name=" creatUser" />
+						<input class="easyui-textbox" type="text" name="creatUser" readonly="true"/>
 					</td>
 				</tr>
-				<tr>
-					<td>
-						  退费原因 ：
-					</td>
-					<td>
-						<input class="easyui-textbox" type="text"  name=" returnMoneyReason" />
-					</td>
-					<td>
-						  定金金额：
-					</td>
-					<td>
-						<input class="easyui-textbox" type="text"  name=" preMoneyTime" />
-					</td>
-					<td>
-						 交定金时间：
-					</td>
-					<td>
-						<input class="easyui-textbox" type="text"  name=" isInClass" />
-					</td>
-				</tr> 
+				
        </table>
  </form>
  </div> 
    
  <!--修改-->
- <div id="updateWindow" class="easyui-window" data-options="closed:true,title:'编辑'" modal="true" style="width:700px;height:600px; "  >
+ <div id="updateWindow" class="easyui-window" data-options="closed:true,title:'编辑'" modal="true" style="width:700px;height:750px; "  >
  <form id="updateForm">
  <table style="margin-left:27%; margin-top: 1%"> 
                  <tr>
@@ -537,7 +523,11 @@
 						<label for="name">课程方向:</label> 
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="learnForword1" name="learnForword"/>
+					  <select id="learnForword1"  class="easyui-combobox" name="learnForword" data-options="required:true,editable:false">
+					   <option value="">--请选择--</option>
+					   <option>网络开发</option>
+					   <option>网站运营</option>
+					   </select>
 					</td>
 				</tr>
 				
@@ -546,7 +536,7 @@
 						<label for="name">是否有效:</label> 
 					</td>
 					<td>
-					   <select id="isValid1"  class="easyui-combobox" >
+					   <select id="isValid1"  class="easyui-combobox" name="isValid" data-options="required:true,editable:false">
 					   <option value="">--请选择--</option>
 					   <option>是</option>
 					   <option>否</option>
@@ -559,7 +549,7 @@
 						<label for="name">无效原因:</label> 
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="lostValid1" name="lostValid"/>
+						<input class="easyui-validatebox" type="text" id="lostValid1" name="lostValid" data-options="required:true"/>
 					</td>
 				</tr>
 				<tr>
@@ -567,7 +557,7 @@
 						<label for="name">是否回访:</label> 
 					</td>
 					<td>
-					   <select id="isReturnVisit1"  class="easyui-combobox" >
+					   <select id="isReturnVisit1"  class="easyui-combobox" name="isReturnVisit" data-options="required:true,editable:false">
 					   <option value="">--请选择--</option>
 					   <option>是</option>
 					   <option>否</option>
@@ -579,7 +569,7 @@
 						<label for="name">首访时间:</label> 
 					</td>
 					<td>
-						<input class="easyui-datetimebox" type="text" id="firstVisitTime1" name="firstVisitTime"/>
+						<input class="easyui-datetimebox" type="text" id="firstVisitTime1" name="firstVisitTime" data-options="required:true,editable:false"/>
 					</td>
 				</tr>	
 				<tr>
@@ -587,7 +577,7 @@
 						<label for="name">是否家访:</label> 
 					</td>
 					<td>
-					   <select id="isHome1"  class="easyui-combobox" >
+					   <select id="isHome1"  class="easyui-combobox"  name="isHome" data-options="required:true,editable:false">
 					   <option value="">--请选择--</option>
 					   <option>是</option>
 					   <option>否</option>
@@ -599,7 +589,7 @@
 						<label for="name">家访时间:</label> 
 					</td>
 					<td>
-						<input class="easyui-datetimebox" type="text" id="homeTime1" name="homeTime"/>
+						<input class="easyui-datetimebox" type="text" id="homeTime1" name="homeTime" data-options="required:true,editable:false"/>
 					</td>
 				</tr>
 				 <tr>
@@ -607,7 +597,7 @@
 						<label for="name">担忧情况:</label> 
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="stuConcern1" name="money"/>
+						<input class="easyui-validatebox" type="text" id="stuConcern1" name="money" data-options="required:true"/>
 					</td>
 				</tr>
 				<tr>
@@ -615,7 +605,7 @@
 						<label for="name">咨询内容:</label> 
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="ziXunName1" name="payTime"/>
+						<input class="easyui-validatebox" type="text" id="ziXunName1" name="payTime" data-options="required:true"/>
 					</td>
 				</tr> 
 				
@@ -624,7 +614,7 @@
 						<label for="name">学生简述:</label> 
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="reoord1" name="reoord"/>
+						<input class="easyui-validatebox" type="text" id="reoord1" name="reoord" data-options="required:true"/>
 					</td>
 				</tr> 
 				
@@ -633,7 +623,7 @@
 						<label for="name">是否缴费:</label> 
 					</td>
 					<td>
-						<select id="isPay1"  class="easyui-combobox" >
+						<select id="isPay1"  class="easyui-combobox" name="isPay"  data-options="required:true,editable:false">
 					   <option value="">--请选择--</option>
 					   <option>是</option>
 					   <option>否</option>
@@ -645,7 +635,7 @@
 						<label for="name">缴费时间:</label> 
 					</td>
 					<td>
-						<input class="easyui-datetimebox" type="text" id="payTime1" name="payTime"/>
+						<input class="easyui-datetimebox" type="text" id="payTime1" name="payTime" data-options="required:true,editable:false"/>
 					</td>
 				</tr>
 				<tr>
@@ -653,7 +643,7 @@
 						<label for="name">缴费金额:</label> 
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="money1" name="money"/>
+						<input class="easyui-validatebox" type="text" id="money1" name="money" data-options="required:true"/>
 					</td>
 				</tr>
 				<tr>
@@ -661,7 +651,7 @@
 						<label for="name">是否退费:</label> 
 					</td>
 					<td>
-						<select id="isReturnMoney1"  class="easyui-combobox" >
+						<select id="isReturnMoney1"  class="easyui-combobox" name="isReturnMoney" data-options="required:true,editable:false" >
 					   <option value="">--请选择--</option>
 					   <option>是</option>
 					   <option>否</option>
@@ -673,7 +663,7 @@
 						<label for="name">退费原因:</label> 
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="returnMoneyReason1" name="returnMoneyReason"/>
+						<input class="easyui-validatebox" type="text" id="returnMoneyReason1" name="returnMoneyReason" data-options="required:true"/>
 					</td>
 				</tr> 
 				<tr>
@@ -681,7 +671,7 @@
 						<label for="name">是否进班:</label> 
 					</td>
 					<td>
-						<select id="isInClass1"  class="easyui-combobox"  >
+						<select id="isInClass1"  class="easyui-combobox" name="isInClass" data-options="required:true,editable:false" >
 					   <option value=" ">--请选择--</option>
 					   <option>是</option>
 					   <option>否</option>
@@ -693,7 +683,7 @@
 						<label for="name">进班时间:</label> 
 					</td>
 					<td>
-						<input class="easyui-datetimebox" type="text" id="inClassTime1" name="inClassTime"/>
+						<input class="easyui-datetimebox" type="text" id="inClassTime1" name="inClassTime" data-options="required:true,editable:false"/>
 					</td>
 				</tr>
 				<tr>
@@ -701,7 +691,7 @@
 						<label for="name">进班备注:</label> 
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="inClassContent1" name="inClassContent"/>
+						<input class="easyui-validatebox" type="text" id="inClassContent1" name="inClassContent" data-options="required:true"/>
 					</td>
 				</tr>
 				<tr>
@@ -709,7 +699,7 @@
 						<label for="name">咨询师备注:</label> 
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="askerContent1" name="askerContent"/>
+						<input class="easyui-validatebox" type="text" id="askerContent1" name="askerContent" data-options="required:true"/>
 					</td>
 				</tr> 
 				
@@ -718,7 +708,7 @@
 						<label for="name">是否报备:</label> 
 					</td>
 					<td>
-						<select id="isBaoBei1"  class="easyui-combobox"  >
+						<select id="isBaoBei1"  class="easyui-combobox" name="isBaoBei" data-options="required:true,editable:false">
 					   <option value=" ">--请选择--</option>
 					   <option>是</option>
 					   <option>否</option>
@@ -730,7 +720,7 @@
 						<label for="name">打分:</label> 
 					</td>
 					<td>
-						<input class="easyui-validatebox" type="text" id="fromPart1" name="fromPart"/>
+						<input class="easyui-validatebox" type="text" id="fromPart1" name="fromPart" data-options="required:true"/>
 					</td>
 				</tr>
 				
@@ -759,7 +749,7 @@
 	    </tr>
 	    <tr>
 	     <td><label for="name">跟踪开始时间:</label></td>
-	     <td><input class="easyui-datetimebox" type="text" id="date" data-options="required:true" /></td> 
+	     <td><input class="easyui-datetimebox" type="text" id="date" data-options="required:true,editable:false" /></td> 
 	    </tr>
 	    <tr>
 	     <td><label for="name">跟踪者:</label>   
@@ -767,11 +757,11 @@
 	    </tr>
 	    <tr>
 	     <td><label for="name">回访情况:</label></td>
-	     <td><input class="easyui-validatebox" type="text" id="n_qingkuang" data-options="required:true" /></td> 
+	     <td><input class="easyui-validatebox" type="text" id="n_qingkuang" data-options="required:true,editable:false" /></td> 
 	    </tr>
 	    <tr> 
 	     <td><label for="name">跟踪方式:</label></td>
-	     <td><select id="sn_fangshi"  class="easyui-combobox" style="width:157px" >
+	     <td><select id="sn_fangshi"  class="easyui-combobox" style="width:157px" data-options="required:true,editable:false" >
 					   <option value=''>--请选择--</option>
 					   <option>家访</option>
 					   <option>校访</option>
@@ -785,7 +775,7 @@
 	    </tr>
 	    <tr>
 	     <td> <label for="name">跟踪结束时间:</label>  </td>
-	     <td><input class="easyui-datetimebox" type="text" id="aftertime" data-options="required:true"/></td> 
+	     <td><input class="easyui-datetimebox" type="text" id="aftertime" data-options="required:true,editable:false"/></td> 
 	    </tr>
 	  
 	    <tr>
