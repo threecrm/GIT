@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.crm.dao.LoginMapper;
+import com.crm.entity.Roles;
 import com.crm.entity.Users;
 @Service
 public class LoginServiceImp implements LoginService{
@@ -28,8 +29,12 @@ public class LoginServiceImp implements LoginService{
 	 * 修改个人信息
 	 */
 	public Integer updatePim(Users users) {
-		// TODO Auto-generated method stub
 		return loginMapper.updatePim(users);
+	}
+	@Override
+	public List<Roles> selectRolesName(Users users) {
+		List<Roles> selectRolesName = loginMapper.selectRolesName(users);
+		return selectRolesName;
 	}
 
 }

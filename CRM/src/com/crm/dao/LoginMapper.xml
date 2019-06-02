@@ -45,4 +45,7 @@
                  uid=#{uid}
              </where> 
 	</update>
+	<select id="selectRolesName" parameterType="users" resultType="roles">
+		SELECT * FROM users u,roles r ,userroles ur where u.uid=ur.UserId and r.rid=ur.RoleId and u.longinName=#{LonginName}
+	</select>
 </mapper>
