@@ -5,6 +5,7 @@ import java.util.List;
 import com.crm.entity.Ask;
 import com.crm.entity.Fenye;
 import com.crm.entity.Roles;
+import com.crm.entity.Sign_in;
 import com.crm.entity.Student;
 import com.crm.entity.Users;
 
@@ -32,11 +33,24 @@ public interface AskMapper {
 	//根据用户名称查询用户
 	Users selectUsers(String longinName);
 	/**
-	 * 一键签退
+	 * 查询当天签到的员工
+	 * @param sign_in
+	 * @return
+	 */
+	/*List<Sign_in> selectSignByTime(Sign_in sign_in);*/
+	/**
+	 * 一键签退 咨询师
 	 * @param ask
 	 * @return
 	 */
 	Integer allQiantui(Ask ask);
+	/**
+	 * 一键签退 签到表
+	 * @param sign_in
+	 * @return
+	 */
+	Integer allQiantuis(Sign_in sign_in);
+	
 	/**
 	 * 查询出当天未签到的咨询师
 	 * @param ask

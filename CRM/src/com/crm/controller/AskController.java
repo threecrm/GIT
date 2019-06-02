@@ -253,6 +253,7 @@ public class AskController {
 	@RequestMapping(value = "/allQiantui", method = RequestMethod.POST)
 	@ResponseBody
 	public Integer allQiantui(Ask ask){
+		Integer i = askService.allQiantuis(sign_in);
 		return askService.allQiantui(ask);
 	}
 	/**

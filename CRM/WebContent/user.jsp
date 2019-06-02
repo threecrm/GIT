@@ -387,7 +387,7 @@
 				<form id="tb-frm">
 				用户名: <input class="easyui-textbox" type="text" id="userName" name="userName">
 				起止时间: <input class="easyui-datebox" id="beginDates" name="beginDates"/>-<input class="easyui-datebox" id="endDates" name="endDates"/>
-				是否锁定: <select id="isLock" class="easyui-combobox" name="isLock" style="height:auto;">
+				是否锁定: <select id="isLock" class="easyui-combobox" name="isLock" style="height:auto;" data-options="editable:false">
 						    <option value="">---请选择---</option>
 						    <option value="是">是</option>
 						    <option value="否">否</option>
