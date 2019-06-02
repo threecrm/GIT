@@ -101,8 +101,8 @@ public class NetStudentController {
 	// 修改失效
 	@RequestMapping(value = "/updateShixiaoStudent", method = RequestMethod.POST)
 	@ResponseBody
-	public Integer updateShixiaoStudent(Student student) {
-		return netStudentService.updateShixiaoStudent(student);
+	public Integer updateShixiaoStudent(String Sname) {
+		return netStudentService.updateShixiaoStudent(Sname);
 	}
 
 	// 查询学生和咨询师

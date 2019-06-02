@@ -292,13 +292,13 @@
 		var data = $("#tabs").datagrid("getData");
 		var row = data.rows[index];
 		$.post("updateShixiaoStudent", {
-			sid : row.sid
+			Sname : row.sname
 		}, function(res) {
 			if (res > 0) {
 				$.messager.alert("提示", "设置成功");
 				$("#tabs").datagrid("reload");
 			} else {
-				$.messager.alert("提示", "设置失败");
+				$.messager.alert("提示", "你已经在跟踪中，不能进行失效");
 			}
 		}, "json")
 	}
@@ -339,7 +339,7 @@
 			n_aftertime : $("#n_aftertime").datetimebox("getValue"),
 			n_ask : $("#n_ask").val(),
 			uname : $("#LoginUserName").val(),
-			n_fangshi : $("#n_fangshi").val(),
+			n_fangshi : $("#n_fangshi").combobox("getValue"),
 			n_qingkuang : $("#n_qingkuang").combobox("getValue")
 
 		}, function(res) {
@@ -350,8 +350,8 @@
 				$("#genzongForm").form("reset");
 
 			} else {
-				$.messager.alert("提示", "你已经对" + $("#studentsname1").val()
-						+ "跟踪过一次了，不能二次跟踪哦！");
+				$.messager.alert("提示", $("#studentsname1").val()
+						+ "已跟踪完成！");
 				$("#genzongid").window("close");
 				$("#tabs").datagrid("reload");
 				$("#genzongForm").form("reset");
@@ -1036,7 +1036,17 @@
 				</tr>
 				<tr>
 					<td>追踪方式:</td>
-					<td><input class="easyui-textbox" id="n_fangshi"></td>
+					<td>
+					<select id="n_fangshi" class="easyui-combobox" data-options="editable:false">
+							<option value=''>--请选择--</option>
+							<option>电话</option>
+							<option>网络</option>
+							<option>QQ</option>
+							<option>微信</option>
+							<option>上门</option>
+							<option>其他</option>
+					</select>
+					</td>
 				</tr>
 				<tr>
 					<td>跟踪状态:</td>
@@ -1044,6 +1054,7 @@
 							<option value=''>--请选择--</option>
 							<option>已跟踪</option>
 							<option>跟踪中</option>
+							<option>跟踪完成</option>
 							<option>思量</option>
 							<option>上门未报名</option>
 							<option>报名未进班</option>

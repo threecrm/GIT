@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.crm.dao.NetStudentMapper;
 import com.crm.entity.Fenye;
+import com.crm.entity.Network_trace;
 import com.crm.entity.Student;
 @Service
 public class NetStudentServiceImpl implements NetStudentService {
@@ -46,8 +47,15 @@ public Integer updateNetStudent(Student student) {
 	return netStudentMapper.updateNetStudent(student);
 }
 //修改失效
-public Integer updateShixiaoStudent(Student student) {
-	return netStudentMapper.updateShixiaoStudent(student);
+public Integer updateShixiaoStudent(String Sname) {
+	Integer updateShixiaoStudent = null;
+	List<Network_trace> i = netStudentMapper.selectShiXiaoTiaoJian(Sname);
+	if(i.size()==0) {
+		 updateShixiaoStudent = netStudentMapper.updateShixiaoStudent(Sname);
+	}else {
+		return -1;
+	}
+	return updateShixiaoStudent;
 }
 //查询学生和咨询师
 public Student selectAsks(Integer id) {

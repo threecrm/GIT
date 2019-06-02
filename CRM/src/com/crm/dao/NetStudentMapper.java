@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.crm.entity.Ask;
 import com.crm.entity.Fenye;
+import com.crm.entity.Network_trace;
 import com.crm.entity.Student;
 
 public interface NetStudentMapper {
@@ -20,9 +21,11 @@ public interface NetStudentMapper {
     //修改学生
     Integer updateNetStudent(Student student);
     //修改失效
-    Integer updateShixiaoStudent(Student student);
+    Integer updateShixiaoStudent(String Sname);
     //查询学生和咨询师
     Student selectAsks(Integer id);
 
     Ask selectAsk(Integer askid);
+    //失效条件
+    List<Network_trace> selectShiXiaoTiaoJian(String Sname);
 }
