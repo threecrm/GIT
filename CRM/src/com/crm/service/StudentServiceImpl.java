@@ -70,11 +70,6 @@ public class StudentServiceImpl implements StudentService {
 		return addStudent;
 	}
 
-	public Integer deleteStudent(Integer id) {
-		Integer deleteStudent = studentMapper.deleteStudent(id);
-		return deleteStudent;
-	}
-
 	public Integer updateStudent(Student student) {
 		Integer updateStudent = studentMapper.updateStudent(student);
 		return updateStudent;
@@ -165,5 +160,17 @@ public class StudentServiceImpl implements StudentService {
 			Integer insertMessage=messageMapper.insertMessage(message);
 		}
 		return updateStudentAsk;
+	}
+
+	//ʧЧ
+	public Integer updateShixiaoStudent(String Sname) {
+		// TODO Auto-generated method stub
+		return studentMapper.updateShixiaoStudent(Sname);
+	}
+
+	@Override
+	public List<Student> selectshixiaostudents() {
+		// TODO Auto-generated method stub
+		return studentMapper.selectshixiaostudents();
 	}
 }

@@ -92,11 +92,6 @@
 		student(Sname,Sex,Age,Phone,StuStatus,PerStatus,MsgSource,SourceUrl,SourceKeyWord,QQ,WeiXin,isBaoBei,Content,IsReturnVisit,AskerId,CreatTimes,IsValid)
 		VALUES(#{Sname},#{Sex},#{Age},#{Phone},#{StuStatus},#{PerStatus},#{MsgSource},#{SourceUrl},#{SourceKeyWord},#{QQ},#{WeiXin},#{isBaoBei},#{Content},#{IsReturnVisit},#{AskerId},#{CreatTimes},#{IsValid})
 	</insert>
-	<!-- 删除学生 -->
-	<delete id="deleteStudent" parameterType="int">
-		DELETE from student
-		where sid=#{id}
-	</delete>
 	<!-- 修改学生 -->
 	<update id="updateStudent" parameterType="Student">
 		UPDATE student
@@ -196,4 +191,12 @@
 			sid=#{sid}
 		</where>
 	</update>
+	<!-- 失效 -->
+<update id="updateShixiaoStudent" parameterType="string">
+update student set IsValid='否' where IsValid='是' and Sname=#{Sname}
+</update>
+	<!--  查询失效学生-->
+	<select id="selectshixiaostudents" resultType="student">
+	select * from student where IsValid='否'
+	</select>
 </mapper>

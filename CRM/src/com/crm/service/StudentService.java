@@ -21,9 +21,6 @@ public interface StudentService {
 	// 添加学生
 	public Integer addStudent(Student student,Boolean tur);
 
-	// 删除学生
-	public Integer deleteStudent(Integer id);
-
 	// 修改学生
 	public Integer updateStudent(Student student);
 
@@ -55,4 +52,9 @@ public interface StudentService {
 	 * 分量
 	 */
 	Integer selectFenLiang(List<Integer> list);
+	
+	 //失效
+	 public Integer updateShixiaoStudent(String Sname);
+	 //查询失效学生
+	    List<Student> selectshixiaostudents();
 }

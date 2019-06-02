@@ -17,5 +17,8 @@ public interface NetGenzongMapper {
     List<Network_trace> selectNetName(Network_trace network_trace);
     //判断是否完成跟踪
     List<Network_trace> selectWanChengGenzong(Network_trace network_trace);
+    //查看跟踪日志
+    List<Network_trace> selectgenzongrizhi(String name);
+    
 
 }

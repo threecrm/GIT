@@ -22,10 +22,6 @@ public interface StudentMapper {
 
 	// 添加学生信息
 	Integer addStudent(Student student);
-
-	// 删除学生
-	Integer deleteStudent(Integer id);
-
 	// 修改学生
 	Integer updateStudent(Student student);
 
@@ -63,4 +59,9 @@ public interface StudentMapper {
 	List<Ask> selectAskAll(String date);
 	//分配学生
 	Integer updateStudentAsk(Student student);
+    //失效
+    Integer updateShixiaoStudent(String Sname);
+    //查询失效学生
+    List<Student> selectshixiaostudents();
+    
 }

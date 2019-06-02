@@ -1,5 +1,7 @@
 package com.crm.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,5 +38,11 @@ public class NetGenzongController {
 		return netGenzongService.addNetGenzong(network_trace);
     	
     }
+	//查看跟踪日志
+	@RequestMapping(value="/selectgenzongrizhi",method=RequestMethod.POST)
+	@ResponseBody
+	public List<Network_trace> selectgenzongrizhi(String name) {
+		return netGenzongService.selectgenzongrizhi(name);
+	}
 
 }

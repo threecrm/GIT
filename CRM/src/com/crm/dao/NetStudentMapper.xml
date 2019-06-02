@@ -118,7 +118,7 @@ UPDATE student
 </set>
  where sid=#{sid}
 </update>
-<!-- 修改失效 -->
+<!-- 失效 -->
 <update id="updateShixiaoStudent" parameterType="string">
 update student set IsValid='否' where IsValid='是' and Sname=#{Sname}
 </update>

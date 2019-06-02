@@ -2,8 +2,9 @@ function formatterSet(value, row, index) {
 	return "<a href='javascrip:void(0)' onclick='look(" + index
 			+ ")'>查看</a>  <a href='javascrip:void(0)' onclick='update(" + index
 			+ ")'>修改</a>   <a href='javascrip:void(0)'  onclick='del(" + index
-			+ ")'>删除</a>  <a href='javascrip:void(0)'  onclick='GenZong(" + index
+			+ ")'>失效</a>  <a href='javascrip:void(0)'  onclick='GenZong(" + index
 			+ ")'>跟踪</a> "
+			+"<a href='javascrip:void(0)'  onclick='genzongrizhi("+index+")'>查看跟踪日志</a>"
 }
 $(function() {
 	init();
@@ -184,25 +185,20 @@ function updatetrue() {
 function updatefalse() {
 	$("#updateWindow").window("close");
 }
-// 删除
+// 失效
 function del(index) {
 	var data = $("#tab").datagrid("getData");
-	var row = data.rows[index];// 获取id
-	$.messager.confirm("提示", "确认删除吗？", function(r) {
-		if (r) {
-			$.post("deleteStudent", {
-				id : row.sid
-			}, function(res) {
-				if (res > 0) {
-					$.messager.alert("提示", "删除成功");
-					$("#tab").datagrid("reload");
-
-				} else {
-					$.messager.alert("提示", "删除失败");
-				}
-			}, "json")
+	var row = data.rows[index];  
+	$.post("updateShixiaoStudents", {
+		Sname : row.sname
+	}, function(res) {
+		if (res > 0) {
+			$.messager.alert("提示", "设置成功");
+			$("#tab").datagrid("reload");
+		} else {
+			$.messager.alert("提示", "你已经在跟踪中，不能进行失效");
 		}
-	})
+	}, "json")
 }
 
 // 手动添加咨询师（第一步弹窗）
@@ -291,39 +287,30 @@ function Weifenpei() {
 		mehtod : 'post'
 	})
 }
-// 动态设置显示列（第一步）
+//动态显示
 function shezhi() {
-	$("#win").window("open");
+	$("#dtcx_students").window("open");
 }
-// 动态设置显示列（第二步）
-function test(row) {// 接受文本框this自身的所有的值
-	var checked = $('p input:checkbox:checked');// 获取p标签所有选中的复选框
-	checked.each(function(i) {// 依次存储到localStorage里面
-		localStorage.setItem(i, this.value);
-		localStorage.setItem('length', i);
-	});
-	console.log(localStorage.getItem('length'));// 控制台输出
-	if (row.checked == true) {
-		$('#tab').datagrid('showColumn', row.value);// 显示
+function checkOrClose(object) {
+	if (object.checked == true) {
+		$("#tab").datagrid("showColumn", object.name);
 	} else {
-		$('#tab').datagrid('hideColumn', row.value);// 隐藏
+		$("#tab").datagrid("hideColumn", object.name);
 	}
 }
-// 动态设置显示列（第三步）
-$(function() {
-	// 取得本地存储的被选中checkbox的个数，循环将checkbox选中
-	var length = localStorage.getItem('length');// 获取localStorage数据
-	for (var i = 0; i <= length; i++) {
-		var a = localStorage.getItem(i);
-		$("p input:checkbox[value=" + a + "]").attr("checked", "checked");// 选中状态
+function checkOrCloseAll(obj) {
+	$(".checkeds").prop('checked', $(obj).prop('checked'));
+	if (obj.checked == true) {
+		$(".checkeds:checked").each(function() {
+			$("#tab").datagrid("showColumn", this.name);
+		});
+	} else {
+		$(".checkeds").each(function() {
+			$("#tab").datagrid("hideColumn", this.name);
+		});
 	}
-	var checked = $('p input:checkbox:not(:checked)');// 获取所有未选中的复选框
-	checked.each(function() {// 遍历
-
-		$('#tab').datagrid('hideColumn', this.value);// 将没选中的列隐藏起来
-	});
-});
-
+}
+//跟踪
 function GenZong(index){
 	 var datas=$("#tab").datagrid("getData");
 	 var row=datas.rows[index];
@@ -344,7 +331,7 @@ function submitZuiZong(){
 	var data=$("#tab").datagrid("getSelected");
 	var sname=$("#sName").val();
 	var uname=$("#userlonginName").val();
-	var n_qingkuang=$("#n_qingkuang").val();
+	var n_qingkuang=$("#n_qingkuang").combobox('getValue');
 	var n_fangshi=$("#n_fangshi").combobox("getValue");
 	var date=$("#date").datetimebox('getValue');
 	var ask=$("#ask").val();
@@ -365,13 +352,16 @@ function submitZuiZong(){
 	    		uid:u_id
 	    	},function(res){
 	    		if (res > 0) {
-					//拜访成功
+					$.messager.alert("提示", "你对学生"+$("#sName").val()+"跟踪成功");
 					$("#genzongid").dialog("close");
-					
-					$.messager.alert("提示", "回访成功");
+					$("#tab").datagrid("reload");
+					$("#genzongForm").form("reset");
 				} else {
-					//拜访失败
-					$.messager.alert("提示", "回访失败")
+					$.messager.alert("提示", $("#sName").val()+"你已跟踪完成，请选择其他学生进行跟踪！");
+					$("#genzongid").dialog("close");
+					$("#tab").datagrid("reload");
+					$("#genzongForm").form("reset");
+					
 				}
 	    	},"json")
 		}else{
@@ -395,5 +385,25 @@ function chongzhiStudent() {
 		url : 'selectAllStudent',
 		method : 'post',
 		pagination : true
+	})
+}
+
+function genzongrizhi(index){
+	 var date=$("#tab").datagrid("getData");
+	 var row=date.rows[index];
+	  $("#tabs").datagrid({
+		 	 url:'selectgenzongrizhi',
+		 	 method:'post',
+		 	queryParams:{
+		 	 name:row.sname
+		 				 }
+		 		 })
+		 $("#genzongrizhiId").window("open") ;
+}
+
+function shixiaoStudent(){
+	$("#tab").datagrid({
+		url:'selectshixiaostudents',
+		method:'post'
 	})
 }

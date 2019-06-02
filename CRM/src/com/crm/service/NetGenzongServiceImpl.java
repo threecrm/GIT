@@ -35,6 +35,12 @@ public Integer addNetGenzong(Network_trace network_trace) {
 	return addNetGenzong;
 }
 
+//查看跟踪日志
+public List<Network_trace> selectgenzongrizhi(String name) {
+	// TODO Auto-generated method stub
+	return netGenzongMapper.selectgenzongrizhi(name);
+}
+
 
   
 

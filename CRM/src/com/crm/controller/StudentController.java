@@ -88,14 +88,6 @@ public class StudentController {
 		return addStudent;
 	}
 
-	// 删除
-	@RequestMapping(value = "/deleteStudent", method = RequestMethod.POST)
-	@ResponseBody
-	public Integer deleteStudent(Integer id) {
-		Integer deleteStudent = studentService.deleteStudent(id);
-		return deleteStudent;
-	}
-
 	// 修改
 	@RequestMapping(value = "/updateStudent", method = RequestMethod.POST)
 	@ResponseBody
@@ -180,5 +172,17 @@ public class StudentController {
 		System.out.println(selectWeightId);
 		return selectWeightId;
 	}
+	// 失效
+		@RequestMapping(value = "/updateShixiaoStudents", method = RequestMethod.POST)
+		@ResponseBody
+		public Integer updateShixiaoStudent(String Sname) {
+			return studentService.updateShixiaoStudent(Sname);
+		}
+		 //查询失效学生
+		@RequestMapping(value = "/selectshixiaostudents", method = RequestMethod.POST)
+		@ResponseBody
+	    List<Student> selectshixiaostudents(){
+	    	return studentService.selectshixiaostudents();
+	    }
 
 }

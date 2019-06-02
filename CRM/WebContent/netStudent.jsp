@@ -54,6 +54,7 @@
 				+ index
 				+ ")'>修改 </a>   <a href='javascrip:void(0)'  onclick='updateShixiao("
 				+ index + ")'>失效</a>  "
+				+"<a href='javascrip:void(0)'  onclick='genzongrizhi("+index+")'>查看跟踪日志</a>"
 	}
 	function init() {
 		/* 	alert($("#LoginUserName").val()) */
@@ -97,7 +98,7 @@
 
 						})
 	}
-
+ 
 	//动态显示
 	function shezhi() {
 		$("#dtcx_students").window("open");
@@ -190,16 +191,7 @@
 		$("#addWindow").window("close");
 	}
 
-	//失效学生
-	function shixiaoStudent() {
-		$("#tabs").datagrid({
-			url : 'selectShiXiaoStudent',
-			method : 'post',
-			queryParams : {
-				askName : $("#LoginUserName").val()
-			}
-		})
-	}
+
 	//所有学生
 	function AllshixiaoStudent() {
 		$("#tabs").datagrid({
@@ -219,7 +211,7 @@
 	}
 	// 修改确认按钮
 	function updatetrue() {
-		$.post("",
+		$.post("updateShixiaoStudent",
 				{
 					sid : $("#updatesid").val(),
 					LearnForword : $("#updateLearnForword")
@@ -302,7 +294,16 @@
 			}
 		}, "json")
 	}
-
+	//失效学生
+	function shixiaoStudent() {
+		$("#tabs").datagrid({
+			url : 'selectShiXiaoStudent',
+			method : 'post',
+			queryParams : {
+				askName : $("#LoginUserName").val()
+			}
+		})
+	}
 	//查看
 	function look(index) {
 		var data = $("#tabs").datagrid("getData");
@@ -351,9 +352,8 @@
 
 			} else {
 				$.messager.alert("提示", $("#studentsname1").val()
-						+ "已跟踪完成！");
+						+ "你已跟踪完成，请选择其他学生进行跟踪");
 				$("#genzongid").window("close");
-				$("#tabs").datagrid("reload");
 				$("#genzongForm").form("reset");
 			}
 
@@ -367,6 +367,20 @@
 	// 导出excel(导 js/jquery-easyui-1.4.3/datagrid-export.js 包)
 	function exportExcel() {
 		$('#tabs').datagrid('toExcel', 'dg.xls');
+	}
+	
+	//查看跟踪日志
+	function genzongrizhi(index){
+		 var date=$("#tabs").datagrid("getData");
+		 var row=date.rows[index];
+		  $("#tab").datagrid({
+			 	 url:'selectgenzongrizhi',
+			 	 method:'post',
+			 	queryParams:{
+			 	 name:row.sname
+			 				 }
+			 		 })
+			 $("#genzongrizhiId").window("open") ;
 	}
 </script>
 </head>
@@ -1043,7 +1057,8 @@
 							<option>网络</option>
 							<option>QQ</option>
 							<option>微信</option>
-							<option>上门</option>
+						   <option>家访</option>
+					      <option>校访</option>
 							<option>其他</option>
 					</select>
 					</td>
@@ -1070,5 +1085,24 @@
 			</table>
 		</form>
 	</div>
+	<!--  查看跟踪日志-->
+	<div id="genzongrizhiId" class="easyui-window" title="跟踪信息" style="width:100%;height:700px;"   
+	        data-options="iconCls:'icon-save',closed:true">
+	        <table id="tab" class="easyui-datagrid">
+<thead>
+         <tr>
+               <th data-options="field:'n_id',title:'ID',width:100"></th>
+				<th data-options="field:'n_sname',title:'学生姓名',width:100"></th>
+				<th data-options="field:'n_date',title:'跟踪开始时间',width:100"></th>
+				<th data-options="field:'uname',title:'跟踪者',width:100"></th>
+				<th data-options="field:'n_qingkuang',title:'回访情况',width:100"></th>
+				<th data-options="field:'n_fangshi',title:'跟踪方式',width:100"></th>
+				<th data-options="field:'n_ask',title:'跟踪内容',width:100"></th>
+				<th data-options="field:'n_aftertime',title:'跟踪结束时间',width:100"></th>
+         </tr>
+</thead>
+</table>
+	        
+	        </div>
 </body>
 </html>

@@ -20,10 +20,16 @@ public class GenZongServiceImpl implements GenZongService{
 		fenye.setTotal(count);
 		return fenye;
 	}
-
+//Ìí¼ÓÒ»Ìõ¸ú×Ù
 	public Integer Addgenzong(Network_trace network_trace) {
-		 Integer i = genZongMapper.Addgenzong(network_trace);
-		return i;
+		 Integer Addgenzong = null;
+		 List<Network_trace> i = genZongMapper.selectWanChengGenzong(network_trace);
+		 if(i.size()==0) {
+			 Addgenzong = genZongMapper.Addgenzong(network_trace);
+			}else {
+				return -1;
+			}
+		return Addgenzong;
 	}
 
 }

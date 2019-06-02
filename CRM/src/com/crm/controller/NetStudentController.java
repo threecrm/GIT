@@ -98,7 +98,7 @@ public class NetStudentController {
 		return netStudentService.updateNetStudent(student);
 	}
 
-	// �޸�ʧЧ
+	// ʧЧ
 	@RequestMapping(value = "/updateShixiaoStudent", method = RequestMethod.POST)
 	@ResponseBody
 	public Integer updateShixiaoStudent(String Sname) {

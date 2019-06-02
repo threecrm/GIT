@@ -61,4 +61,8 @@
 		INSERT INTO network_trace(n_sname,uname,n_date,n_ask,n_aftertime,uid,n_qingkuang,n_fangshi,sid) 
 		      VALUES(#{n_sname},#{uname},#{n_date},#{n_ask},#{n_aftertime},#{uid},#{n_qingkuang},#{n_fangshi},#{sid})
 	</insert>
+	  <!-- 判断是否完成跟踪 -->
+ <select id="selectWanChengGenzong" parameterType="network_trace" resultType="network_trace">
+select * from network_trace where n_sname=#{n_sname} and n_qingkuang ='跟踪完成' 
+ </select>
 </mapper>

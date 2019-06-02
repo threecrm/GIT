@@ -45,4 +45,8 @@ SELECT * from network_trace
  <select id="selectWanChengGenzong" parameterType="network_trace" resultType="network_trace">
 select * from network_trace where n_sname=#{n_sname} and n_qingkuang ='跟踪完成' 
  </select>
+ <!-- 查看跟踪日志 -->
+ <select id="selectgenzongrizhi" parameterType="string" resultType="network_trace">
+ select * from network_trace where n_sname=#{name}
+ </select>
  </mapper>

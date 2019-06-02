@@ -16,5 +16,7 @@ public interface GenZongMapper {
 	
     //¸ú×Ù
     Integer Addgenzong(Network_trace network_trace);
+    //ÅÐ¶ÏÊÇ·ñÍê³É¸ú×Ù
+    List<Network_trace> selectWanChengGenzong(Network_trace network_trace);
     
 }

@@ -20,7 +20,7 @@ public interface NetStudentMapper {
     List<Student> selectAllNetStudent();
     //修改学生
     Integer updateNetStudent(Student student);
-    //修改失效
+    //失效
     Integer updateShixiaoStudent(String Sname);
     //查询学生和咨询师
     Student selectAsks(Integer id);
