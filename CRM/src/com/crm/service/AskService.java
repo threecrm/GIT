@@ -4,6 +4,7 @@ import java.util.List;
 import com.crm.entity.Ask;
 import com.crm.entity.Fenye;
 import com.crm.entity.Roles;
+import com.crm.entity.Sign_in;
 import com.crm.entity.Student;
 import com.crm.entity.Users;
 public interface AskService {
@@ -25,6 +26,18 @@ public interface AskService {
 	 public	Integer updateQianTui(Ask ask);
 	//权重排序
 	public	List<Ask> paixun(Ask ask);
+	/**
+	 * 查询当天签到的员工
+	 * @param sign_in
+	 * @return
+	 */
+	/*List<Sign_in> selectSignByTime(Sign_in sign_in);*/
+	/**
+	 * 一键签退 签到表
+	 * @param sign_in
+	 * @return
+	 */
+	Integer allQiantuis(Sign_in sign_in);
 	/**
 	 * 一键签退
 	 * @param ask

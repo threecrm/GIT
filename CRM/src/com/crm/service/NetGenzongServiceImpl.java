@@ -26,8 +26,8 @@ public Fenye<Network_trace> selectNetGenZong(Fenye<Network_trace> fenye) {
 //Ìí¼ÓÍøÂç¸ú×Ù
 public Integer addNetGenzong(Network_trace network_trace) {
 	Integer addNetGenzong = null;
-	List<Network_trace> selectNetName = netGenzongMapper.selectNetName(network_trace);
-	if(selectNetName.size()==0) {
+	List<Network_trace> i = netGenzongMapper.selectWanChengGenzong(network_trace);
+	if(i.size()==0) {
 		addNetGenzong = netGenzongMapper.addNetGenzong(network_trace);
 	}else {
 		return -1;

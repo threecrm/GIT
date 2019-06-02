@@ -11,6 +11,7 @@ import com.crm.dao.AskMapper;
 import com.crm.entity.Ask;
 import com.crm.entity.Fenye;
 import com.crm.entity.Roles;
+import com.crm.entity.Sign_in;
 import com.crm.entity.Student;
 
 @Service
@@ -75,6 +76,24 @@ public class AskServiceImpl implements AskService {
 	public List<Ask> paixun(Ask ask) {
 		return askMapper.paixun(ask);
 	}
+	/**
+	 * 查询当天签到的员工
+	 */
+	/*public List<Sign_in> selectSignByTime(Sign_in sign_in) {
+		// TODO Auto-generated method stub
+		return askMapper.selectSignByTime(sign_in);
+	}*/
+	
+	
+    /**
+      *  一键签退 签到表
+    */
+	@Override
+	public Integer allQiantuis(Sign_in sign_in) {
+		// TODO Auto-generated method stub
+		return askMapper.allQiantuis(sign_in);
+	}
+
 	/**
 	 * 一键签退
 	 */

@@ -91,9 +91,17 @@
 	<select id="selectUsers" parameterType="string" resultType="users">
 		SELECT * FROM users WHERE LonginName=#{longinName}
 	</select>
+	<!-- 查询当天签到的员工 -->
+	<!-- <select id="selectSignByTime" parameterType="sign_in" resultType="sign_in">
+	   select * from sign_in where uid=#{uid} and creat_time like "%"#{creat_time} "%"
+	</select> -->
 	<!-- 一键签退 -->
 	<update id="allQiantui" parameterType="ask">
 	      UPDATE askteacher SET statue='已签退' where statue='已签到'
+	</update>
+	<!-- 一键签退 签到 -->
+	<update id="allQiantuis" parameterType="sign_in">
+          UPDATE sign_in SET endState='已签退' where endState=''
 	</update>
 	
 	<!-- 查询当天未签到的咨询师 -->

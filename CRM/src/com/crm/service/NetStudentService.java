@@ -16,7 +16,7 @@ public interface NetStudentService {
 	  //修改学生
 	 public Integer updateNetStudent(Student student);
 	 //修改失效
-	 public Integer updateShixiaoStudent(Student student);
+	 public Integer updateShixiaoStudent(String Sname);
 	   //查询学生和咨询师
 	  public Student selectAsks(Integer id);
 	 

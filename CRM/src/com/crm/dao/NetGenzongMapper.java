@@ -13,7 +13,9 @@ public interface NetGenzongMapper {
     Integer countNetzong(Fenye<Network_trace> fenye);
     //添加网络跟踪
     Integer addNetGenzong(Network_trace network_trace);
-  //判断跟踪姓名是否重名 
+    //判断跟踪姓名是否重名 (已不用)
     List<Network_trace> selectNetName(Network_trace network_trace);
+    //判断是否完成跟踪
+    List<Network_trace> selectWanChengGenzong(Network_trace network_trace);
 
 }
