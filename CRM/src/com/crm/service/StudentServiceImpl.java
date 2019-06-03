@@ -92,6 +92,9 @@ public class StudentServiceImpl implements StudentService {
 		if(selecStudent.size()==0){
 			return -1;
 		}
+		if(askid==null){
+			return -2;
+		}
 		Integer j = null;
 		//如果有分配的学生，循环所有学生
 		for(int i=0;i<selecStudent.size();i++){
@@ -133,6 +136,9 @@ public class StudentServiceImpl implements StudentService {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
 		//查询出所有的当天已经签到的咨询师
 		List<Ask> selectAskAll = studentMapper.selectAskAll(sdf.format(date));
+		if(selectAskAll.size()==0){
+			return -2;
+		}
 		for (int y = 0; y < selecStudent.size(); y++) {
 			Message message =new Message();
 			Integer Max = 100;

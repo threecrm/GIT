@@ -241,6 +241,8 @@ function zixuntrue() {
 		} else if(res==-1){
 			$.messager.alert("提示", "已分配过了，不能二次分配");
 			$("#caozuoWindow").window("close");
+		}else if(res==-2){
+			$.messager.alert("提示", "当天没有签到的咨询师");
 		}
 	}, "json")
 }
@@ -266,7 +268,9 @@ function fenpei() {
 			if (res > 0) {
 				$.messager.alert("提示", "自动分配成功");
 				$("#tab").datagrid("reload");
-			} else {
+			}else if(res==-2){
+				$.messager.alert("提示", "当天没有咨询师签到");
+			}else {
 				$.messager.alert("提示", "已分配过了，不能二次分配");
 			}
 		}, "json")
