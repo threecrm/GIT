@@ -667,7 +667,7 @@
 				</tr>
 				<tr>
 					<td>年龄:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input
-						class="easyui-validatebox" type="text" id="addAge"
+						class="easyui-numberbox" type="text" id="addAge"
 						data-options="required:true" placeholder="请输入年龄" /></td>
 					<td>学历:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<select
 						id="addStuStatus" class="easyui-combobox a" data-options="editable:false">
@@ -683,7 +683,7 @@
 				</tr>
 				<tr>
 					<td>电话:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input
-						class="easyui-validatebox" type="text" id="addPhone"
+						class="easyui-numberbox" type="text" id="addPhone"
 						data-options="required:true" placeholder="请输入电话" /></td>
 					<td>状态:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<select
 						id="addPerStatus" class="easyui-combobox a" data-options="editable:false">
