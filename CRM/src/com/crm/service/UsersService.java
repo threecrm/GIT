@@ -25,7 +25,7 @@ public interface UsersService {
 	 * @param uid
 	 * @return
 	 */
-	Integer delUser(Integer uid);
+	Integer delUser(Integer uid,String askName);
 	/**
 	 * ĞŞ¸ÄÓÃ»§
 	 * @param users

@@ -121,9 +121,17 @@
 		WHERE u.uid=ur.UserId and r.rid=ur.RoleId 
 		  AND u.uid=#{uid}
  </select>
+ <!--查询是否有这个咨询师  -->
+ <select id="selectAskName" parameterType="string" resultType="ask">
+   SELECT * FROM askteacher WHERE AskName=#{askName}
+ </select>
  <!-- 删除用户 -->
    <delete id="delUser" parameterType="int">
        delete from users where uid=#{uid}
+  </delete>
+  <!--根据名字删除咨询师  -->
+  <delete id="delAsker" parameterType="string">
+      delete FROM askteacher WHERE AskName=#{askName}
   </delete>
 <!--   修改用户 -->
 <update id="updateUser" parameterType="users">

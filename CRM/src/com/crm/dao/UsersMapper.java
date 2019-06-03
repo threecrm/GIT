@@ -49,11 +49,23 @@ public interface UsersMapper {
 	 */
 	List<Roles> selectRoleNameByRole(Integer uid);
 	/**
+	 * 查询是否有这个咨询师
+	 * @param askName
+	 * @return
+	 */
+	Ask selectAskName(String askName);
+	/**
 	 * 删除用户
 	 * @param uid
 	 * @return
 	 */
 	Integer delUser(Integer uid);
+	/**
+	 * 根据名字删除咨询师
+	 * @param askName
+	 * @return
+	 */
+	Integer delAsker(String askName);
 	/**
 	 * 修改用户
 	 * @param users

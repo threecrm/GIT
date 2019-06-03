@@ -55,8 +55,8 @@ public class UserController {
 	 */
 	  @RequestMapping(value="/delUser",method=RequestMethod.POST)
 	  @ResponseBody
-	  public Integer delUser(Integer uid){
-		  return usersService.delUser(uid);
+	  public Integer delUser(Integer uid,String longinName){
+		  return usersService.delUser(uid,longinName);
 	  }
 	  /**
 	   * ÐÞ¸ÄÓÃ»§

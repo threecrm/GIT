@@ -75,7 +75,9 @@
 			$.messager.confirm("确认删除","确认删除么？",function(r){
 				if(r){
 					$.post("delUser",
-						{uid:row.uid},
+						{ uid:row.uid,
+						  longinName:row.longinName
+						  },
 				function(res){
 						if(res>0){
 							$("#tab").datagrid("reload");

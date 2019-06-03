@@ -55,7 +55,7 @@ public class UsersServiceImp implements UsersService {
 	/**
 	 * 删除用户
 	 */
-	public Integer delUser(Integer uid) {
+	public Integer delUser(Integer uid,String longinName) {
 		// TODO Auto-generated method stub
 		//查询该用户的角色是否是管理员
 		List<Roles> selectRoleNameByRole = usersMapper.selectRoleNameByRole(uid);
@@ -69,7 +69,12 @@ public class UsersServiceImp implements UsersService {
 		if(selectStudent.size()!=0){
 			return -1;
 		}
-		return usersMapper.delUser(uid);
+		//同时删除咨询师
+		Ask selectAskName = usersMapper.selectAskName(longinName);
+		if(selectAskName!=null){
+			Integer i1 = usersMapper.delAsker(longinName);
+		}
+		 return usersMapper.delUser(uid);
 	}
 	/**
 	 * 修改用户
