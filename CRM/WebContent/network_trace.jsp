@@ -80,7 +80,7 @@
 	    </tr>
 	    <tr> 
 	     <td><label for="name">拜访详细:</label></td>
-	     <td><input class="easyui-validatebox" type="text" id="ask" name="n_ask" readonly="true"/></td> 
+	     <td><input class="easyui-textbox" data-options="multiline:true,height:50,prompt:'备注...',readonly:true" type="text" id="ask" name="n_ask"/></td> 
 	    </tr>
 	    <tr>
 	     <td> <label for="name">跟踪结束时间:</label>  </td>

@@ -771,7 +771,7 @@
 	    </tr>
 	    <tr> 
 	     <td><label for="name">拜访详细:</label></td>
-	     <td><input class="easyui-textbox" type="text" id="ask" data-options="required:true "/></td> 
+	     <td><input class="easyui-textbox" type="text" id="ask" data-options="required:true,multiline:true,height:50,prompt:'备注...' "/></td> 
 	    </tr>
 	    <tr>
 	     <td> <label for="name">跟踪结束时间:</label>  </td>
