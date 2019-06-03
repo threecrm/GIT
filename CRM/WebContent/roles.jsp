@@ -135,23 +135,24 @@
 		function formatterQuanXian(value, row, index) {
 			return "<a href='javascript:void(0)' style='cursor: pointer;' onclick='showQuanxian(" + index + ")'>设置权限</a>";
 		}
-   
+   //角色权限设置框
    function showQuanxian(index) {
+	   //获取tab数据表格所有数据
 	    var data = $("#tab").datagrid("getData");
-		var row = data.rows[index];
-	 	var roleName=row.roleName;
-	 	var rid=row.rid;
+		var row = data.rows[index];//index下标
+	 	var roleName=row.roleName;//获取到角色名称
+	 	var rid=row.rid;//获取到角色Id
 	 		$("#quanxian").dialog({
 	 			closed:false,
 	 			title:"您正在设置："+roleName,
-	 			 toolbar:[{
+	 			 toolbar:[{//设置对话框窗口顶部工具栏
 	 				text:"提交",
 	 				iconCls:'icon-ok',
 	 				handler:function(){
-	 					var data = $("#tab").datagrid("getSelected");
-	 					var nodes=$("#tre").tree('getChecked',['checked','indeterminate']);
+	 					var data = $("#tab").datagrid("getSelected");//第一个被选中的
+	 					var nodes=$("#tre").tree('getChecked',['checked','indeterminate']);//获取所有选中的节点
 	 					var n="";
-	 					for(var i=0;i<nodes.length;i++){
+	 					for(var i=0;i<nodes.length;i++){//拼接字符串获取到所有的选中的节点id
 	 						if(n==""){
 	 							n+=nodes[i].id;
 	 						}else{
@@ -162,8 +163,8 @@
 	 					$.post(
 	 						"rolesModules",
 	 						{
-	 							parentIds:n,
-								rId:data.rid
+	 							parentIds:n,//所有的选中的节点id
+								rId:data.rid//角色id
 							}, function(res){
 								if(res==true){
 									$.messager.alert("消息","保存权限成功！");
@@ -181,7 +182,7 @@
 	 				}
 	 			}] 
 	 		});
-	 		$.post(
+	 		$.post(//查询出所有模块
 	 				"selectModules",
 	 				{
 						rid:rid,

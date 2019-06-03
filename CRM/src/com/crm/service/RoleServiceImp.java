@@ -76,9 +76,9 @@ public class RoleServiceImp implements RoleService {
 	
 	List<Integer> ids = null;
 	List<Modules> ab =null;
-	public List<Modules> selectModules(Integer rid) {
-		
+	public List<Modules> selectModules(Integer rid) {//rid角色Id
 		ids = new ArrayList<Integer>();
+		//根据角色id查询模块
 		List<RoleModules> selectModules = roleMapper.selectModules(rid);
 		for(int x=0;x<selectModules.size();x++){
 			List<Modules> selectMid = roleMapper.selectMid(selectModules.get(x).getModuleid());
@@ -87,9 +87,6 @@ public class RoleServiceImp implements RoleService {
 					ids.add(selectMid.get(y).getId());
 				}
 			}
-		}
-		for(int i=0;i<ids.size();i++){
-//			System.out.println(id.get(i));
 		}
 		ab = modulesMapper.selectModulesSubmodule(0);
 		for(int i=0;i<ab.size();i++){
