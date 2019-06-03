@@ -202,7 +202,7 @@
 
 <!-- 添加资讯师 -->
  <insert id="addAsk" parameterType="ask">
-      INSERT into askteacher(AskName,RoleNames,CheckInTime) VALUES(#{askName},#{roleNames},#{checkInTime})
+      INSERT into askteacher(AskName,RoleNames,CheckInTime,Weights,BakContent) VALUES(#{askName},#{roleNames},#{checkInTime},5,'已开启')
 </insert>
 
 <!-- 删除资讯师 -->
